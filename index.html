@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Subnet-Dojo</title>
+  <meta name="description" content="Interaktives Lern-Dojo für IPv4-Adressen, Subnetzmasken und Subnetting – inklusive Firmennetz-Planer.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23C81E3A'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3E/%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#grundlagen">
+        <span class="brand-title">Subnet-<i>Dojo</i></span>
+        <span class="eyebrow">IPv4 · Subnetzmaske · Subnetting</span>
+      </a>
+      <a class="school-logo" href="https://www.bsnes.de" target="_blank" rel="noopener" title="Jakob-Preh-Schule"><img src="assets/jps-logo.png" alt="Logo der Jakob-Preh-Schule" width="324" height="182"></a>
+    </div>
+    <div class="sig-rail" id="sigRail" aria-hidden="true"></div>
+  </header>
+
+  <nav class="topnav" aria-label="Stationen">
+    <a href="#grundlagen"><span class="tab-num">1</span>Grundlagen</a>
+    <a href="#werkstatt"><span class="tab-num">2</span>Masken-Werkstatt</a>
+    <a href="#klassen"><span class="tab-num">3</span>Klasse&nbsp;C oder&nbsp;/16?</a>
+    <a href="#dojo"><span class="tab-num">4</span>Übungs-Dojo</a>
+    <a href="#planer"><span class="tab-num">5</span>Firmennetz-Planer</a>
+  </nav>
+
+  <main>
+    <!-- ============================ 1 GRUNDLAGEN ============================ -->
+    <section id="grundlagen" class="page">
+      <header class="page-head">
+        <p class="eyebrow">Station 1 · Grundlagen</p>
+        <h1>IPv4 verstehen – Bit für Bit.</h1>
+        <p class="lead">Im Subnet-Dojo lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die fünf Stationen.</p>
+      </header>
+
+      <article class="card">
+        <h2>Eine IPv4-Adresse besteht aus 32 Bit</h2>
+        <p>Computer sehen eine IP-Adresse als <b>32 Nullen und Einsen</b>. Damit Menschen sie lesen können, teilt man sie in vier <b>Oktette</b> zu je 8 Bit und schreibt jedes Oktett als Dezimalzahl: <code>192.168.10.77</code>. Ein Oktett kann Werte von <b>0 bis 255</b> annehmen, denn 8 Bit ergeben 2<sup>8</sup> = 256 Möglichkeiten.</p>
+        <p>Probier es aus: Klick auf die Bits und beobachte die Dezimalzahl. Jedes Bit hat eine feste Wertigkeit.</p>
+        <div id="g-octet" class="widget"></div>
+      </article>
+
+      <article class="card">
+        <h2>Netzanteil und Hostanteil</h2>
+        <p>Jede IP-Adresse hat zwei Teile – wie eine Postadresse aus <b>Straße</b> und <b>Hausnummer</b>:</p>
+        <ul class="ticks">
+          <li><b class="c-net">Netzanteil</b> – in welchem Netz das Gerät steht (die „Straße“). Alle Geräte im selben Netz haben denselben Netzanteil.</li>
+          <li><b class="c-host">Hostanteil</b> – welches Gerät im Netz gemeint ist (die „Hausnummer“).</li>
+        </ul>
+        <p>Wo genau die Grenze liegt, steht <b>nicht</b> in der Adresse selbst. Dafür braucht man die <b>Subnetzmaske</b>.</p>
+        <div id="g-split" class="bits-box"></div>
+      </article>
+
+      <article class="card">
+        <h2>Die Subnetzmaske</h2>
+        <p>Die Subnetzmaske ist ebenfalls 32 Bit lang. Sie markiert jedes Bit der Adresse:</p>
+        <ul class="ticks">
+          <li><code>1</code> = dieses Bit gehört zum <b class="c-net">Netzanteil</b></li>
+          <li><code>0</code> = dieses Bit gehört zum <b class="c-host">Hostanteil</b></li>
+        </ul>
+        <p>Die Einsen stehen <b>immer links und lückenlos</b>. Deshalb reicht es, sie zu zählen: <code>255.255.255.0</code> hat 24 Einsen → Kurzschreibweise <b>/24</b> (CIDR- oder Präfix-Schreibweise).</p>
+        <p>Deshalb gibt es in einer Maske pro Oktett nur diese neun Werte:</p>
+        <div class="tbl-wrap"><table class="tbl compact" id="g-masks"></table></div>
+      </article>
+
+      <article class="card">
+        <h2>Die UND-Verknüpfung: So findet ein Gerät sein Netz</h2>
+        <p>Ein Gerät verknüpft seine IP-Adresse Bit für Bit per <b>UND</b> mit der Maske. Nur wo <i>beide</i> Bits 1 sind, ergibt sich 1. So entsteht die <b>Netzadresse</b>. Damit prüft das Gerät, ob ein Ziel im eigenen Netz liegt (direkt zustellen) oder nicht (an das Standard-Gateway, also den Router, schicken).</p>
+        <div id="g-and" class="bits-box"></div>
+        <p class="note">Tipp: Fahre mit der Maus über ein Bit – die ganze Spalte wird hervorgehoben.</p>
+      </article>
+
+      <article class="card">
+        <h2>Besondere Adressen &amp; Anzahl der Hosts</h2>
+        <p>In jedem Netz sind zwei Adressen reserviert:</p>
+        <ul class="ticks">
+          <li><b>Netzadresse</b> – alle Host-Bits <code>0</code>. Bezeichnet das Netz selbst.</li>
+          <li><b>Broadcast-Adresse</b> – alle Host-Bits <code>1</code>. Erreicht alle Geräte im Netz.</li>
+        </ul>
+        <p>Bei <i>n</i> Host-Bits gibt es also <b>2<sup>n</sup> − 2</b> nutzbare Adressen für Geräte (inklusive Router!).</p>
+        <div class="tbl-wrap"><table class="tbl compact" id="g-hosts"></table></div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Subnetting in einem Satz</h2>
+        <p>Beim Subnetting <b>leiht</b> man sich Bits aus dem Hostanteil und schlägt sie dem Netzanteil zu: <b>Jedes geliehene Bit verdoppelt die Zahl der Netze und halbiert ihre Größe.</b></p>
+        <a class="btn primary" href="#werkstatt">Weiter zur Masken-Werkstatt →</a>
+      </article>
+    </section>
+
+    <!-- ============================ 2 WERKSTATT ============================ -->
+    <section id="werkstatt" class="page">
+      <header class="page-head">
+        <p class="eyebrow">Station 2 · Interaktiv</p>
+        <h1>Masken-Werkstatt</h1>
+        <p class="lead">Gib eine IP-Adresse ein und verschiebe die Grenze zwischen Netz- und Hostanteil – mit dem Regler, per Maske oder durch Klick auf die Bits der Maske.</p>
+      </header>
+
+      <div class="card">
+        <div class="fields w-fields">
+          <label class="field"><span>IP-Adresse</span><input id="w-ip" value="192.168.10.77" spellcheck="false" autocomplete="off" inputmode="decimal"></label>
+          <label class="field"><span>Subnetzmaske (oder /Präfix)</span><input id="w-mask" spellcheck="false" autocomplete="off"></label>
+          <label class="field field-range"><span>Präfix <output id="w-prefix-out">/24</output></span><input type="range" id="w-prefix" min="0" max="32" value="24"></label>
+        </div>
+        <p id="w-fb" class="field-fb" aria-live="polite"></p>
+        <div class="presets"><span class="muted">Schnellwahl:</span>
+          <button type="button" class="pill" data-preset="192.168.10.77/24">192.168.10.77/24</button>
+          <button type="button" class="pill" data-preset="192.168.10.77/26">192.168.10.77/26</button>
+          <button type="button" class="pill" data-preset="192.168.0.0/16">192.168.0.0/16 (RFC 1918)</button>
+          <button type="button" class="pill" data-preset="172.20.5.9/12">172.20.5.9/12</button>
+          <button type="button" class="pill" data-preset="10.1.2.3/8">10.1.2.3/8</button>
+        </div>
+        <div id="w-bits" class="bits-box"></div>
+        <div id="w-legend"></div>
+        <div id="w-expl" class="explain"></div>
+      </div>
+
+      <div class="results" id="w-results"></div>
+
+      <div class="card" id="w-subnets-card" hidden>
+        <h2 id="w-subnets-title"></h2>
+        <p class="muted">Klick auf ein Subnetz, um eine Adresse darin zu untersuchen.</p>
+        <div id="w-subnets" class="subnet-chips"></div>
+      </div>
+    </section>
+
+    <!-- ============================ 3 KLASSEN ============================ -->
+    <section id="klassen" class="page">
+      <header class="page-head">
+        <p class="eyebrow">Station 3 · Das große Missverständnis</p>
+        <h1>Klasse C oder /16?</h1>
+        <p class="lead">Im Schulbuch steht „192.168.x.x ist ein Klasse-C-Netz mit 255.255.255.0“. In RFC 1918 steht „192.168/16“. Wer hat recht?</p>
+      </header>
+
+      <div class="versus">
+        <div class="card quote-card">
+          <p class="src">Schulbuch</p>
+          <p class="quote">„192.168.1.0 ist ein privates <b>Klasse-C-Netz</b> mit der Subnetzmaske <b>255.255.255.0</b>.“</p>
+        </div>
+        <div class="vs" aria-hidden="true">?</div>
+        <div class="card quote-card">
+          <p class="src"><a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a>, Abschnitt 3</p>
+          <pre class="rfc-pre">10.0.0.0    - 10.255.255.255  (10/8 prefix)
+172.16.0.0  - 172.31.255.255  (172.16/12 prefix)
+192.168.0.0 - 192.168.255.255 (<b>192.168/16</b> prefix)</pre>
+        </div>
+      </div>
+
+      <article class="card verdict">
+        <h2>Beide haben recht – sie meinen verschiedene Dinge.</h2>
+        <p>RFC 1918 löst den scheinbaren Widerspruch direkt im nächsten Satz selbst auf:</p>
+        <blockquote class="rfc">“Note that (in pre-CIDR notation) the first block is nothing but a single class A network number, while the second block is a set of 16 contiguous class B network numbers, and third block is a set of 256 contiguous class C network numbers.”<cite>RFC 1918, Abschnitt 3</cite></blockquote>
+        <div class="two-col">
+          <div class="mini-card">
+            <h3>/16 im RFC 1918</h3>
+            <p>Beschreibt den <b>reservierten Vorrat</b>: Alle 65.536 Adressen von 192.168.0.0 bis 192.168.255.255 dürfen privat verwendet werden. Das ist kein Netz, das man so konfigurieren muss – es ist der Bereich, aus dem man sich bedient.</p>
+          </div>
+          <div class="mini-card">
+            <h3>Klasse C im Schulbuch</h3>
+            <p>Beschreibt, wie groß <b>ein einzelnes Netz</b> daraus im alten Klassensystem (RFC 791) war: /24 mit 254 Hosts. Der /16-Block enthält <b>256 solcher Klasse-C-Netze</b> (192.168.0.0/24 bis 192.168.255.0/24).</p>
+          </div>
+        </div>
+        <p class="callout">Seit CIDR (1993) gibt es keine Klassen mehr. Innerhalb von 192.168.0.0/16 darfst du <b>jedes Präfix ab /16</b> verwenden – /24 ist nur eine verbreitete Gewohnheit.</p>
+      </article>
+
+      <article class="card">
+        <h2>Block-Explorer</h2>
+        <p>Die drei privaten Blöcke sind <b>sehr unterschiedlich groß</b>. Im Vergleich unten entspricht die Fläche der Anzahl der Adressen:</p>
+        <div class="k-compare" id="k-compare"></div>
+        <p>Wähle einen Block und bilde mit dem Regler Netze. In allen drei Blöcken gilt dieselbe Einheit: <b>Ein Kästchen ist ein /24</b> (256 Adressen, so groß wie ein „Klasse-C-Netz“). Gleiche Farbe = gleiches Netz.</p>
+        <div class="seg small" id="k-tabs" role="group" aria-label="Privater Block"></div>
+        <label class="switch small k-true"><input type="checkbox" id="k-true"><span>Maßstabsgetreu – alle Blöcke im gleichen Maßstab zeichnen</span></label>
+        <p class="k-scale" id="k-scale"></p>
+        <div class="k-view">
+          <div class="k-canvas-wrap" id="k-wrap"><canvas id="k-canvas" aria-label="Kästchen-Raster des gewählten Blocks"></canvas><p id="k-label-note" class="note"></p><p id="k-true-note" class="note"></p></div>
+          <div class="k-side">
+            <label class="field field-range"><span>Netze bilden mit Präfix <output id="k-prefix-out">/16</output></span><input type="range" id="k-prefix" min="16" max="24" value="16"></label>
+            <p id="k-info" class="k-info" aria-live="polite"></p>
+            <p id="k-hover" class="k-hover muted">Fahre über ein Kästchen.</p>
+            <p class="note">Mit noch längeren Präfixen (/25 bis /30) entstehen noch mehr, kleinere Netze – sie wären kleiner als ein Kästchen.</p>
+          </div>
+        </div>
+        <p id="k-note" class="note"></p>
+      </article>
+
+      <article class="card">
+        <h2>Woran erkennt man die Klasse? (RFC 791)</h2>
+        <p>Im ursprünglichen IPv4-Standard von 1981 gab es <b>keine Subnetzmaske</b>. Die Größe des Netzes ergab sich allein aus den <b>ersten Bits</b> der Adresse:</p>
+        <blockquote class="rfc">“There are three formats or classes of internet addresses: in class a, the high order bit is zero, the next 7 bits are the network, and the last 24 bits are the local address; in class b, the high order two bits are one-zero, the next 14 bits are the network and the last 16 bits are the local address; in class c, the high order three bits are one-one-zero, the next 21 bits are the network and the last 8 bits are the local address.”<cite><a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a>, Abschnitt 2.3</cite></blockquote>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Klasse</th><th>Erste Bits</th><th>Erstes Oktett</th><th>Netzanteil</th><th>Standardmaske</th><th>Privater Bereich (RFC 1918)</th></tr></thead>
+            <tbody>
+              <tr><td><b>A</b></td><td><code>0</code></td><td>0 – 127</td><td>8 Bit</td><td>255.0.0.0 (/8)</td><td>10.0.0.0/8</td></tr>
+              <tr><td><b>B</b></td><td><code>10</code></td><td>128 – 191</td><td>16 Bit</td><td>255.255.0.0 (/16)</td><td>172.16.0.0/12</td></tr>
+              <tr><td><b>C</b></td><td><code>110</code></td><td>192 – 223</td><td>24 Bit</td><td>255.255.255.0 (/24)</td><td>192.168.0.0/16</td></tr>
+              <tr class="muted"><td>D</td><td><code>1110</code></td><td>224 – 239</td><td colspan="3">Multicast (später ergänzt)</td></tr>
+              <tr class="muted"><td>E</td><td><code>1111</code></td><td>240 – 255</td><td colspan="3">reserviert (später ergänzt)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="octet-bar" id="k-bar" aria-hidden="true">
+          <div class="seg-a" style="flex:128">A</div><div class="seg-b" style="flex:64">B</div><div class="seg-c" style="flex:32">C</div><div class="seg-d" style="flex:16">D</div><div class="seg-e" style="flex:16">E</div>
+          <div class="marker" id="k-marker" hidden><span></span></div>
+        </div>
+        <div class="octet-scale" aria-hidden="true"><span style="left:0%">0</span><span style="left:50%">128</span><span style="left:75%">192</span><span style="left:87.5%">224</span><span style="left:93.75%">240</span></div>
+        <label class="field k-test"><span>Teste eine Adresse</span><input id="k-test" value="172.31.4.20" spellcheck="false" autocomplete="off" inputmode="decimal"></label>
+        <div id="k-test-out" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>Zeitstrahl</h2>
+        <ol class="timeline">
+          <li><span class="tl-year">1981</span><div><b><a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> – Internet Protocol.</b> IPv4 mit den Klassen A, B und C. Die Netzgröße folgt aus den ersten Bits – eine Subnetzmaske gibt es noch nicht.</div></li>
+          <li><span class="tl-year">1985</span><div><b><a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> – Subnetting.</b> Die Subnetzmaske wird eingeführt, um ein Klassennetz intern weiter aufzuteilen.</div></li>
+          <li><span class="tl-year">1993</span><div><b><a href="https://www.rfc-editor.org/info/rfc1519/" target="_blank" rel="noopener">RFC 1519</a> – CIDR.</b> Die Klassen werden abgeschafft. Die Präfixlänge (/x) ist frei wählbar. Heute gilt <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (2006).</div></li>
+          <li><span class="tl-year">1996</span><div><b><a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> – Private Adressen.</b> Bereits in CIDR-Schreibweise: 10/8, 172.16/12, 192.168/16. Die Klassen werden nur noch als „pre-CIDR notation“ erwähnt.</div></li>
+        </ol>
+      </article>
+
+      <article class="card merksatz">
+        <h2>Merksätze</h2>
+        <ol>
+          <li>Die <b>Klasse</b> ist Geschichte. Sie hängt nur an den ersten Bits der Adresse.</li>
+          <li>Heute bestimmt allein die <b>Subnetzmaske</b> (das Präfix), wo Netz- und Hostanteil sich trennen.</li>
+          <li><b>192.168.0.0/16</b> ist der reservierte Vorrat – <b>192.168.1.0/24</b> ist ein Netz daraus.</li>
+          <li>/24 ist üblich, aber nicht Pflicht: /16, /20, /26 … alles ist erlaubt, solange das Netz im privaten Block bleibt.</li>
+        </ol>
+      </article>
+    </section>
+
+    <!-- ============================ 4 DOJO ============================ -->
+    <section id="dojo" class="page">
+      <header class="page-head">
+        <p class="eyebrow">Station 4 · Training</p>
+        <h1>Übungs-Dojo</h1>
+        <p class="lead">Sieben Gürtel, sieben Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten. Die Aufgaben werden zufällig erzeugt – du kannst also beliebig lange trainieren.</p>
+      </header>
+      <div class="dojo-layout">
+        <aside class="belts" id="d-belts" aria-label="Gürtel"></aside>
+        <div class="card dojo-main">
+          <div class="dojo-top">
+            <h2 id="d-title"></h2>
+            <div class="streak" id="d-streak" aria-label="Serie"></div>
+          </div>
+          <div class="dojo-q" id="d-q"></div>
+          <form id="d-form" class="dojo-form" autocomplete="off">
+            <input id="d-input" spellcheck="false" autocomplete="off" aria-label="Deine Antwort">
+            <button class="btn primary" type="submit">Prüfen</button>
+          </form>
+          <div id="d-choices" class="choices" hidden></div>
+          <div id="d-fb" class="dojo-fb" aria-live="polite"></div>
+          <div class="row-actions">
+            <button type="button" class="btn primary" id="d-next" hidden>Nächste Aufgabe →</button>
+            <button type="button" class="btn ghost" id="d-show">Lösung zeigen</button>
+          </div>
+          <p class="note">Antworten: Adressen als <code>a.b.c.d</code>, Präfixe als <code>/26</code> oder <code>26</code>, Masken als <code>255.255.255.192</code>. Der Fortschritt wird nur in diesem Browser gespeichert.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ 5 PLANER ============================ -->
+    <section id="planer" class="page">
+      <header class="page-head">
+        <p class="eyebrow">Station 5 · Praxis</p>
+        <h1>Firmennetz-Planer</h1>
+        <p class="lead">Eine Firma hat drei Abteilungen: <b class="c-d0">Verwaltung</b>, <b class="c-d1">Entwicklung</b> und <b class="c-d2">Reparatur</b>. Jede Abteilung soll ein <b>eigenes Subnetz</b> bekommen, ein Router verbindet sie. Plane das Netz Schritt für Schritt – das Dojo prüft jede Eingabe sofort.</p>
+        <label class="switch"><input type="checkbox" id="p-help"><span>Hilfen &amp; Lösungsvorschläge einblenden</span></label>
+      </header>
+
+      <article class="card step" id="p-s1">
+        <h2><span class="num">1</span>Adressbereich wählen <span class="st-badge" id="p-st1"></span></h2>
+        <div class="seg" id="p-mode" role="group" aria-label="Planungsart">
+          <button type="button" data-mode="classful"><b>Klassenbasiert</b><small>wie im Schulbuch</small></button>
+          <button type="button" data-mode="cidr"><b>Klassenlos (CIDR)</b><small>wie in RFC 1918 / heute</small></button>
+        </div>
+        <p id="p-mode-note" class="note"></p>
+        <div class="class-cards" id="p-classes"></div>
+        <div class="fields">
+          <label class="field"><span>Netzadresse des Firmennetzes</span><input data-bind="base" spellcheck="false" autocomplete="off" inputmode="decimal"></label>
+          <label class="field"><span>Subnetzmaske</span><input data-bind="baseMask" id="p-basemask" spellcheck="false" autocomplete="off"></label>
+        </div>
+        <div id="p-base-fb"></div>
+        <div id="p-base-bits" class="bits-box"></div>
+      </article>
+
+      <article class="card step" id="p-s2">
+        <h2><span class="num">2</span>Bedarf der Abteilungen <span class="st-badge" id="p-st2"></span></h2>
+        <p>Wie viele Geräte (Hosts) braucht jede Abteilung? Denk daran: Der <b>Router</b> braucht in jedem Subnetz zusätzlich eine Adresse – sie ist dort das Standard-Gateway.</p>
+        <div class="tbl-wrap"><table class="tbl" id="p-need"></table></div>
+        <div id="p-need-fb"></div>
+        <div class="row-actions"><button type="button" class="btn" id="p-random">🎲 Neue Aufgabe würfeln</button></div>
+      </article>
+
+      <article class="card step" id="p-s3">
+        <h2><span class="num">3</span>Subnetze bilden <span class="st-badge" id="p-st3"></span></h2>
+        <p>Teile das Firmennetz so auf, dass jede Abteilung ein eigenes Subnetz bekommt. Die Subnetze müssen im Firmennetz liegen, groß genug sein und dürfen sich nicht überschneiden. Masken kannst du als <code>255.255.255.192</code> oder <code>/26</code> eingeben.</p>
+        <div class="help-only">
+          <div class="hint" id="p-hint"></div>
+          <div class="row-actions">
+            <button type="button" class="btn" id="p-flsm">Vorschlag: gleich große Subnetze</button>
+            <button type="button" class="btn" id="p-vlsm">Vorschlag: VLSM (passgenau)</button>
+          </div>
+          <div id="p-suggest-fb"></div>
+        </div>
+        <div id="p-subnets"></div>
+        <div id="p-sn-legend"></div>
+      </article>
+
+      <article class="card step" id="p-s4">
+        <h2><span class="num">4</span>Adressraum-Karte</h2>
+        <p>So verteilen sich die Subnetze im Firmennetz. Graue Kästchen sind noch frei.</p>
+        <label class="switch small"><input type="checkbox" id="p-zoom"><span>Auf den belegten Bereich zoomen</span></label>
+        <div id="p-map"></div>
+      </article>
+
+      <article class="card step" id="p-s5">
+        <h2><span class="num">5</span>Netzplan &amp; IP-Vergabe <span class="st-badge" id="p-st5"></span></h2>
+        <p>Klicke auf den <b>Router</b> und vergib seine drei Schnittstellen-Adressen. Klicke dann auf die Geräte und trage <b>IP-Adresse</b>, <b>Subnetzmaske</b> und <b>Standard-Gateway</b> ein. Die Geräte stehen stellvertretend für alle Geräte der Abteilung.</p>
+        <div class="topo-layout">
+          <div id="p-topo" class="topo"></div>
+          <div id="p-editor" class="editor"></div>
+        </div>
+        <div class="help-only">
+          <div class="row-actions"><button type="button" class="btn" id="p-autoip">Vorschlag: IP-Adressen automatisch vergeben</button></div>
+          <div id="p-autoip-fb"></div>
+        </div>
+      </article>
+
+      <article class="card step" id="p-s6">
+        <h2><span class="num">6</span>Zusammenfassung <span class="st-badge" id="p-st6"></span></h2>
+        <div id="p-summary"></div>
+        <div class="row-actions no-print">
+          <button type="button" class="btn" id="p-print">🖨 Drucken</button>
+          <button type="button" class="btn" id="p-share">🔗 Link zu diesem Plan kopieren</button>
+          <button type="button" class="btn ghost" id="p-reset">Alles zurücksetzen</button>
+        </div>
+        <div id="p-share-fb"></div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996)</p>
+    <p>Subnet-Dojo · Jakob-Preh-Schule · statische HTML-Seite, läuft komplett im Browser – keine Daten werden übertragen, keine externen Dienste geladen.</p>
+  </footer>
+
+  <script src="assets/ipv4.js"></script>
+  <script src="assets/ui.js"></script>
+  <script src="assets/grundlagen.js"></script>
+  <script src="assets/werkstatt.js"></script>
+  <script src="assets/klassen.js"></script>
+  <script src="assets/dojo.js"></script>
+  <script src="assets/planer.js"></script>
+</body>
+</html>
