@@ -1,4 +1,5 @@
 # Subnet-Dojo
+# [\[Hier öffnen\](https://flowthetensor.github.io/subnet-dojo/)](https://flowthetensor.github.io/Subnet-Dojo/)
 
 Interaktive Lernseite für IPv4, Subnetzmasken und Subnetting – gedacht für den Unterricht.
 Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schritt und lädt
@@ -27,22 +28,6 @@ Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schrit
 ## Lokal verwenden
 
 `index.html` einfach im Browser öffnen – ein Webserver ist nicht nötig.
-
-## Auf GitHub Pages veröffentlichen
-
-1. Neues Repository auf GitHub anlegen, z. B. `subnet-dojo`.
-2. Dateien hochladen bzw. pushen:
-   ```bash
-   git init
-   git add .
-   git commit -m "Subnet-Dojo"
-   git branch -M main
-   git remote add origin https://github.com/<benutzername>/subnet-dojo.git
-   git push -u origin main
-   ```
-3. Im Repository: **Settings → Pages → Build and deployment → Source: Deploy from a branch**,
-   Branch `main`, Ordner `/ (root)` wählen und speichern.
-4. Nach ca. einer Minute ist die Seite unter `https://<benutzername>.github.io/subnet-dojo/` erreichbar.
 
 ## Aufbau
 
