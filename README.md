@@ -1,5 +1,5 @@
 # Subnet-Dojo
-# [\[Hier öffnen\](https://flowthetensor.github.io/subnet-dojo/)](https://flowthetensor.github.io/Subnet-Dojo/)
+# [[Hier öffnen](https://flowthetensor.github.io/Subnet-Dojo/)
 
 Interaktive Lernseite für IPv4, Subnetzmasken und Subnetting – gedacht für den Unterricht.
 Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schritt und lädt
@@ -11,14 +11,15 @@ Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schrit
 |---|---------|--------|
 | 1 | Grundlagen | 32 Bit, Oktette, Netz-/Hostanteil, Maske, UND-Verknüpfung, 2ⁿ − 2 |
 | 2 | Masken-Werkstatt | IP + Maske eingeben, Bits live eingefärbt, Maskenbits anklickbar, Subnetzliste |
-| 3 | Klasse C oder /16? | Klärt das Missverständnis RFC 791 (Klassen) ↔ RFC 1918 (CIDR-Blöcke), Block-Explorer, Zeitstrahl |
+| 3 | Netzklassen | Klärt das Missverständnis RFC 791 (Klassen) ↔ RFC 1918 (CIDR-Blöcke), Block-Explorer, Zeitstrahl |
 | 4 | Übungs-Dojo | 7 Gürtel mit zufällig erzeugten Aufgaben (5 richtige in Folge = Gürtel) |
 | 5 | Firmennetz-Planer | Verwaltung, Entwicklung, Reparatur: Klasse/CIDR wählen → Bedarf → Subnetting → Adressraum-Karte → Netzplan mit IP-Vergabe → Zusammenfassung |
 
 ## Hinweise für Lehrkräfte
 
-- **Hilfen & Lösungsvorschläge** (Schalter oben im Planer) blendet Tipps, das kleinste passende
-  Subnetz sowie Vorschläge für gleich große Subnetze (FLSM), VLSM und die IP-Vergabe ein.
+- Der Planer übt **nur gleich große Subnetze (FLSM)** – alle Abteilungen bekommen dieselbe Maske.
+- **Hilfen einblenden** (Schalter oben im Planer) zeigt das kleinste passende Subnetz je Abteilung
+  und einen Rechenhinweis für FLSM. Automatische Lösungsvorschläge gibt es nicht.
 - **Neue Aufgabe würfeln** erzeugt zufällige Hostzahlen für die drei Abteilungen.
 - **Link zu diesem Plan kopieren** speichert den kompletten Planungsstand in der URL.
   So lassen sich vorbereitete Aufgaben verteilen oder Lösungen abgeben.

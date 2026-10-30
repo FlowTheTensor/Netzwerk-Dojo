@@ -70,10 +70,20 @@
       return `<tr><td><code>${'1'.repeat(k)}<span class="dim">${'0'.repeat(8 - k)}</span></code></td><td><b>${v}</b></td><td>${k}</td></tr>`;
     }).join('') + '</tbody>';
 
-  // Hostanzahl je Präfix
+  // Hostanzahl je Präfix: feste Beispiele + eine Zeile für den Regler
+  const hostCells = p => `<td><b>/${p}</b></td><td><code>${F(IPv4.mask(p))}</code></td><td>${32 - p}</td><td>2<sup>${32 - p}</sup> = ${IPv4.fmtNum(IPv4.size(p))}</td><td><b>${IPv4.fmtNum(IPv4.hosts(p))}</b></td>`;
   $('#g-hosts').innerHTML = '<thead><tr><th>Präfix</th><th>Subnetzmaske</th><th>Host-Bits</th><th>Adressen</th><th>nutzbare Hosts</th></tr></thead><tbody>' +
-    [16, 20, 22, 23, 24, 25, 26, 27, 28, 29, 30].map(p => `<tr><td><b>/${p}</b></td><td><code>${F(IPv4.mask(p))}</code></td><td>${32 - p}</td><td>2<sup>${32 - p}</sup> = ${IPv4.fmtNum(IPv4.size(p))}</td><td><b>${IPv4.fmtNum(IPv4.hosts(p))}</b></td></tr>`).join('') +
-    '</tbody>';
+    [8, 12, 24].map(p => `<tr>${hostCells(p)}</tr>`).join('') +
+    '</tbody><tbody><tr class="hosts-pick" id="g-hosts-pick"></tr></tbody>';
+
+  const prefixIn = $('#g-prefix');
+  const showPick = () => {
+    const p = +prefixIn.value;
+    $('#g-prefix-out').textContent = `/${p}`;
+    $('#g-hosts-pick').innerHTML = hostCells(p);
+  };
+  prefixIn.addEventListener('input', showPick);
+  showPick();
 
   columnHover($('#g-and'));
   columnHover($('#g-split'));

@@ -1,4 +1,4 @@
-/* Station 3 – Klasse C oder /16? */
+/* Station 3 – Netzklassen */
 'use strict';
 
 (() => {

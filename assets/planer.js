@@ -8,9 +8,9 @@
   const root = $('#planer');
 
   const CLS = {
-    A: { prefix: 8, example: '10.0.0.0', block: IPv4.RFC1918[0] },
-    B: { prefix: 16, example: '172.16.0.0', block: IPv4.RFC1918[1] },
-    C: { prefix: 24, example: '192.168.1.0', block: IPv4.RFC1918[2] },
+    A: { prefix: 8, block: IPv4.RFC1918[0] },
+    B: { prefix: 16, block: IPv4.RFC1918[1] },
+    C: { prefix: 24, block: IPv4.RFC1918[2] },
   };
   const DEPTS = [
     { key: 'v', name: 'Verwaltung', hosts: 25, devices: ['PC-V1', 'PC-V2', 'Drucker-V'] },
@@ -22,14 +22,13 @@
   const err = h => ({ t: 'err', h });
   const info = h => ({ t: 'info', h });
   const fbList = msgs => (msgs.length ? `<ul class="fb">${msgs.map(m => `<li class="${m.t}">${m.h}</li>`).join('')}</ul>` : '');
-  const bin8 = n => n.toString(2).padStart(8, '0');
   const pct = (a, b) => Math.round((a / b) * 100) + ' %';
 
   /* ---------- Zustand ---------- */
 
   function fresh() {
     return {
-      v: 1, mode: 'classful', cls: 'C', base: '192.168.1.0', baseMask: '255.255.255.0', help: false, zoom: true,
+      v: 1, mode: 'classful', cls: 'C', base: '192.168.0.0', baseMask: '255.255.0.0', help: false, zoom: true,
       depts: DEPTS.map(d => ({
         key: d.key, name: d.name, hosts: d.hosts, net: '', mask: '', gw: '',
         devices: d.devices.map(n => ({ name: n, ip: '', mask: '', gw: '' })),
@@ -83,11 +82,13 @@
 
   /* ---------- Prüfungen ---------- */
 
-  const basePrefix = () => (S.mode === 'classful' ? CLS[S.cls].prefix : IPv4.parseMask(S.baseMask));
+  // Klassenbasiert ist das Firmennetz der gesamte private Bereich der Klasse (z. B. 192.168.0.0/16)
+  const basePrefix = () => (S.mode === 'classful' ? CLS[S.cls].block.prefix : IPv4.parseMask(S.baseMask));
+  const inName = () => (S.mode === 'classful' ? `privaten Klasse-${S.cls}-Bereich` : 'Firmennetz');
 
   function checkBase() {
     const r = { ok: false, msgs: [] };
-    const ip = IPv4.parse(S.base);
+    const ip = S.mode === 'classful' ? CLS[S.cls].block.start : IPv4.parse(S.base);
     const p = basePrefix();
     if (ip === null) {
       r.msgs.push(err('Die Netzadresse ist keine gültige IPv4-Adresse (Format a.b.c.d, jede Zahl 0 – 255).'));
@@ -100,11 +101,7 @@
     const blk = IPv4.privateBlock(ip);
     const c = IPv4.classOf(ip);
     if (S.mode === 'classful') {
-      if (c.cls !== S.cls) {
-        r.msgs.push(err(`${F(ip)} beginnt mit ${ip >>> 24} (binär <code>${bin8(ip >>> 24)}</code>) – das ist eine Klasse-${c.cls}-Adresse, keine Klasse ${S.cls}.`));
-      } else if (!blk) {
-        r.msgs.push(err(`${F(ip)} ist keine private Adresse. Private Klasse-${S.cls}-Netze liegen im Bereich ${CLS[S.cls].block.range}.`));
-      }
+      // fest vorgegeben, nichts zu prüfen
     } else if (!blk) {
       r.msgs.push(err(`${F(ip)} liegt in keinem privaten Block nach RFC 1918 (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16).`));
     } else if (p < blk.prefix) {
@@ -118,7 +115,9 @@
     if (r.msgs.length) return r;
 
     Object.assign(r, { ok: true, net: ip, p, bc: IPv4.broadcast(ip, p), blk, cls: c });
-    r.msgs.push(ok(`Firmennetz <b>${F(ip)}/${p}</b> (Maske ${F(IPv4.mask(p))}): ${fmt(IPv4.size(p))} Adressen von ${F(ip)} bis ${F(r.bc)}.`));
+    r.msgs.push(ok(S.mode === 'classful'
+      ? `Privater Klasse-${S.cls}-Bereich <b>${blk.cidr}</b>: ${fmt(IPv4.size(p))} Adressen von ${F(ip)} bis ${F(r.bc)} – das sind ${blk.classful}.`
+      : `Firmennetz <b>${F(ip)}/${p}</b> (Maske ${F(IPv4.mask(p))}): ${fmt(IPv4.size(p))} Adressen von ${F(ip)} bis ${F(r.bc)}.`));
     if (S.mode === 'cidr' && c.prefix && p !== c.prefix) {
       r.msgs.push(info(p < c.prefix
         ? `Historisch betrachtet fasst /${p} ${fmt(2 ** (c.prefix - p))} Klasse-${c.cls}-Netze zusammen.`
@@ -143,8 +142,12 @@
       r.errs.push(`${F(net)} ist bei /${p} keine Netzadresse – die Host-Bits sind nicht alle 0${blk}. Die Netzadresse wäre <b>${F(r.net)}</b>.`);
     }
     if (base.ok) {
-      if (p < base.p || !IPv4.contains(base.net, base.p, r.net)) r.errs.push(`Liegt nicht im Firmennetz ${F(base.net)}/${base.p}.`);
+      if (p < base.p || !IPv4.contains(base.net, base.p, r.net)) r.errs.push(`Liegt nicht im ${inName()} ${F(base.net)}/${base.p}.`);
       else r.inside = true;
+    }
+    const cp = CLS[S.cls].prefix;
+    if (S.mode === 'classful' && p < cp) {
+      r.errs.push(`Ein Klasse-${S.cls}-Netz ist höchstens /${cp} groß (${F(IPv4.mask(cp))}). /${p} würde mehrere Klasse-${S.cls}-Netze zusammenfassen – das geht nur klassenlos (CIDR).`);
     }
     if (p > 30) r.errs.push(`/${p} hat keine nutzbaren Host-Adressen.`);
     else if (IPv4.hosts(p) < r.need) {
@@ -165,6 +168,12 @@
         }
       }
     }
+    // FLSM: Alle Subnetze müssen dieselbe Maske haben
+    const parsed = rs.map((r, i) => ({ r, i })).filter(x => x.r.parsed);
+    if (new Set(parsed.map(x => x.r.p)).size > 1) {
+      const list = parsed.map(x => `${esc(S.depts[x.i].name)} /${x.r.p}`).join(', ');
+      parsed.forEach(x => x.r.errs.push(`Alle Subnetze müssen gleich groß sein (gleiche Maske). Bisher: ${list}.`));
+    }
     rs.forEach(r => {
       if (!r.parsed && !r.errs.length) return;
       r.status = r.errs.length ? 'err' : 'ok';
@@ -172,8 +181,6 @@
       if (r.status === 'ok') {
         const u = IPv4.hosts(r.p);
         r.msgs.push(ok(`${F(r.net)}/${r.p}: Hosts ${F(r.net + 1)} bis ${F(r.bc - 1)}, Broadcast ${F(r.bc)}. Nutzbar ${fmt(u)}, benötigt ${fmt(r.need)} (Auslastung ${pct(r.need, u)}).`));
-        const best = IPv4.prefixForHosts(r.need);
-        if (S.help && best > r.p) r.msgs.push(info(`Tipp: Ein /${best} (${fmt(IPv4.hosts(best))} nutzbar) würde auch reichen und spart Adressen.`));
       }
     });
     return rs;
@@ -276,7 +283,7 @@
   function setBadge(n, st) {
     const b = $(`#p-st${n}`);
     b.className = 'st-badge ' + st;
-    b.textContent = { ok: '✔ erledigt', err: '✘ prüfen', open: 'offen' }[st];
+    b.textContent = { ok: '✔ erledigt', err: '✘ prüfen', open: 'offen', given: 'Vorgabe' }[st];
   }
 
   function renderStep1(base) {
@@ -288,11 +295,17 @@
     $('#p-classes').hidden = S.mode !== 'classful';
     $$('.class-card').forEach(b => b.classList.toggle('active', b.dataset.cls === S.cls));
     $('#p-basemask').readOnly = S.mode === 'classful';
+    $('[data-bind="base"]', root).readOnly = S.mode === 'classful';
     $('#p-mode-note').innerHTML = S.mode === 'classful'
-      ? 'Du wählst eine <b>Klasse</b> – die Maske ergibt sich daraus automatisch (A: /8, B: /16, C: /24). Danach teilst du dieses Klassennetz in Subnetze auf.'
-      : 'Du wählst Netzadresse und Maske <b>frei</b>. Das Netz muss nur vollständig in einem privaten Block nach RFC 1918 liegen.';
+      ? (S.cls === 'A'
+        ? 'Du wählst eine <b>Klasse</b>. Das Firmennetz ist der ganze private Bereich dieser Klasse. Bei Klasse A gibt es aber nur <b>ein</b> privates Netz (10.0.0.0/8) – du teilst es in gleich große Subnetze auf, z. B. 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.'
+        : `Du wählst eine <b>Klasse</b>. Das Firmennetz ist der ganze private Bereich dieser Klasse – jede Abteilung bekommt daraus ein <b>eigenes Klasse-${S.cls}-Netz</b>, z. B. ${S.cls === 'C' ? '192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24' : '172.16.0.0/16, 172.17.0.0/16, 172.18.0.0/16'}. Du darfst ein Klassennetz auch in gleich große Subnetze aufteilen.`)
+      : 'Du wählst Netzadresse und Maske <b>frei</b>. Das Netz muss nur vollständig in einem privaten Block nach RFC 1918 liegen – z. B. der ganze Block 192.168.0.0/16.';
     $('#p-base-fb').innerHTML = fbList(base.msgs);
-    if (base.ok) {
+    if (base.ok && S.mode === 'classful') {
+      $('#p-base-bits').innerHTML = UI.bitRow(base.net, { label: `Privater Bereich Klasse ${S.cls}`, sub: `/${base.p}`, prefix: base.p }) +
+        UI.legend({ net: 'fest (privater Bereich)', host: 'frei für Abteilungsnetze und Geräte' });
+    } else if (base.ok) {
       const cp = base.cls.prefix;
       const lg = { net: 'Netzanteil' };
       if (base.p > cp) lg.sub = 'Subnetz-Bits ggü. Klasse';
@@ -319,17 +332,20 @@
   function hintHtml(base) {
     if (!base.ok) return '<p>Erst Schritt 1 abschließen.</p>';
     const needs = S.depts.map(d => IPv4.prefixForHosts(Math.max(1, d.hosts | 0) + 1));
-    const fp = base.p + 2;
     const biggest = Math.min(...needs);
-    const order = [0, 1, 2].sort((a, b) => needs[a] - needs[b]);
-    let h = `<p><b>Gleich große Subnetze (FLSM):</b> 3 Abteilungen → 2 Bits leihen (2² = 4 ≥ 3) → /${base.p} + 2 = <b>/${fp}</b> (${F(IPv4.mask(fp))}) mit je ${fmt(IPv4.hosts(fp))} nutzbaren Adressen. `;
-    h += fp <= biggest ? '✔ Das reicht für alle Abteilungen.' : `✘ Das reicht nicht – die größte Abteilung braucht mindestens ein /${biggest}.`;
-    h += `</p><p><b>Passgenaue Subnetze (VLSM):</b> Die größte Abteilung zuerst platzieren, dann die nächstkleinere direkt dahinter: ${order.map(i => `${esc(S.depts[i].name)} /${needs[i]}`).join(' → ')}.</p>`;
+    let h = `<p><b>Gleich große Netze (FLSM):</b> Alle Abteilungen bekommen dieselbe Maske. Die größte Abteilung braucht mindestens ein <b>/${biggest}</b> (${fmt(IPv4.hosts(biggest))} nutzbar) – die Maske darf also höchstens /${biggest} sein.</p>`;
+    if (S.mode === 'classful') {
+      const cp = CLS[S.cls].prefix;
+      if (S.cls === 'A') h += '<p>Klasse A hat nur ein privates Netz – teile 10.0.0.0/8 in gleich große Subnetze auf.</p>';
+      else if (biggest >= cp) h += `<p>Ein ganzes Klasse-${S.cls}-Netz (/${cp}, ${fmt(IPv4.hosts(cp))} nutzbar) reicht für jede Abteilung. Nimm für jede Abteilung ein anderes.</p>`;
+      else h += `<p>✘ Ein Klasse-${S.cls}-Netz (/${cp}) ist für die größte Abteilung zu klein. Wähle eine größere Klasse.</p>`;
+    }
     return h;
   }
 
   function renderStep3(base, drs) {
     $('#p-hint').innerHTML = hintHtml(base);
+    const classful = S.mode === 'classful';
     let anyBits = false;
     S.depts.forEach((d, i) => {
       const r = drs[i];
@@ -339,10 +355,12 @@
       $(`#p-sn-${i}`).className = 'subnet-row st-' + r.status;
       const showBits = r.parsed && r.inside;
       anyBits = anyBits || showBits;
-      $(`#p-sn-bits-${i}`).innerHTML = showBits ? UI.bitRow(r.net, { label: `${F(r.net)}/${r.p}`, prefix: r.p, base: base.p }) : '';
+      $(`#p-sn-bits-${i}`).innerHTML = showBits ? UI.bitRow(r.net, { label: `${F(r.net)}/${r.p}`, prefix: r.p, base: classful ? CLS[S.cls].prefix : base.p }) : '';
     });
     $('#p-sn-legend').innerHTML = anyBits
-      ? UI.legend({ net: 'Firmennetz-Anteil (fest)', sub: 'Subnetz-Bits (geliehen)', host: 'Hostanteil im Subnetz' })
+      ? UI.legend(classful
+        ? { net: `Klasse-${S.cls}-Netzanteil`, sub: 'Subnetz-Bits (geliehen)', host: 'Hostanteil' }
+        : { net: 'Firmennetz-Anteil (fest)', sub: 'Subnetz-Bits (geliehen)', host: 'Hostanteil im Subnetz' })
       : '';
   }
 
@@ -570,7 +588,7 @@
     const st5 = all5.every(r => r.status === 'ok') ? 'ok' : all5.some(r => r.status === 'err') ? 'err' : 'open';
     const complete = base.ok && hostsOk && st3 === 'ok' && st5 === 'ok';
     setBadge(1, base.ok ? 'ok' : 'err');
-    setBadge(2, hostsOk ? 'ok' : 'err');
+    setBadge(2, hostsOk ? 'given' : 'err');
     setBadge(3, st3);
     setBadge(5, st5);
     setBadge(6, complete ? 'ok' : 'open');
@@ -578,78 +596,12 @@
     UI.store.set('plan', S);
   }
 
-  /* ---------- Lösungsvorschläge (Hilfsmodus) ---------- */
-
-  function suggest(kind) {
-    const base = checkBase();
-    const out = $('#p-suggest-fb');
-    if (!base.ok) { out.innerHTML = fbList([err('Erst muss das Firmennetz in Schritt 1 gültig sein.')]); return; }
-    const needs = S.depts.map(d => IPv4.prefixForHosts(Math.max(1, d.hosts | 0) + 1));
-    let plan;
-    if (kind === 'flsm') {
-      const p = base.p + 2;
-      if (p > Math.min(...needs)) {
-        out.innerHTML = fbList([err(`Mit gleich großen Subnetzen (/${p}, je ${fmt(IPv4.hosts(p))} nutzbar) passt die größte Abteilung nicht hinein. Nimm VLSM oder ein größeres Firmennetz.`)]);
-        return;
-      }
-      plan = S.depts.map((d, i) => ({ net: base.net + i * IPv4.size(p), p }));
-    } else {
-      const order = [0, 1, 2].sort((a, b) => needs[a] - needs[b]);
-      let cur = base.net;
-      plan = [];
-      for (const i of order) {
-        const p = needs[i];
-        const sz = IPv4.size(p);
-        cur = Math.ceil(cur / sz) * sz;
-        if (cur + sz - 1 > base.bc) {
-          out.innerHTML = fbList([err('Die Abteilungen passen zusammen nicht ins Firmennetz. Wähle ein größeres Netz (kürzeres Präfix).')]);
-          return;
-        }
-        plan[i] = { net: cur, p };
-        cur += sz;
-      }
-    }
-    if (S.depts.some(d => d.net.trim() || d.mask.trim()) && !confirm('Vorhandene Einträge in Schritt 3 überschreiben?')) return;
-    plan.forEach((x, i) => {
-      S.depts[i].net = F(x.net);
-      S.depts[i].mask = F(IPv4.mask(x.p));
-    });
-    out.innerHTML = fbList([info(kind === 'flsm' ? 'Vorschlag mit gleich großen Subnetzen eingetragen.' : 'VLSM-Vorschlag eingetragen – die größte Abteilung steht vorne.')]);
-    syncInputs();
-    refresh();
-  }
-
-  function autoIPs() {
-    const out = $('#p-autoip-fb');
-    const drs = checkDepts(checkBase());
-    if (!drs.every(r => r.status === 'ok')) {
-      out.innerHTML = fbList([err('Erst müssen alle Subnetze in Schritt 3 korrekt sein.')]);
-      return;
-    }
-    S.depts.forEach((d, i) => {
-      const r = drs[i];
-      d.gw = F(r.net + 1);
-      d.devices.forEach((x, k) => {
-        const a = r.net + 2 + k;
-        x.ip = a < r.bc ? F(a) : '';
-        x.mask = F(IPv4.mask(r.p));
-        x.gw = d.gw;
-      });
-    });
-    out.innerHTML = fbList([info('Router bekommt die erste Host-Adresse, die Geräte die folgenden.')]);
-    syncInputs();
-    renderEditor();
-    refresh();
-  }
-
   /* ---------- Ereignisse ---------- */
 
   function applyClass() {
-    const c = CLS[S.cls];
-    S.baseMask = F(IPv4.mask(c.prefix));
-    const ip = IPv4.parse(S.base);
-    const blk = ip === null ? null : IPv4.privateBlock(ip);
-    S.base = blk && blk.cls === S.cls ? F(IPv4.network(ip, c.prefix)) : c.example;
+    const blk = CLS[S.cls].block;
+    S.base = F(blk.start);
+    S.baseMask = F(IPv4.mask(blk.prefix));
   }
 
   root.addEventListener('input', e => {
@@ -676,9 +628,6 @@
     syncInputs();
     refresh();
   });
-  $('#p-flsm').addEventListener('click', () => suggest('flsm'));
-  $('#p-vlsm').addEventListener('click', () => suggest('vlsm'));
-  $('#p-autoip').addEventListener('click', autoIPs);
 
   function selectNode(t) {
     sel = t.dataset.sel;
@@ -701,14 +650,15 @@
     const filled = S.depts.some(d => d.net || d.mask || d.gw || d.devices.some(x => x.ip || x.mask || x.gw));
     if (filled && !confirm('Neue Aufgabe würfeln? Subnetze und IP-Adressen werden dabei geleert.')) return;
     const r = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
-    const hosts = [r(10, 60), r(30, 100), r(3, 28)];
+    // Bei FLSM bekommt jede Abteilung ein Viertel des Firmennetzes (2 geliehene Bits) – minus 1 Adresse für den Router
+    const base = checkBase();
+    const max = Math.min(100, IPv4.hosts((base.ok ? base.p : 24) + 2) - 1);
+    const hosts = [r(10, Math.min(60, max)), r(Math.min(30, max), max), r(3, Math.min(28, max))];
     S.depts.forEach((d, i) => {
       d.hosts = hosts[i];
       d.net = d.mask = d.gw = '';
       d.devices.forEach(x => { x.ip = x.mask = x.gw = ''; });
     });
-    $('#p-suggest-fb').innerHTML = '';
-    $('#p-autoip-fb').innerHTML = '';
     syncInputs();
     renderEditor();
     refresh();
@@ -735,8 +685,6 @@
     if (!confirm('Den gesamten Plan zurücksetzen?')) return;
     S = fresh();
     sel = null;
-    $('#p-suggest-fb').innerHTML = '';
-    $('#p-autoip-fb').innerHTML = '';
     $('#p-share-fb').innerHTML = '';
     buildStatic();
     syncInputs();
@@ -744,6 +692,7 @@
     refresh();
   });
 
+  if (S.mode === 'classful') applyClass(); // ältere gespeicherte Pläne hatten hier ein einzelnes Klassennetz
   buildStatic();
   syncInputs();
   renderEditor();

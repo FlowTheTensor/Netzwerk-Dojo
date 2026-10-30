@@ -248,10 +248,61 @@
        <button type="button" class="btn ghost small" id="d-reset">Fortschritt zurücksetzen</button>`;
   }
 
-  function renderStreak() {
+  // fx.pop: neuer Punkt springt auf; fx.lost: so viele Punkte fallen herunter
+  function renderStreak(fx = {}) {
     let h = '<span class="streak-lbl">Serie</span>';
-    for (let k = 0; k < STREAK; k++) h += `<i class="${k < streak ? 'on' : ''}"></i>`;
+    for (let k = 0; k < STREAK; k++) {
+      if (k < streak) h += `<i class="on${fx.pop && k === streak - 1 ? ' pop' : ''}"></i>`;
+      else if (k < (fx.lost || 0)) h += `<i class="lost" style="--d:${(Math.min(fx.lost, STREAK) - 1 - k) * 90}ms"></i>`;
+      else h += '<i></i>';
+    }
     $('#d-streak').innerHTML = h;
+  }
+
+  // ---------- Effekte ----------
+  const calm = matchMedia('(prefers-reduced-motion: reduce)');
+  const SYMBOLS = ['🥋', '🌸', '⛩️', '🏮', '🎋', '⭐', '☯️'];
+  const rand = (a, b) => a + Math.random() * (b - a);
+
+  // Symbol-Feuerwerk ab Bildschirmpunkt (x, y)
+  function burst(x, y, n = 12, spread = 120) {
+    if (calm.matches) return;
+    for (let k = 0; k < n; k++) {
+      const s = document.createElement('span');
+      s.className = 'fx-spark';
+      s.textContent = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+      s.style.left = `${x}px`;
+      s.style.top = `${y}px`;
+      document.body.appendChild(s);
+      const a = (k / n) * 2 * Math.PI + rand(-.25, .25);
+      const r = spread * rand(.6, 1.1);
+      const dx = Math.cos(a) * r, dy = Math.sin(a) * r, rot = rand(-90, 90);
+      s.animate([
+        { transform: 'translate(-50%, -50%) scale(.3)', opacity: 1 },
+        { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(1) rotate(${rot}deg)`, opacity: 1, offset: .55 },
+        { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy + 50}px)) scale(.8) rotate(${rot * 1.5}deg)`, opacity: 0 },
+      ], { duration: rand(1000, 1400), easing: 'cubic-bezier(.2, .7, .3, 1)' }).onfinish = () => s.remove();
+    }
+  }
+
+  function burstFrom(el, n, spread) {
+    const r = el.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + r.height / 2, n, spread);
+  }
+
+  // Gürtel erreicht: mehrere Feuerwerke über die ganze Seite
+  function celebrate(stamp) {
+    if (calm.matches) return;
+    setTimeout(() => burstFrom(stamp, 18, 170), 250);
+    for (let k = 0; k < 6; k++) {
+      setTimeout(() => burst(innerWidth * rand(.15, .85), innerHeight * rand(.15, .6), 16, rand(120, 200)), 600 + k * 280);
+    }
+  }
+
+  function shake(el) {
+    el.classList.remove('shake');
+    void el.offsetWidth; // Animation neu starten
+    el.classList.add('shake');
   }
 
   function newTask(focus = true) {
@@ -270,6 +321,7 @@
       form.hidden = false;
       choices.hidden = true;
       input.value = '';
+      input.classList.remove('bad');
       input.placeholder = task.ph || '';
       if (focus) input.focus({ preventScroll: true });
     }
@@ -281,24 +333,27 @@
     renderStreak();
   }
 
-  function finish() {
+  function finish(fx) {
     done = true;
     $('#d-next').hidden = false;
     $('#d-show').hidden = true;
     $('#d-next').focus({ preventScroll: true });
-    renderStreak();
+    renderStreak(fx);
   }
 
   function answer(v) {
     if (done || !v.trim()) return;
     const right = task.check(v);
     const fb = $('#d-fb');
+    let fx;
     if (right) {
       streak++;
+      fx = { pop: true };
       fb.className = 'dojo-fb ok';
       let h = `<p class="fb-head">✔ Richtig!</p><p>${task.sol}</p>`;
       const belt = BELTS[cur];
-      if (streak === STREAK) {
+      const big = streak === STREAK;
+      if (big) {
         if (!progress[belt.id]) {
           progress[belt.id] = true;
           UI.store.set('belts', progress);
@@ -308,11 +363,20 @@
           h += '<p class="earned-msg">🔥 Wieder 5 in Folge – stark!</p>';
         }
       }
+      h += big
+        ? '<span class="hanko big" aria-hidden="true"><b>★</b><small>bestanden</small></span>'
+        : '<span class="hanko" aria-hidden="true"><b>✔</b><small>richtig</small></span>';
       fb.innerHTML = h;
+      const stamp = fb.querySelector('.hanko');
+      if (big) celebrate(stamp);
+      else if (!calm.matches) setTimeout(() => burstFrom(stamp), 250);
     } else {
+      fx = { lost: streak };
       streak = 0;
       fb.className = 'dojo-fb err';
       fb.innerHTML = `<p class="fb-head">✘ Leider nicht richtig.</p><p>Deine Antwort: <code>${esc(v)}</code></p><p>${task.sol}</p>`;
+      if (!task.choices) input.classList.add('bad');
+      shake($('.dojo-main'));
     }
     if (task.choices) {
       document.querySelectorAll('#d-choices .choice').forEach(b => {
@@ -321,7 +385,7 @@
         else if (b.dataset.v === v) b.classList.add('wrong');
       });
     }
-    finish();
+    finish(fx);
   }
 
   $('#d-form').addEventListener('submit', e => {
@@ -336,11 +400,12 @@
   $('#d-next').addEventListener('click', () => newTask());
   $('#d-show').addEventListener('click', () => {
     if (done) return;
+    const lost = streak;
     streak = 0;
     const fb = $('#d-fb');
     fb.className = 'dojo-fb info';
     fb.innerHTML = `<p class="fb-head">Lösung</p><p>${task.sol}</p>`;
-    finish();
+    finish({ lost });
   });
   $('#d-belts').addEventListener('click', e => {
     if (e.target.closest('#d-reset')) {
