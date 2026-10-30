@@ -13,7 +13,7 @@
   const BLOCKS = [
     { start: IPv4.parse('192.168.0.0'), p: 16, clsP: 24, cls: 'C', cols: 16,
       layout: '16 × 16 = 256 Kästchen. Die Zahl im Kästchen ist das 3. Oktett.',
-      note: 'Jedes Kästchen ist genau ein „Klasse-C-Netz“ aus dem Schulbuch. Der RFC-1918-Block 192.168.0.0/16 enthält 256 davon.' },
+      note: 'Jedes Kästchen ist genau ein „Klasse-C-Netz“. Der RFC-1918-Block 192.168.0.0/16 enthält 256 davon.' },
     { start: IPv4.parse('172.16.0.0'), p: 12, clsP: 16, cls: 'B', cols: 64,
       layout: '64 × 64 = 4.096 Kästchen. Je 4 Zeilen bilden ein /16 (172.16, 172.17, … 172.31).',
       note: 'Der Block enthält 16 „Klasse-B-Netze“ – jedes davon ist so groß wie der komplette 192.168-Block (256 Kästchen).' },
@@ -200,7 +200,7 @@
     let info = `<b>${F(b.start)}/${b.p}</b> mit Präfix <b>/${sp}</b> → <b>${fmt(total)} Netz${total > 1 ? 'e' : ''}</b> mit je ${fmt(IPv4.size(sp))} Adressen (${fmt(IPv4.hosts(sp))} nutzbar).`;
     info += ` Ein Netz = ${fmt(2 ** (U - sp))} Kästchen.`;
     if (sp === b.p) info += ' <span class="tag">So steht es in RFC 1918</span>';
-    if (sp === b.clsP) info += ` <span class="tag tag-alt">= Klasse-${b.cls}-Netze (Schulbuch)</span>`;
+    if (sp === b.clsP) info += ` <span class="tag tag-alt">= Klasse-${b.cls}-Netze (klassenbasiert)</span>`;
     $('#k-info').innerHTML = info;
     $('#k-note').textContent = b.note;
     draw();

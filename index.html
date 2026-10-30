@@ -63,6 +63,7 @@
           <li><code>0</code> = dieses Bit gehört zum <b class="c-host">Hostanteil</b></li>
         </ul>
         <p>Die Einsen stehen <b>immer links und lückenlos</b>. Deshalb reicht es, sie zu zählen: <code>255.255.255.0</code> hat 24 Einsen → Kurzschreibweise <b>/24</b> (CIDR- oder Präfix-Schreibweise).</p>
+        <p class="note">Achtung: In den IPv4-Einstellungen von <b>Windows</b> oder im <b>TIA Portal</b> kann man die Maske nicht als /24 eingeben – dort steht immer die Punktschreibweise <code>255.255.255.0</code>. Du musst also in beide Richtungen umrechnen können.</p>
         <p>Deshalb gibt es in einer Maske pro Oktett nur diese neun Werte:</p>
         <div class="tbl-wrap"><table class="tbl compact" id="g-masks"></table></div>
       </article>
@@ -130,7 +131,7 @@
 
       <article class="card next-card">
         <h2>Und was ist mit den Klassen?</h2>
-        <p>Im Schulbuch heißt 192.168.0.0 oft „Klasse-C-Netz“, in RFC 1918 steht aber <b>/16</b>. Die nächste Station klärt, wie beides zusammenpasst.</p>
+        <p>Oft heißt es, 192.168.x.x sei ein „Klasse-C-Netz“ mit 255.255.255.0 – in RFC 1918 steht aber <b>/16</b>. Die nächste Station klärt, wie beides zusammenpasst und warum die Klassen in der Praxis noch wichtig sind.</p>
         <a class="btn primary" href="#klassen">Weiter zu den Netzklassen →</a>
       </article>
     </section>
@@ -140,7 +141,7 @@
       <header class="page-head">
         <p class="eyebrow">Station 3 · Geschichte &amp; Missverständnis</p>
         <h1>Netzklassen</h1>
-        <p class="lead">Woran erkennt man eine Klasse? Und warum steht im Schulbuch „192.168.x.x ist ein Klasse-C-Netz mit 255.255.255.0“, in RFC 1918 aber „192.168/16“? Wer hat recht?</p>
+        <p class="lead">Woran erkennt man eine Klasse? Und warum heißt es oft „192.168.x.x ist ein Klasse-C-Netz mit 255.255.255.0“, während in RFC 1918 „192.168/16“ steht? Wer hat recht?</p>
       </header>
 
       <article class="card">
@@ -170,7 +171,7 @@
 
       <div class="versus">
         <div class="card quote-card">
-          <p class="src">Schulbuch</p>
+          <p class="src">Klassenbasierte Sicht</p>
           <p class="quote">„192.168.1.0 ist ein privates <b>Klasse-C-Netz</b> mit der Subnetzmaske <b>255.255.255.0</b>.“</p>
         </div>
         <div class="vs" aria-hidden="true">?</div>
@@ -192,11 +193,21 @@
             <p>Beschreibt den <b>reservierten Vorrat</b>: Alle 65.536 Adressen von 192.168.0.0 bis 192.168.255.255 dürfen privat verwendet werden. Das ist kein Netz, das man so konfigurieren muss – es ist der Bereich, aus dem man sich bedient.</p>
           </div>
           <div class="mini-card">
-            <h3>Klasse C im Schulbuch</h3>
+            <h3>Klasse C (klassenbasiert)</h3>
             <p>Beschreibt, wie groß <b>ein einzelnes Netz</b> daraus im alten Klassensystem (RFC 791) war: /24 mit 254 Hosts. Der /16-Block enthält <b>256 solcher Klasse-C-Netze</b> (192.168.0.0/24 bis 192.168.255.0/24).</p>
           </div>
         </div>
         <p class="callout">Seit CIDR (1993) gibt es keine Klassen mehr. Innerhalb von 192.168.0.0/16 darfst du <b>jedes Präfix ab /16</b> verwenden – /24 ist nur eine verbreitete Gewohnheit.</p>
+      </article>
+
+      <article class="card">
+        <h2>Warum Klassen und Punktschreibweise in der Praxis wichtig bleiben</h2>
+        <p>Die Kurzschreibweise /24 ist praktisch – aber viele Konfigurationsoberflächen kennen sie nicht. Dort trägt man die Subnetzmaske in <b>Punktschreibweise</b> ein:</p>
+        <ul class="ticks">
+          <li><b>Windows</b> – IPv4-Eigenschaften des Netzwerkadapters, Feld „Subnetzmaske“: <code>255.255.255.0</code>. Windows schlägt beim Eintippen der IP-Adresse sogar die <b>Standardmaske der Klasse</b> vor (bei 192.168.1.10 → 255.255.255.0, bei 10.0.0.5 → 255.0.0.0).</li>
+          <li><b>TIA Portal</b> – Eigenschaften der PROFINET-Schnittstelle, Feld „Subnetzmaske“: ebenfalls <code>255.255.255.0</code>.</li>
+        </ul>
+        <p>Wer Geräte konfiguriert, muss deshalb /x und Punktschreibweise sicher ineinander umrechnen können – und die Standardmasken der Klassen A, B und C kennen, denn genau diese sieht man dort am häufigsten.</p>
       </article>
 
       <article class="card">
@@ -292,9 +303,18 @@
       </header>
 
       <article class="card step" id="p-s1">
-        <h2><span class="num">1</span>Adressbereich wählen <span class="st-badge" id="p-st1"></span></h2>
+        <h2><span class="num">1</span>Bedarf der Abteilungen <span class="st-badge" id="p-st1"></span></h2>
+        <p>Die Firma hat drei Abteilungen mit folgendem Bedarf an Geräten (Hosts) – das ist deine <b>Aufgabenstellung</b>. Du kannst die Zahlen ändern oder eine neue Aufgabe würfeln. Denk daran: Der <b>Router</b> braucht in jedem Subnetz zusätzlich eine Adresse – sie ist dort das Standard-Gateway.</p>
+        <div class="floorplan" id="p-floor"></div>
+        <div class="tbl-wrap"><table class="tbl" id="p-need"></table></div>
+        <div id="p-need-fb"></div>
+        <div class="row-actions"><button type="button" class="btn" id="p-random">🎲 Neue Aufgabe würfeln</button></div>
+      </article>
+
+      <article class="card step" id="p-s2">
+        <h2><span class="num">2</span>Adressbereich wählen <span class="st-badge" id="p-st2"></span></h2>
         <div class="seg" id="p-mode" role="group" aria-label="Planungsart">
-          <button type="button" data-mode="classful"><b>Klassenbasiert</b><small>wie im Schulbuch</small></button>
+          <button type="button" data-mode="classful"><b>Klassenbasiert</b><small>mit Standardmasken A, B, C</small></button>
           <button type="button" data-mode="cidr"><b>Klassenlos (CIDR)</b><small>wie in RFC 1918 / heute</small></button>
         </div>
         <p id="p-mode-note" class="note"></p>
@@ -305,14 +325,6 @@
         </div>
         <div id="p-base-fb"></div>
         <div id="p-base-bits" class="bits-box"></div>
-      </article>
-
-      <article class="card step" id="p-s2">
-        <h2><span class="num">2</span>Bedarf der Abteilungen <span class="st-badge" id="p-st2"></span></h2>
-        <p>Die Firma hat drei Abteilungen mit folgendem Bedarf an Geräten (Hosts) – das ist deine <b>Aufgabenstellung</b>. Du kannst die Zahlen ändern oder eine neue Aufgabe würfeln. Denk daran: Der <b>Router</b> braucht in jedem Subnetz zusätzlich eine Adresse – sie ist dort das Standard-Gateway.</p>
-        <div class="tbl-wrap"><table class="tbl" id="p-need"></table></div>
-        <div id="p-need-fb"></div>
-        <div class="row-actions"><button type="button" class="btn" id="p-random">🎲 Neue Aufgabe würfeln</button></div>
       </article>
 
       <article class="card step" id="p-s3">

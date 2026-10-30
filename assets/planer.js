@@ -28,7 +28,7 @@
 
   function fresh() {
     return {
-      v: 1, mode: 'classful', cls: 'C', base: '192.168.0.0', baseMask: '255.255.0.0', help: false, zoom: true,
+      v: 1, mode: 'classful', cls: null, base: '', baseMask: '', help: false, zoom: true,
       depts: DEPTS.map(d => ({
         key: d.key, name: d.name, hosts: d.hosts, net: '', mask: '', gw: '',
         devices: d.devices.map(n => ({ name: n, ip: '', mask: '', gw: '' })),
@@ -88,6 +88,14 @@
 
   function checkBase() {
     const r = { ok: false, msgs: [] };
+    // Noch nichts gewählt bzw. eingetragen: Schritt ist offen, kein Fehler
+    if (S.mode === 'classful' ? !S.cls : !S.base.trim() && !S.baseMask.trim()) {
+      r.empty = true;
+      r.msgs.push(info(S.mode === 'classful'
+        ? 'Wähle oben eine <b>Klasse</b>. Daraus ergibt sich der private Bereich, aus dem die Firma ihre Netze nimmt.'
+        : 'Trage Netzadresse und Subnetzmaske des Firmennetzes ein.'));
+      return r;
+    }
     const ip = S.mode === 'classful' ? CLS[S.cls].block.start : IPv4.parse(S.base);
     const p = basePrefix();
     if (ip === null) {
@@ -129,7 +137,7 @@
   function checkDept(d, base) {
     const r = { status: 'empty', errs: [], msgs: [], need: Math.max(0, d.hosts | 0) + 1 };
     if (!d.net.trim() && !d.mask.trim()) return r;
-    if (!base.ok) r.errs.push('Das Firmennetz aus Schritt 1 ist noch nicht gültig.');
+    if (!base.ok) r.errs.push('Das Firmennetz aus Schritt 2 ist noch nicht gültig.');
     const net = IPv4.parse(d.net);
     const p = IPv4.parseMask(d.mask);
     if (net === null) r.errs.push(d.net.trim() ? 'Die Netzadresse ist keine gültige IPv4-Adresse.' : 'Netzadresse fehlt.');
@@ -145,7 +153,7 @@
       if (p < base.p || !IPv4.contains(base.net, base.p, r.net)) r.errs.push(`Liegt nicht im ${inName()} ${F(base.net)}/${base.p}.`);
       else r.inside = true;
     }
-    const cp = CLS[S.cls].prefix;
+    const cp = S.cls ? CLS[S.cls].prefix : 0;
     if (S.mode === 'classful' && p < cp) {
       r.errs.push(`Ein Klasse-${S.cls}-Netz ist höchstens /${cp} groß (${F(IPv4.mask(cp))}). /${p} würde mehrere Klasse-${S.cls}-Netze zusammenfassen – das geht nur klassenlos (CIDR).`);
     }
@@ -297,7 +305,9 @@
     $('#p-basemask').readOnly = S.mode === 'classful';
     $('[data-bind="base"]', root).readOnly = S.mode === 'classful';
     $('#p-mode-note').innerHTML = S.mode === 'classful'
-      ? (S.cls === 'A'
+      ? (!S.cls
+        ? 'Du wählst eine <b>Klasse</b>. Das Firmennetz ist dann der ganze private Bereich dieser Klasse, und jede Abteilung bekommt daraus ein eigenes Netz.'
+        : S.cls === 'A'
         ? 'Du wählst eine <b>Klasse</b>. Das Firmennetz ist der ganze private Bereich dieser Klasse. Bei Klasse A gibt es aber nur <b>ein</b> privates Netz (10.0.0.0/8) – du teilst es in gleich große Subnetze auf, z. B. 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16.'
         : `Du wählst eine <b>Klasse</b>. Das Firmennetz ist der ganze private Bereich dieser Klasse – jede Abteilung bekommt daraus ein <b>eigenes Klasse-${S.cls}-Netz</b>, z. B. ${S.cls === 'C' ? '192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24' : '172.16.0.0/16, 172.17.0.0/16, 172.18.0.0/16'}. Du darfst ein Klassennetz auch in gleich große Subnetze aufteilen.`)
       : 'Du wählst Netzadresse und Maske <b>frei</b>. Das Netz muss nur vollständig in einem privaten Block nach RFC 1918 liegen – z. B. der ganze Block 192.168.0.0/16.';
@@ -317,7 +327,54 @@
     }
   }
 
+  // Grundriss der Firma: drei Räume mit je einem Symbol pro Gerät, Router im Flur
+  const FP_ICONS = {
+    pc: '<rect x="-8" y="-7" width="16" height="11" rx="1.5"/><path d="M0 4v3M-4 7.5h8"/>',
+    printer: '<rect x="-5" y="-8" width="10" height="5"/><rect x="-8" y="-3" width="16" height="7" rx="1.5"/><rect x="-5" y="2" width="10" height="5"/>',
+    server: '<rect x="-6" y="-8" width="12" height="16" rx="1.5"/><path d="M-3 -4h6M-3 0h6"/>',
+    test: '<rect x="-9" y="-1" width="18" height="7" rx="1"/><path d="M-6 -1l2 -5h8l2 5"/>',
+  };
+
+  function renderFloor() {
+    const MAXI = 120, COLS = 12, CELL = 22, RW = 300, GAP = 15, TOP = 54;
+    const counts = S.depts.map(d => Math.max(0, d.hosts | 0));
+    const rows = Math.max(1, ...counts.map(n => Math.ceil(Math.min(n, MAXI) / COLS)));
+    const RH = TOP + rows * CELL + 14;
+    const CY = RH + 48;
+    const H = CY + 52;
+    const label = S.depts.map((d, i) => `${d.name}: ${counts[i]} Geräte`).join(', ');
+    let s = `<svg class="floor-svg" viewBox="0 0 960 ${H}" role="img" aria-label="${esc(`Grundriss der Firma – ${label}`)}"><defs>` +
+      Object.entries(FP_ICONS).map(([k, g]) => `<g id="fp-${k}" class="fp-ic">${g}</g>`).join('') + '</defs>';
+    s += `<rect class="fp-hall" x="${GAP}" y="${RH + 12}" width="${960 - 2 * GAP}" height="${H - RH - 18}" rx="10"/>`;
+    s += `<text class="fp-small" x="${GAP + 12}" y="${H - 16}">Flur / Technik</text>`;
+    S.depts.forEach((d, i) => {
+      const x = GAP + i * (RW + GAP);
+      const n = counts[i];
+      const shown = n > MAXI ? MAXI - 1 : n;
+      const left = x + (RW - COLS * CELL) / 2 + CELL / 2;
+      s += `<g class="fp-room d${i}">`;
+      s += `<line class="fp-link" x1="${x + RW / 2}" y1="${RH}" x2="480" y2="${CY}"/>`;
+      s += `<rect class="fp-wall" x="${x}" y="1" width="${RW}" height="${RH - 1}" rx="8"/>`;
+      s += `<rect class="fp-door" x="${x + RW / 2 - 18}" y="${RH - 3}" width="36" height="6"/>`;
+      s += `<text class="fp-name" x="${x + 14}" y="25">${esc(d.name)}</text>`;
+      s += `<text class="fp-small" x="${x + 14}" y="42">${fmt(n)} Gerät${n === 1 ? '' : 'e'}</text>`;
+      for (let k = 0; k < shown; k++) {
+        const icon = k === 2 ? iconOf(d.devices[2].name) : 'pc';
+        s += `<use href="#fp-${icon}" x="${left + (k % COLS) * CELL}" y="${TOP + 11 + Math.floor(k / COLS) * CELL}"/>`;
+      }
+      if (n > MAXI) {
+        s += `<text class="fp-more" x="${left + (shown % COLS) * CELL}" y="${TOP + 15 + Math.floor(shown / COLS) * CELL}" text-anchor="middle">+${fmt(n - shown)}</text>`;
+      }
+      if (!n) s += `<text class="fp-small" x="${x + RW / 2}" y="${TOP + 14}" text-anchor="middle">keine Geräte</text>`;
+      s += '</g>';
+    });
+    s += `<g class="fp-router" transform="translate(480 ${CY})"><circle r="17"/><path d="M-9 -4h14M2 -8l4 4l-4 4M9 4h-14M-2 0l-4 4l4 4"/></g>`;
+    s += `<text class="fp-small" x="480" y="${CY + 34}" text-anchor="middle">Router – verbindet die Abteilungen und braucht in jeder eine eigene Adresse</text>`;
+    $('#p-floor').innerHTML = s + '</svg>';
+  }
+
   function renderStep2() {
+    renderFloor();
     const bad = S.depts.filter(d => !(d.hosts >= 1));
     $('#p-need-fb').innerHTML = bad.length ? fbList([err('Jede Abteilung braucht mindestens 1 Gerät.')]) : '';
     S.depts.forEach((d, i) => {
@@ -330,7 +387,7 @@
   }
 
   function hintHtml(base) {
-    if (!base.ok) return '<p>Erst Schritt 1 abschließen.</p>';
+    if (!base.ok) return '<p>Erst Schritt 2 abschließen.</p>';
     const needs = S.depts.map(d => IPv4.prefixForHosts(Math.max(1, d.hosts | 0) + 1));
     const biggest = Math.min(...needs);
     let h = `<p><b>Gleich große Netze (FLSM):</b> Alle Abteilungen bekommen dieselbe Maske. Die größte Abteilung braucht mindestens ein <b>/${biggest}</b> (${fmt(IPv4.hosts(biggest))} nutzbar) – die Maske darf also höchstens /${biggest} sein.</p>`;
@@ -367,7 +424,7 @@
   function renderMap(base, drs) {
     const el = $('#p-map');
     if (!base.ok) {
-      el.innerHTML = '<p class="muted">Lege zuerst in Schritt 1 ein gültiges Firmennetz fest.</p>';
+      el.innerHTML = '<p class="muted">Lege zuerst in Schritt 2 ein gültiges Firmennetz fest.</p>';
       return;
     }
     const placed = drs.map((r, i) => ({ r, i })).filter(x => x.r.parsed && x.r.inside);
@@ -587,8 +644,8 @@
     const all5 = [...gws, ...devs.flat()];
     const st5 = all5.every(r => r.status === 'ok') ? 'ok' : all5.some(r => r.status === 'err') ? 'err' : 'open';
     const complete = base.ok && hostsOk && st3 === 'ok' && st5 === 'ok';
-    setBadge(1, base.ok ? 'ok' : 'err');
-    setBadge(2, hostsOk ? 'given' : 'err');
+    setBadge(1, hostsOk ? 'given' : 'err');
+    setBadge(2, base.empty ? 'open' : base.ok ? 'ok' : 'err');
     setBadge(3, st3);
     setBadge(5, st5);
     setBadge(6, complete ? 'ok' : 'open');
@@ -599,9 +656,9 @@
   /* ---------- Ereignisse ---------- */
 
   function applyClass() {
-    const blk = CLS[S.cls].block;
-    S.base = F(blk.start);
-    S.baseMask = F(IPv4.mask(blk.prefix));
+    const blk = S.cls && CLS[S.cls].block;
+    S.base = blk ? F(blk.start) : '';
+    S.baseMask = blk ? F(IPv4.mask(blk.prefix)) : '';
   }
 
   root.addEventListener('input', e => {
