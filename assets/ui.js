@@ -91,6 +91,7 @@ const UI = (() => {
     ipv6: { name: 'IPv6', after: 'topo' },
     osi: { name: 'OSI-Modell', after: 'ipv6' },
     kabel: { name: 'Kabel & Signale', after: 'osi' },
+    dienste: { name: 'Netzwerkdienste', after: 'kabel' },
   };
   const themeOf = page => page.dataset.theme;
   const stationsOf = theme => $$(`.page[data-theme="${theme}"]:not(.lock-page)`);

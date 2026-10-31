@@ -1,7 +1,7 @@
 # Netzwerktechnik-Dojo
 # [Hier öffnen](https://flowthetensor.github.io/Netzwerk-Dojo/)
 
-Interaktive Lernseite für Netzwerktechnik – MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell sowie Kabel und Leitungscodes, gedacht für den Unterricht.
+Interaktive Lernseite für Netzwerktechnik – MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell, Kabel und Leitungscodes sowie Netzwerkdienste (DHCP, DNS, URL, Ports), gedacht für den Unterricht.
 Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schritt und lädt
 **keine externen Ressourcen** (keine Web-Fonts, kein CDN, kein Tracking).
 
@@ -74,6 +74,20 @@ Leitungscodierung, Ethernetstandards und Netzwerkkabel, auf den aktuellen Stand 
 | 5 | Ethernet-Standards | Namen zerlegen (Rate · BASE · Medium), Stammbaum von 10BASE5 bis 40GBASE-T mit Kennzeichnung „Geschichte“, CSMA/CD und 5-4-3-Regel als Rückblick |
 | 6 | Kabel-Dojo | 5 Gürtel: Kabel & Schirmung, Kategorien, RJ45-Belegung, Manchester-Code, Ethernet-Standards |
 
+## Thema Netzwerkdienste
+
+Wird freigeschaltet, sobald alle Kabel-Stationen einmal geöffnet wurden. Grundlage sind die Arbeitsblätter
+DHCP sowie DNS, URL und Ports, auf den aktuellen Stand gebracht (Ports 0–65 535 mit IANA-Bereichen,
+HTTPS/IMAPS/SSH statt der unverschlüsselten Dienste, DHCP immer UDP 67/68).
+
+| # | Station | Inhalt |
+|---|---------|--------|
+| 1 | DHCP | Was DHCP verteilt; DORA Schritt für Schritt mit Paketinhalt (MAC, IP, Ports) und `ipconfig /all`; Lease mit T1/T2 und Schalter „Server erreichbar“; Pool-Rechner mit Prüfung von Gateway, Netz- und Broadcast-Adresse; APIPA, fremder DHCP-Server, SLAAC |
+| 2 | DNS | Namensbaum zu einem eingegebenen Namen; Auflösung über Resolver, Root, TLD und Domain-Nameserver als Animation, zweiter Aufruf aus dem Cache; Eintragstypen; nslookup-Simulator mit Beispieldaten für example.com |
+| 3 | URL | URL-Zerleger (Schema, Host, Port, Standort, Ressource, Query, Fragment, IPv6, mailto), Standardports, Übung „Teile benennen“ |
+| 4 | Ports | Portbereiche mit Nachschlagen, Tabelle wichtiger Ports, Socket-Demo (Quell-/Zielport, zwei Tabs), TCP oder UDP, Ablauf „Webseite öffnen“ mit Fehlersuche |
+| 5 | Dienste-Dojo | 6 Gürtel: DHCP, DNS, URL, Portnummern, Portbereiche & Sockets, Fehlersuche & Zusammenspiel |
+
 ## Hinweise für Lehrkräfte
 
 - Der Planer übt **nur gleich große Subnetze (FLSM)** – alle Abteilungen bekommen dieselbe Maske.
@@ -104,6 +118,10 @@ assets/kabel.js       Kabel-Daten (auch fürs Dojo), Kabel-Stationen 1–3
 assets/signale.js     Manchester-Rechenkern, Kabel-Station 4
 assets/ethernet.js    Ethernet-Standards (auch fürs Dojo), Kabel-Station 5
 assets/kabel-dojo.js  Kabel-Station 6
+assets/dhcp.js        Schritt-Steuerung der Dienste-Stationen, Dienste-Station 1
+assets/dns.js         Dienste-Station 2
+assets/ports.js       URL-Zerleger und Portdaten (auch fürs Dojo), Dienste-Stationen 3–4
+assets/dienste-dojo.js  Dienste-Station 5
 assets/mac.js         MAC-Rechenkern und MAC-Stationen 1–2
 assets/mac-dojo.js    MAC-Station 3
 assets/ipv4.js        Rechenkern (Parsen, Masken, Netz/Broadcast, Klassen, RFC 1918)
@@ -141,3 +159,7 @@ Das Schullogo (`assets/jps-logo.png`) gehört der Jakob-Preh-Schule.
 - [RFC 950](https://www.rfc-editor.org/info/rfc950/) – Internet Standard Subnetting Procedure (1985)
 - [RFC 1519](https://www.rfc-editor.org/info/rfc1519/) / [RFC 4632](https://www.rfc-editor.org/info/rfc4632/) – CIDR
 - [RFC 1918](https://www.rfc-editor.org/info/rfc1918/) – Address Allocation for Private Internets (1996)
+- [RFC 2131](https://www.rfc-editor.org/info/rfc2131/) – Dynamic Host Configuration Protocol
+- [RFC 1034](https://www.rfc-editor.org/info/rfc1034/) / [RFC 1035](https://www.rfc-editor.org/info/rfc1035/) – Domain Name System
+- [RFC 3986](https://www.rfc-editor.org/info/rfc3986/) – URI: Generic Syntax
+- [RFC 6335](https://www.rfc-editor.org/info/rfc6335/) – Portbereiche und Vergabe durch die IANA

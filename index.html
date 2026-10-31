@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Netzwerktechnik-Dojo</title>
-  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: MAC-Adressen, IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell sowie Kabel und Leitungscodes.">
+  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: MAC-Adressen, IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell, Kabel und Leitungscodes sowie DHCP, DNS, URLs und Ports.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23C81E3A'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3E/%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/tor.css">
@@ -15,7 +15,7 @@
     <div class="header-inner">
       <a class="brand" href="#mac-grundlagen">
         <span class="brand-title">Netzwerktechnik-<i>Dojo</i></span>
-        <span class="eyebrow">MAC · IPv4 · Topologien · IPv6 · OSI · Kabel</span>
+        <span class="eyebrow">MAC · IPv4 · Topologien · IPv6 · OSI · Kabel · Dienste</span>
       </a>
       <a class="school-logo" href="https://www.bsnes.de" target="_blank" rel="noopener" title="Jakob-Preh-Schule"><img src="assets/jps-logo.png" alt="Logo der Jakob-Preh-Schule" width="324" height="182"></a>
     </div>
@@ -30,6 +30,7 @@
       <a href="#v6-grundlagen" data-theme="ipv6">IPv6</a>
       <a href="#osi-grundlagen" data-theme="osi">OSI</a>
       <a href="#kabel-typen" data-theme="kabel">Kabel &amp; Signale</a>
+      <a href="#dienst-dhcp" data-theme="dienste">Netzwerkdienste</a>
     </div>
     <div class="stationbar">
       <a href="#mac-grundlagen" data-theme="mac"><span class="tab-num">1</span>MAC verstehen</a>
@@ -59,6 +60,11 @@
       <a href="#kabel-code" data-theme="kabel"><span class="tab-num">4</span>Leitungscodes</a>
       <a href="#kabel-eth" data-theme="kabel"><span class="tab-num">5</span>Ethernet-Standards</a>
       <a href="#kabel-dojo" data-theme="kabel"><span class="tab-num">6</span>Kabel-Dojo</a>
+      <a href="#dienst-dhcp" data-theme="dienste"><span class="tab-num">1</span>DHCP</a>
+      <a href="#dienst-dns" data-theme="dienste"><span class="tab-num">2</span>DNS</a>
+      <a href="#dienst-url" data-theme="dienste"><span class="tab-num">3</span>URL</a>
+      <a href="#dienst-ports" data-theme="dienste"><span class="tab-num">4</span>Ports</a>
+      <a href="#dienst-dojo" data-theme="dienste"><span class="tab-num">5</span>Dienste-Dojo</a>
     </div>
   </nav>
 
@@ -175,7 +181,7 @@
     <!-- ============================ MAC 2 ============================ -->
     <section id="mac-switch" class="page" data-theme="mac">
       <header class="page-head">
-        <img class="head-art" src="assets/images/el-rack.webp" alt="">
+        <img class="head-art" src="assets/images/el-switch.webp" alt="">
         <p class="eyebrow">MAC · Station 2 · Interaktiv</p>
         <h1>Switch &amp; MAC-Tabelle</h1>
         <p class="lead">Ein Switch verbindet die Geräte eines lokalen Netzes. Er schaut in jeden Frame auf die MAC-Adressen und lernt dabei selbstständig, welches Gerät an welchem Port hängt.</p>
@@ -842,7 +848,8 @@ Ablaufverfolgung beendet.</pre>
         </div>
       </article>
 
-      <article class="card next-card">
+      <article class="card next-card has-art">
+        <img class="card-art" src="assets/images/el-stern.webp" alt="">
         <h2>Jetzt selbst bauen</h2>
         <p>Im Baukasten verbindest du Geräte selbst – so, dass die verlangte Topologie entsteht.</p>
         <a class="btn primary" href="#topo-baukasten">Weiter zum Baukasten →</a>
@@ -1170,7 +1177,7 @@ Ablaufverfolgung beendet.</pre>
     <!-- ============================ OSI 1 ============================ -->
     <section id="osi-grundlagen" class="page" data-theme="osi">
       <header class="page-head">
-        <img class="head-art" src="assets/images/el-rolle.webp" alt="">
+        <img class="head-art" src="assets/images/el-osi.webp" alt="">
         <p class="eyebrow">OSI · Station 1 · Grundlagen</p>
         <h1>Das ISO/OSI-Modell</h1>
         <p class="lead">Damit Geräte verschiedener Hersteller miteinander reden können, hat die <b>ISO</b> die Kommunikation im Netz in <b>sieben Schichten</b> zerlegt. Jede Schicht hat genau eine Aufgabe und arbeitet nur mit der Schicht direkt darüber und darunter zusammen. Dieses <b>OSI-Modell</b> ist die Landkarte, auf der sich alles einordnen lässt, was du bisher gelernt hast.</p>
@@ -1289,7 +1296,7 @@ Ablaufverfolgung beendet.</pre>
     <!-- ============================ KABEL 1 ============================ -->
     <section id="kabel-typen" class="page" data-theme="kabel">
       <header class="page-head">
-        <img class="head-art" src="assets/images/el-kabel.webp" alt="">
+        <img class="head-art" src="assets/images/el-kabelbund.webp" alt="">
         <p class="eyebrow">Kabel &amp; Signale · Station 1 · Grundlagen</p>
         <h1>Netzwerkkabel</h1>
         <p class="lead">Auf <b>Schicht 1</b> des OSI-Modells werden aus Bits Signale: elektrische Spannung im Kupferkabel, Lichtpulse in der Glasfaser oder Funkwellen im WLAN. Welches Kabel man nimmt, entscheidet über Geschwindigkeit, Reichweite und Störfestigkeit.</p>
@@ -1391,7 +1398,7 @@ Ablaufverfolgung beendet.</pre>
     <!-- ============================ KABEL 2 ============================ -->
     <section id="kabel-kat" class="page" data-theme="kabel">
       <header class="page-head">
-        <img class="head-art" src="assets/images/el-schild.webp" alt="">
+        <img class="head-art" src="assets/images/el-twisted.webp" alt="">
         <p class="eyebrow">Kabel &amp; Signale · Station 2 · Grundlagen</p>
         <h1>Kategorien &amp; Stecker</h1>
         <p class="lead">Je höher die Datenrate, desto höher die Frequenzen auf dem Kabel. Die <b>Kategorie</b> sagt, bis zu welcher Frequenz ein Kabel, eine Dose oder ein Stecker gebaut ist.</p>
@@ -1449,7 +1456,7 @@ Ablaufverfolgung beendet.</pre>
     <!-- ============================ KABEL 3 ============================ -->
     <section id="kabel-rj45" class="page" data-theme="kabel">
       <header class="page-head">
-        <img class="head-art" src="assets/images/el-rack.webp" alt="">
+        <img class="head-art" src="assets/images/el-rj45.webp" alt="">
         <p class="eyebrow">Kabel &amp; Signale · Station 3 · Interaktiv</p>
         <h1>RJ45-Werkstatt</h1>
         <p class="lead">Die acht Adern haben feste Farben. In welcher Reihenfolge sie in den Stecker kommen, regeln zwei Normen: <b>T568A</b> und <b>T568B</b>.</p>
@@ -1503,7 +1510,7 @@ Ablaufverfolgung beendet.</pre>
     <!-- ============================ KABEL 4 ============================ -->
     <section id="kabel-code" class="page" data-theme="kabel">
       <header class="page-head">
-        <img class="head-art" src="assets/images/el-steinlaterne.webp" alt="">
+        <img class="head-art" src="assets/images/el-leitungscode.webp" alt="">
         <p class="eyebrow">Kabel &amp; Signale · Station 4 · Interaktiv</p>
         <h1>Leitungscodes</h1>
         <p class="lead">Ein <b>Leitungscode</b> legt fest, wie aus logischen Nullen und Einsen ein Signal auf der Leitung wird. Ein guter Leitungscode sorgt dafür, dass der Empfänger die Bits sicher erkennt – auch wenn seine Uhr nicht ganz genau so schnell läuft wie die des Senders.</p>
@@ -1583,7 +1590,7 @@ Ablaufverfolgung beendet.</pre>
     <!-- ============================ KABEL 5 ============================ -->
     <section id="kabel-eth" class="page" data-theme="kabel">
       <header class="page-head">
-        <img class="head-art" src="assets/images/el-kirschbaum.webp" alt="">
+        <img class="head-art" src="assets/images/el-ethernet.webp" alt="">
         <p class="eyebrow">Kabel &amp; Signale · Station 5 · Grundlagen</p>
         <h1>Ethernet-Standards</h1>
         <p class="lead">Alle Ethernet-Varianten stammen von der IEEE und gehören zur Normenfamilie <b>IEEE 802.3</b>. Seit 1983 ist Ethernet von 10 Mbit/s auf bis zu 800 Gbit/s gewachsen – die MAC-Adressen und der Aufbau des Frames sind dabei gleich geblieben.</p>
@@ -1631,8 +1638,312 @@ Ablaufverfolgung beendet.</pre>
 
       <article class="card next-card has-art">
         <img class="card-art" src="assets/images/el-laternchen.webp" alt="">
+        <h2>Geschafft – weiter zum nächsten Thema!</h2>
+        <p>Von Schicht 1 geht es jetzt nach oben: Wie bekommt ein Gerät seine Adresse, wie wird aus einem Namen eine IP-Adresse, und welches Programm bekommt die Daten?</p>
+        <a class="btn primary" href="#dienst-dhcp">Weiter zum Thema Netzwerkdienste →</a>
+      </article>
+    </section>
+
+    <!-- ============================ DIENSTE 1 ============================ -->
+    <section id="dienst-dhcp" class="page" data-theme="dienste">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-dhcp.webp" alt="">
+        <p class="eyebrow">Netzwerkdienste · Station 1 · Interaktiv</p>
+        <h1>DHCP</h1>
+        <p class="lead">Damit ein Gerät im Netz mitreden kann, braucht es eine <b>IP-Adresse</b>, die <b>Subnetzmaske</b>, das <b>Standard-Gateway</b> und einen <b>DNS-Server</b>. Das alles von Hand einzutragen, wäre mühsam und fehleranfällig. Das <b>Dynamic Host Configuration Protocol</b> (DHCP) erledigt es automatisch.</p>
+      </header>
+
+      <article class="card">
+        <h2>Was ein DHCP-Server verteilt</h2>
+        <div class="dn-gives">
+          <div class="mini-card"><h3>IP-Adresse</h3><p>aus einem vorher festgelegten Adressbereich (Pool)</p></div>
+          <div class="mini-card"><h3>Subnetzmaske</h3><p>damit das Gerät weiß, wer im eigenen Netz ist</p></div>
+          <div class="mini-card"><h3>Standard-Gateway</h3><p>der Router, über den es in andere Netze geht</p></div>
+          <div class="mini-card"><h3>DNS-Server</h3><p>der Namen wie www.example.com in IP-Adressen übersetzt</p></div>
+          <div class="mini-card"><h3>Lease-Dauer</h3><p>wie lange die Adresse ausgeliehen ist</p></div>
+        </div>
+        <ul class="ticks">
+          <li>Am Endgerät steht dafür „<b>IP-Adresse automatisch beziehen</b>“ – unter Windows, macOS, Linux, Android und iOS ist das die Voreinstellung.</li>
+          <li>Fast jeder Router für zu Hause hat einen DHCP-Server eingebaut und eingeschaltet. In Firmen und Schulen läuft er oft auf einem Server oder auf dem zentralen Router bzw. der Firewall.</li>
+          <li>DHCP läuft immer über <b>UDP</b>: Der Server lauscht auf <b>Port 67</b>, der Client auf <b>Port 68</b>.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Vier Nachrichten: D-O-R-A</h2>
+        <p>Ein Laptop wird ans Netz angeschlossen. Er hat noch keine IP-Adresse und kennt weder den Router noch den DHCP-Server. Wie kommt er trotzdem an seine Einstellungen?</p>
+        <div class="row-actions">
+          <button type="button" class="btn primary" id="dn-dora-step">Nächster Schritt →</button>
+          <button type="button" class="btn" id="dn-dora-go">▶ Automatisch abspielen</button>
+          <button type="button" class="btn ghost" id="dn-dora-reset">Von vorn</button>
+        </div>
+        <div class="tp-wrap"><div id="dn-dora"></div></div>
+        <div class="osi-say" id="dn-dora-say" aria-live="polite"></div>
+        <div id="dn-dora-pkt"></div>
+      </article>
+
+      <article class="card">
+        <h2>Die Adresse ist nur geliehen</h2>
+        <p>Der Server vergibt jede Adresse nur für eine bestimmte Zeit, die <b>Lease</b>. Läuft sie ab, ohne verlängert zu werden, darf das Gerät die Adresse nicht mehr benutzen. So bekommt der Server Adressen von Geräten zurück, die nicht mehr da sind.</p>
+        <div class="dn-lease-ctrl">
+          <label class="field field-range"><span>Zeit seit dem DHCP-ACK <output id="dn-lease-out">0 h</output></span><input type="range" id="dn-lease" min="0" max="26" step="0.5" value="0"></label>
+          <label class="switch"><input type="checkbox" id="dn-lease-srv" checked><span>DHCP-Server erreichbar</span></label>
+        </div>
+        <div id="dn-lease-bar"></div>
+        <div id="dn-lease-txt" class="kb-res" aria-live="polite"></div>
+        <p class="note">Beispiel mit einer Lease von 24 Stunden. Heimrouter vergeben oft mehrere Tage, Gäste-WLANs nur wenige Stunden.</p>
+      </article>
+
+      <article class="card">
+        <h2>Den Adressbereich festlegen</h2>
+        <p>Dem DHCP-Server gibt man an, aus welchem Bereich er Adressen verteilen darf – den <b>Pool</b> oder Scope. Adressen außerhalb des Pools bleiben frei für Geräte mit fester Adresse: Router, Server, Drucker.</p>
+        <div class="fields dn-pool-fields">
+          <label class="field"><span>Start-Adresse</span><input id="dn-pool-a" value="192.168.1.80" spellcheck="false" autocomplete="off"></label>
+          <label class="field"><span>End-Adresse</span><input id="dn-pool-b" value="192.168.1.90" spellcheck="false" autocomplete="off"></label>
+          <label class="field"><span>Präfix (Length)</span><input id="dn-pool-p" type="number" min="8" max="30" value="24"></label>
+          <label class="field"><span>Gateway (Router)</span><input id="dn-pool-gw" value="192.168.1.1" spellcheck="false" autocomplete="off"></label>
+        </div>
+        <div id="dn-pool-out" aria-live="polite"></div>
+        <ul class="ticks">
+          <li><b>Reservierung:</b> Die meisten DHCP-Server merken sich Geräte an ihrer <b>MAC-Adresse</b> und geben ihnen möglichst wieder dieselbe IP. Man kann eine Adresse auch fest für eine MAC-Adresse reservieren – praktisch für Drucker, die trotzdem per DHCP eingerichtet werden.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Wenn etwas schiefgeht</h2>
+        <div class="two-col">
+          <div class="mini-card"><h3>Kein DHCP-Server antwortet</h3><p>Nach einigen Versuchen gibt sich das Gerät selbst eine Adresse aus <b>169.254.0.0/16</b> (APIPA, Link-Local). Damit erreicht es höchstens Nachbarn im selben Netz – aber kein Gateway und kein Internet. Eine 169.254-Adresse ist deshalb ein deutliches Zeichen: <b>DHCP hat nicht geklappt</b>.</p></div>
+          <div class="mini-card"><h3>Ein zweiter DHCP-Server</h3><p>Steckt jemand einen privaten Router ins Netz, verteilt der womöglich eigene Adressen – mit falschem Gateway. Wer zuerst antwortet, gewinnt; manche Geräte landen im falschen Netz. Gute Switches blockieren DHCP-Antworten an Ports, an denen kein DHCP-Server hängen darf (<b>DHCP-Snooping</b>).</p></div>
+        </div>
+        <ul class="ticks">
+          <li><b>Statische Adressen</b> (von Hand eingetragen) sind weiter erlaubt. Sie dürfen aber nicht im Pool liegen – sonst vergibt der Server dieselbe Adresse womöglich noch einmal.</li>
+          <li>Mit <code>ipconfig /all</code> (Windows) siehst du, ob DHCP aktiv ist, welcher Server geantwortet hat und wann die Lease abläuft. <code>ipconfig /release</code> gibt die Adresse zurück, <code>ipconfig /renew</code> fordert neu an.</li>
+          <li><b>Und IPv6?</b> Dort holen sich Geräte ihre Adresse meist selbst aus dem Präfix des Routers (<b>SLAAC</b>). Für zusätzliche Angaben wie den DNS-Server gibt es DHCPv6.</li>
+        </ul>
+      </article>
+
+      <article class="card next-card">
+        <h2>Namen statt Nummern</h2>
+        <p>Der DHCP-Server hat dem Laptop auch einen DNS-Server mitgeteilt. Wofür braucht man den?</p>
+        <a class="btn primary" href="#dienst-dns">Weiter zu DNS →</a>
+      </article>
+    </section>
+
+    <!-- ============================ DIENSTE 2 ============================ -->
+    <section id="dienst-dns" class="page" data-theme="dienste">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-dns.webp" alt="">
+        <p class="eyebrow">Netzwerkdienste · Station 2 · Interaktiv</p>
+        <h1>DNS</h1>
+        <p class="lead">Menschen merken sich Namen, Computer brauchen IP-Adressen. Das <b>Domain Name System</b> (DNS) übersetzt Namen wie <code>www.example.com</code> in die IP-Adresse des Servers, auf dem die Seite liegt. Es ist eine weltweit verteilte Datenbank – kein Server kennt alle Namen.</p>
+      </header>
+
+      <article class="card">
+        <h2>Ein Name ist ein Pfad durch einen Baum</h2>
+        <p>Ein Domainname wird <b>von rechts nach links</b> gelesen. Ganz oben steht die Wurzel (Root), geschrieben als Punkt, der meist weggelassen wird.</p>
+        <label class="field b-field"><span>Domainname</span><input id="dn-name" value="www.bsnes.de" spellcheck="false" autocomplete="off"></label>
+        <div class="presets"><span class="muted">Ausprobieren:</span>
+          <button type="button" class="pill" data-name="www.bsnes.de">www.bsnes.de</button>
+          <button type="button" class="pill" data-name="de.wikipedia.org">de.wikipedia.org</button>
+          <button type="button" class="pill" data-name="mail.schule.example.com">mail.schule.example.com</button>
+          <button type="button" class="pill" data-name="www.bbc.co.uk">www.bbc.co.uk</button>
+        </div>
+        <div id="dn-tree" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>Eine Anfrage auf Reisen</h2>
+        <p>Der Laptop fragt nicht selbst die ganze Welt ab. Er schickt seine Frage an <b>einen</b> DNS-Server – den <b>Resolver</b>, den ihm DHCP genannt hat (oft der Router, der weiterfragt). Der Resolver hangelt sich dann von oben durch den Baum.</p>
+        <div class="row-actions">
+          <button type="button" class="btn primary" id="dn-res-step">Nächster Schritt →</button>
+          <button type="button" class="btn" id="dn-res-go">▶ Automatisch abspielen</button>
+          <button type="button" class="btn ghost" id="dn-res-reset">Von vorn</button>
+          <button type="button" class="btn ghost" id="dn-res-cache" disabled>Noch einmal aufrufen</button>
+        </div>
+        <div class="tp-wrap"><div id="dn-res"></div></div>
+        <div class="osi-say" id="dn-res-say" aria-live="polite"></div>
+        <ul class="ticks">
+          <li><b>Rekursiv:</b> Der Laptop sagt zum Resolver „Finde es für mich heraus“ und wartet auf die fertige Antwort.</li>
+          <li><b>Iterativ:</b> Der Resolver fragt nacheinander Root-, TLD- und Domain-Nameserver. Die ersten beiden antworten nur mit „Frag dort weiter“.</li>
+          <li><b>Cache:</b> Jede Antwort hat eine Haltbarkeit, die <b>TTL</b> (Time to Live). So lange merken sich Resolver und Laptop das Ergebnis – die zweite Anfrage geht dann ganz schnell.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Was im DNS steht: Einträge</h2>
+        <p>Ein DNS-Server speichert zu jedem Namen <b>Einträge</b> (Resource Records) verschiedener Typen:</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact dn-rr">
+            <thead><tr><th>Typ</th><th>Bedeutung</th><th>Beispiel</th></tr></thead>
+            <tbody>
+              <tr><td><b>A</b></td><td>Name → IPv4-Adresse</td><td><code>www.example.com → 192.0.2.44</code></td></tr>
+              <tr><td><b>AAAA</b></td><td>Name → IPv6-Adresse</td><td><code>www.example.com → 2001:db8::44</code></td></tr>
+              <tr><td><b>CNAME</b></td><td>Name ist ein Alias für einen anderen Namen</td><td><code>shop.example.com → www.example.com</code></td></tr>
+              <tr><td><b>MX</b></td><td>Mailserver der Domain (mit Priorität)</td><td><code>example.com → 10 mail.example.com</code></td></tr>
+              <tr><td><b>NS</b></td><td>zuständige Nameserver der Domain</td><td><code>example.com → ns1.example.com</code></td></tr>
+              <tr><td><b>TXT</b></td><td>beliebiger Text, z. B. Regeln gegen gefälschte E-Mails</td><td><code>example.com → "v=spf1 mx -all"</code></td></tr>
+              <tr><td><b>PTR</b></td><td>umgekehrt: IP-Adresse → Name (Reverse-Lookup)</td><td><code>192.0.2.44 → www.example.com</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>nslookup ausprobieren</h2>
+        <p>Mit <code>nslookup</code> schickt man eine DNS-Anfrage von Hand. Gib einen Befehl ein oder wähle einen aus. Es antwortet ein <b>simulierter</b> DNS-Server mit Beispieldaten für <code>example.com</code>.</p>
+        <div class="presets">
+          <button type="button" class="pill" data-cmd="nslookup www.example.com">nslookup www.example.com</button>
+          <button type="button" class="pill" data-cmd="nslookup shop.example.com">… shop.example.com</button>
+          <button type="button" class="pill" data-cmd="nslookup -type=mx example.com">-type=mx</button>
+          <button type="button" class="pill" data-cmd="nslookup -type=ns example.com">-type=ns</button>
+          <button type="button" class="pill" data-cmd="nslookup -type=txt example.com">-type=txt</button>
+          <button type="button" class="pill" data-cmd="nslookup 192.0.2.44">nslookup 192.0.2.44</button>
+          <button type="button" class="pill" data-cmd="nslookup www.gibtsnicht.example">Name gibt es nicht</button>
+        </div>
+        <form class="dn-cmd" id="dn-cmd-form">
+          <label class="field"><span>Befehl</span><input id="dn-cmd" value="nslookup www.example.com" spellcheck="false" autocomplete="off"></label>
+          <button type="submit" class="btn primary">Ausführen</button>
+        </form>
+        <pre class="console dn-con" id="dn-con" aria-live="polite"></pre>
+        <ul class="ticks">
+          <li><b>Nicht autorisierende Antwort</b> heißt: Die Antwort kommt aus dem Cache des Resolvers, nicht direkt vom zuständigen Nameserver.</li>
+          <li>DNS-Anfragen laufen über <b>Port 53</b>, meist per UDP. Große Antworten und der Abgleich zwischen Nameservern nutzen TCP.</li>
+          <li>Heute verschlüsseln Browser und Betriebssysteme DNS-Anfragen oft: <b>DNS over HTTPS</b> (Port 443) oder <b>DNS over TLS</b> (Port 853).</li>
+          <li>Noch vor dem DNS schaut der Rechner in die Datei <code>hosts</code> (Windows: <code>C:\Windows\System32\drivers\etc\hosts</code>). <code>ipconfig /displaydns</code> zeigt den eigenen Cache, <code>ipconfig /flushdns</code> leert ihn.</li>
+        </ul>
+      </article>
+
+      <article class="card next-card">
+        <h2>Von der Adresse zur Seite</h2>
+        <p>Der Server ist gefunden. Doch was in der Adresszeile des Browsers steht, ist mehr als nur ein Name.</p>
+        <a class="btn primary" href="#dienst-url">Weiter zu URL →</a>
+      </article>
+    </section>
+
+    <!-- ============================ DIENSTE 3 ============================ -->
+    <section id="dienst-url" class="page" data-theme="dienste">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-laptop.webp" alt="">
+        <p class="eyebrow">Netzwerkdienste · Station 3 · Interaktiv</p>
+        <h1>URL</h1>
+        <p class="lead">Ein <b>Uniform Resource Locator</b> (URL) sagt genau, <b>wo</b> eine Ressource liegt und <b>wie</b> man sie abholt: mit welchem Protokoll, von welchem Server, über welchen Port und unter welchem Pfad.</p>
+      </header>
+
+      <article class="card">
+        <h2>Eine URL zerlegen</h2>
+        <label class="field dn-url-field"><span>URL</span><input id="dn-url" value="https://www.example.com/schule/stundenplan.html?klasse=10b#montag" spellcheck="false" autocomplete="off"></label>
+        <div class="presets"><span class="muted">Ausprobieren:</span>
+          <button type="button" class="pill" data-url="http://beispiel.de/beispiel1/index.html">http://beispiel.de/…</button>
+          <button type="button" class="pill" data-url="ftp://172.30.10.12:21/dateien/aufgabe.pdf">ftp mit Port</button>
+          <button type="button" class="pill" data-url="https://de.wikipedia.org/wiki/Uniform_Resource_Locator#Aufbau">Wikipedia</button>
+          <button type="button" class="pill" data-url="http://[2001:db8::1]:8080/status.html">IPv6-Adresse</button>
+          <button type="button" class="pill" data-url="mailto:info@example.com">mailto</button>
+        </div>
+        <div id="dn-url-out" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>Port weggelassen? Dann gilt der Standard</h2>
+        <p>Fast nie steht ein Port in der URL. Das Protokoll bestimmt dann den <b>Standardport</b>, den der Browser automatisch benutzt:</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Schema</th><th>Protokoll</th><th>Standardport</th></tr></thead>
+            <tbody>
+              <tr><td><code>https://</code></td><td>HTTP verschlüsselt mit TLS – heute der Normalfall</td><td>443</td></tr>
+              <tr><td><code>http://</code></td><td>HTTP unverschlüsselt – Browser warnen davor</td><td>80</td></tr>
+              <tr><td><code>ftp://</code></td><td>File Transfer Protocol – von Browsern nicht mehr unterstützt</td><td>21</td></tr>
+              <tr><td><code>ssh://</code> / <code>sftp://</code></td><td>Fernzugriff und Dateiübertragung, verschlüsselt</td><td>22</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Nur wenn ein Dienst auf einem <b>anderen</b> Port läuft, muss er mit Doppelpunkt angegeben werden – zum Beispiel <code>http://192.168.1.20:8080/</code> für die Weboberfläche eines Geräts.</p>
+      </article>
+
+      <article class="card">
+        <h2>Übung: Teile benennen</h2>
+        <p>Trage die Teile der URL ein. Steht kein Port da, gib den Standardport an.</p>
+        <div id="dn-url-task"></div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Welches Programm bekommt die Daten?</h2>
+        <p>Auf einem Server laufen oft mehrere Dienste gleichzeitig: Webserver, Mailserver, Fernwartung. Die Portnummer entscheidet, wer zuständig ist.</p>
+        <a class="btn primary" href="#dienst-ports">Weiter zu Ports →</a>
+      </article>
+    </section>
+
+    <!-- ============================ DIENSTE 4 ============================ -->
+    <section id="dienst-ports" class="page" data-theme="dienste">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-ports.webp" alt="">
+        <p class="eyebrow">Netzwerkdienste · Station 4 · Interaktiv</p>
+        <h1>Ports</h1>
+        <p class="lead">Die IP-Adresse bringt ein Paket zum richtigen <b>Gerät</b>. Die <b>Portnummer</b> bringt es dort zum richtigen <b>Programm</b>. Ports gehören zur <b>Transportschicht</b> (OSI-Schicht 4) und stehen im TCP- oder UDP-Header – jedes Segment hat einen <b>Quellport</b> und einen <b>Zielport</b>.</p>
+      </header>
+
+      <article class="card">
+        <h2>Die Portbereiche</h2>
+        <p>Eine Portnummer ist <b>16 Bit</b> lang. Es gibt also die Ports <b>0 bis 65 535</b>. Die Behörde IANA teilt sie in drei Bereiche:</p>
+        <div class="dn-ranges" id="dn-ranges"></div>
+        <label class="field b-field"><span>Portnummer nachschlagen</span><input id="dn-port" type="number" min="0" max="65535" value="443"></label>
+        <div id="dn-port-out" class="kb-res" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>Wichtige Ports</h2>
+        <p>Diese Nummern sollte man kennen. Grau markierte Dienste übertragen alles <b>unverschlüsselt</b>, auch Passwörter – sie sind heute durch die verschlüsselte Variante ersetzt.</p>
+        <div class="tbl-wrap"><table class="tbl compact dn-ports" id="dn-ports"></table></div>
+      </article>
+
+      <article class="card">
+        <h2>Socket: IP-Adresse und Port</h2>
+        <p>IP-Adresse und Port zusammen heißen <b>Socket</b>, geschrieben <code>192.0.2.44:443</code>. Eine Verbindung besteht aus zwei Sockets. Der Client wählt seinen Quellport zufällig aus dem dynamischen Bereich – so kann der Server sogar zwei Tabs desselben Browsers auseinanderhalten. Klicke ein Programm an:</p>
+        <div class="dn-sock" id="dn-sock"></div>
+      </article>
+
+      <article class="card">
+        <h2>TCP oder UDP?</h2>
+        <div class="two-col">
+          <div class="mini-card"><h3>TCP – zuverlässig</h3><p>Baut zuerst eine Verbindung auf (Drei-Wege-Handshake), nummeriert die Segmente, lässt sich den Empfang bestätigen und wiederholt Verlorenes. Für alles, was vollständig ankommen muss: <b>Webseiten, E-Mail, Dateien, SSH</b>.</p></div>
+          <div class="mini-card"><h3>UDP – schnell</h3><p>Schickt einfach los: kein Verbindungsaufbau, keine Bestätigung. Für kurze Frage-Antwort-Spiele und Echtzeit, wo Warten schlimmer ist als ein verlorenes Paket: <b>DNS, DHCP, Videotelefonie, Online-Spiele</b>.</p></div>
+        </div>
+      </article>
+
+      <article class="card has-art">
+        <img class="card-art" src="assets/images/el-firewall.webp" alt="">
+        <h2>Alles zusammen: Eine Webseite öffnen</h2>
+        <p>Der Laptop wird eingeschaltet, im Browser wird <code>https://www.example.com</code> eingegeben. Das passiert, bis die Seite erscheint:</p>
+        <ol class="dn-flow">
+          <li><span class="dn-tag">DHCP · UDP 68 → 67</span><b>Adresse holen:</b> Discover, Offer, Request, ACK – jetzt kennt der Laptop seine IP, das Gateway und den DNS-Server.</li>
+          <li><span class="dn-tag">DNS · UDP → 53</span><b>Namen auflösen:</b> Der Laptop fragt den Resolver nach <code>www.example.com</code> und erhält <code>192.0.2.44</code>.</li>
+          <li><span class="dn-tag">TCP → 443</span><b>Verbindung aufbauen:</b> von <code>192.168.1.80:51832</code> zu <code>192.0.2.44:443</code>, Drei-Wege-Handshake, danach die TLS-Verschlüsselung.</li>
+          <li><span class="dn-tag">HTTPS</span><b>Seite anfordern:</b> <code>GET /index.html</code> – der Webserver schickt die Seite zurück an Port 51832.</li>
+          <li><span class="dn-tag">weitere Anfragen</span><b>Nachladen:</b> Bilder, Stylesheets und Skripte – oft von weiteren Servern, jeweils wieder mit DNS-Anfrage.</li>
+        </ol>
+        <p class="callout"><b>Fehlersuche mit diesem Wissen:</b> Hat der Laptop eine 169.254-Adresse, klemmt es bei <b>DHCP</b>. Klappt <code>ping 192.0.2.44</code>, aber <code>ping www.example.com</code> nicht, liegt es am <b>DNS</b>. Klappt beides, aber die Seite lädt nicht, ist der Dienst auf dem <b>Port</b> nicht erreichbar – etwa wegen einer Firewall.</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Jetzt üben</h2>
+        <p>Im Dienste-Dojo trainierst du DHCP, DNS, URLs, Portnummern und die Fehlersuche.</p>
+        <a class="btn primary" href="#dienst-dojo">Weiter zum Dienste-Dojo →</a>
+      </article>
+    </section>
+
+    <!-- ============================ DIENSTE 5 ============================ -->
+    <section id="dienst-dojo" class="page" data-theme="dienste">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-puppe.webp" alt="">
+        <p class="eyebrow">Netzwerkdienste · Station 5 · Training</p>
+        <h1>Dienste-Dojo</h1>
+        <p class="lead">Sechs Gürtel, sechs Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten.</p>
+      </header>
+      <div class="dojo-layout" id="d-dienste"></div>
+
+      <article class="card next-card has-art">
+        <img class="card-art" src="assets/images/el-laternchen.webp" alt="">
         <h2>Alle Themen geschafft!</h2>
-        <p>Du hast MAC-Adressen, IPv4, Topologien, IPv6, das OSI-Modell und die Kabel und Signale durchgearbeitet. Wiederholen kannst du jederzeit – am besten in den Übungs-Dojos, bis alle Gürtel in Farbe leuchten.</p>
+        <p>Du hast MAC-Adressen, IPv4, Topologien, IPv6, das OSI-Modell, Kabel und Signale sowie die Netzwerkdienste durchgearbeitet. Wiederholen kannst du jederzeit – am besten in den Übungs-Dojos, bis alle Gürtel in Farbe leuchten.</p>
         <a class="btn primary" href="#mac-grundlagen">Zurück zum Anfang ↺</a>
       </article>
     </section>
@@ -1655,7 +1966,7 @@ Ablaufverfolgung beendet.</pre>
 
   <footer class="site-footer">
     <img class="footer-art" src="assets/images/el-bonsai.webp" alt="">
-    <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996) · <a href="https://www.rfc-editor.org/info/rfc3927/" target="_blank" rel="noopener">RFC 3927</a> (APIPA/Link-Local) · <a href="https://www.rfc-editor.org/info/rfc6890/" target="_blank" rel="noopener">RFC 6890</a> (Besondere Adressbereiche)</p>
+    <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996) · <a href="https://www.rfc-editor.org/info/rfc3927/" target="_blank" rel="noopener">RFC 3927</a> (APIPA/Link-Local) · <a href="https://www.rfc-editor.org/info/rfc6890/" target="_blank" rel="noopener">RFC 6890</a> (Besondere Adressbereiche) · <a href="https://www.rfc-editor.org/info/rfc2131/" target="_blank" rel="noopener">RFC 2131</a> (DHCP) · <a href="https://www.rfc-editor.org/info/rfc1034/" target="_blank" rel="noopener">RFC 1034</a> (DNS) · <a href="https://www.rfc-editor.org/info/rfc3986/" target="_blank" rel="noopener">RFC 3986</a> (URI) · <a href="https://www.rfc-editor.org/info/rfc6335/" target="_blank" rel="noopener">RFC 6335</a> (Portbereiche)</p>
     <p>Netzwerktechnik-Dojo · Jakob-Preh-Schule · statische HTML-Seite, läuft komplett im Browser – keine Daten werden übertragen, keine externen Dienste geladen.</p>
   </footer>
 
@@ -1678,6 +1989,10 @@ Ablaufverfolgung beendet.</pre>
   <script src="assets/signale.js"></script>
   <script src="assets/ethernet.js"></script>
   <script src="assets/kabel-dojo.js"></script>
+  <script src="assets/dhcp.js"></script>
+  <script src="assets/dns.js"></script>
+  <script src="assets/ports.js"></script>
+  <script src="assets/dienste-dojo.js"></script>
   <script src="assets/planer.js"></script>
   <script src="assets/topo.js"></script>
   <script src="assets/topologien.js"></script>
