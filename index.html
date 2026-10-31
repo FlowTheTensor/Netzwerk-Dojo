@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Netzwerktechnik-Dojo</title>
-  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: MAC-Adressen, IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien und IPv6.">
+  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: MAC-Adressen, IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien, IPv6 und das ISO/OSI-Modell.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23C81E3A'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3E/%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/tor.css">
@@ -15,7 +15,7 @@
     <div class="header-inner">
       <a class="brand" href="#mac-grundlagen">
         <span class="brand-title">Netzwerktechnik-<i>Dojo</i></span>
-        <span class="eyebrow">MAC · IPv4 · Topologien · IPv6</span>
+        <span class="eyebrow">MAC · IPv4 · Topologien · IPv6 · OSI</span>
       </a>
       <a class="school-logo" href="https://www.bsnes.de" target="_blank" rel="noopener" title="Jakob-Preh-Schule"><img src="assets/jps-logo.png" alt="Logo der Jakob-Preh-Schule" width="324" height="182"></a>
     </div>
@@ -28,6 +28,7 @@
       <a href="#grundlagen" data-theme="ipv4">IPv4</a>
       <a href="#topo-grundlagen" data-theme="topo">Topologien</a>
       <a href="#v6-grundlagen" data-theme="ipv6">IPv6</a>
+      <a href="#osi-grundlagen" data-theme="osi">OSI</a>
     </div>
     <div class="stationbar">
       <a href="#mac-grundlagen" data-theme="mac"><span class="tab-num">1</span>MAC verstehen</a>
@@ -48,6 +49,9 @@
       <a href="#v6-header" data-theme="ipv6"><span class="tab-num">3</span>Der Header</a>
       <a href="#v6-adressen" data-theme="ipv6"><span class="tab-num">4</span>Drei Adressen</a>
       <a href="#v6-dojo" data-theme="ipv6"><span class="tab-num">5</span>IPv6-Dojo</a>
+      <a href="#osi-grundlagen" data-theme="osi"><span class="tab-num">1</span>OSI-Schichten</a>
+      <a href="#osi-kapselung" data-theme="osi"><span class="tab-num">2</span>Daten auf Reisen</a>
+      <a href="#osi-dojo" data-theme="osi"><span class="tab-num">3</span>OSI-Dojo</a>
     </div>
   </nav>
 
@@ -1149,11 +1153,130 @@ Ablaufverfolgung beendet.</pre>
       </header>
       <div class="dojo-layout" id="d-v6"></div>
 
+      <article class="card next-card">
+        <h2>Geschafft – weiter zum letzten Thema!</h2>
+        <p>Zum Schluss ordnest du alles ein: Im <b>OSI-Modell</b> bekommen MAC-Adressen, IP-Adressen, Kabel und Programme ihren Platz in sieben Schichten.</p>
+        <a class="btn primary" href="#osi-grundlagen">Weiter zum Thema OSI-Modell →</a>
+      </article>
+    </section>
+
+    <!-- ============================ OSI 1 ============================ -->
+    <section id="osi-grundlagen" class="page" data-theme="osi">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-rolle.webp" alt="">
+        <p class="eyebrow">OSI · Station 1 · Grundlagen</p>
+        <h1>Das ISO/OSI-Modell</h1>
+        <p class="lead">Damit Geräte verschiedener Hersteller miteinander reden können, hat die <b>ISO</b> die Kommunikation im Netz in <b>sieben Schichten</b> zerlegt. Jede Schicht hat genau eine Aufgabe und arbeitet nur mit der Schicht direkt darüber und darunter zusammen. Dieses <b>OSI-Modell</b> ist die Landkarte, auf der sich alles einordnen lässt, was du bisher gelernt hast.</p>
+      </header>
+
+      <article class="card">
+        <h2>Warum Schichten?</h2>
+        <p><b>OSI</b> steht für <b>Open Systems Interconnection</b> – „Verbindung offener Systeme“. Das Modell wurde ab 1977 von der <b>ISO</b> (International Organization for Standardization) entwickelt und 1984 als Norm ISO 7498 veröffentlicht. Es ist ein <b>Referenzmodell</b>: Es beschreibt nicht ein bestimmtes Kabel oder Programm, sondern ordnet alle Aufgaben, die bei der Übertragung anfallen.</p>
+        <div class="two-col">
+          <div class="mini-card">
+            <h3>Wie bei der Post</h3>
+            <p>Du schreibst einen Brief, steckst ihn in einen Umschlag, die Post sortiert ihn nach Postleitzahl, ein Lkw fährt ihn. Keiner muss die Arbeit der anderen kennen – der Lkw-Fahrer liest deinen Brief nicht.</p>
+          </div>
+          <div class="mini-card">
+            <h3>Austauschbar</h3>
+            <p>Weil jede Schicht nur ihre Aufgabe erledigt, kann man eine Schicht austauschen, ohne die anderen zu ändern: Ob die Bits über Kupfer, Glasfaser oder WLAN laufen, ist dem Browser egal.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Die sieben Schichten</h2>
+        <p>Gezählt wird <b>von unten</b>: Schicht 1 ist das Kabel, Schicht 7 das Programm, mit dem du arbeitest.</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact osi-tbl">
+            <thead><tr><th>Nr.</th><th>OSI-Modell (deutsch)</th><th>OSI-Modell (englisch)</th><th>Aufgabe</th><th>Beispiele</th><th>Dateneinheit</th></tr></thead>
+            <tbody>
+              <tr class="osi-c7"><td><span class="osi-num">7</span></td><td><b>Anwendungsschicht</b></td><td>Application Layer</td><td>Schnittstelle zum Programm: stellt Dienste wie Web, E-Mail oder Namensauflösung bereit</td><td>HTTP, DNS, SMTP, FTP</td><td>Daten</td></tr>
+              <tr class="osi-c6"><td><span class="osi-num">6</span></td><td><b>Präsentationsschicht</b></td><td>Presentation Layer</td><td>Darstellung: Zeichensatz, Datenformat, Kompression, Verschlüsselung</td><td>UTF-8, JPEG, TLS-Verschlüsselung</td><td>Daten</td></tr>
+              <tr class="osi-c5"><td><span class="osi-num">5</span></td><td><b>Sitzungsschicht</b></td><td>Session Layer</td><td>Sitzung auf- und abbauen, steuern, nach Abbruch wieder aufsetzen</td><td>Anmeldung, RPC, NetBIOS</td><td>Daten</td></tr>
+              <tr class="osi-c4"><td><span class="osi-num">4</span></td><td><b>Transportschicht</b></td><td>Transport Layer</td><td>Ende-zu-Ende-Verbindung zwischen Programmen (Ports), Daten in Segmente teilen, Verlorenes neu senden</td><td>TCP, UDP</td><td>Segment</td></tr>
+              <tr class="osi-c3"><td><span class="osi-num">3</span></td><td><b>Netzwerkschicht</b></td><td>Network Layer</td><td>Logische Adressen, Weg durch mehrere Netze finden (Routing)</td><td>IPv4, IPv6, ICMP · <b>Router</b></td><td>Paket</td></tr>
+              <tr class="osi-c2"><td><span class="osi-num">2</span></td><td><b>Datensicherungsschicht</b></td><td>Data Link Layer</td><td>Zustellung im lokalen Netz mit MAC-Adressen, Fehler erkennen (Prüfsumme)</td><td>Ethernet, WLAN · <b>Switch</b></td><td>Frame (Rahmen)</td></tr>
+              <tr class="osi-c1"><td><span class="osi-num">1</span></td><td><b>Physikalische Schicht</b></td><td>Physical Layer</td><td>Bits als Signale übertragen: Spannung, Licht, Funk; Kabel und Stecker</td><td>Kupferkabel, Glasfaser, Funk · Hub, Repeater</td><td>Bits</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Die Themen dieses Dojos auf der Landkarte: <b>MAC-Adressen</b> und der Switch gehören zu Schicht 2, <b>IPv4</b> und <b>IPv6</b> zu Schicht 3, die <b>Topologien</b> beschreiben, wie Kabel und Geräte auf Schicht 1 und 2 verbunden sind.</p>
+      </article>
+
+      <article class="card">
+        <h2>Merksatz-Puzzle</h2>
+        <p>Für die sieben Schichten gibt es einen bekannten englischen Merksatz. Ordne jeder Schicht ihr Wort zu, sodass der Satz entsteht. Klicke dazu ein Wort an und dann die Zeile der Schicht – oder ziehe das Wort mit der Maus hinein. Ein Klick auf ein eingesetztes Wort legt es zurück.</p>
+        <div class="osi-pz" id="osi-pz"></div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Wie die Daten durch die Schichten wandern</h2>
+        <p>Beim Senden geht eine Nachricht alle Schichten hinunter und bekommt dabei ihre „Umschläge“ – beim Empfänger wird sie wieder ausgepackt.</p>
+        <a class="btn primary" href="#osi-kapselung">Weiter zu Daten auf Reisen →</a>
+      </article>
+    </section>
+
+    <!-- ============================ OSI 2 ============================ -->
+    <section id="osi-kapselung" class="page" data-theme="osi">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-laptop.webp" alt="">
+        <p class="eyebrow">OSI · Station 2 · Interaktiv</p>
+        <h1>Daten auf Reisen</h1>
+        <p class="lead">Links schreibt ein Sender eine Nachricht. Auf dem Weg nach unten setzt jede Schicht ihre Steuerinformationen davor – den <b>Header</b>. Schicht 2 hängt zusätzlich hinten einen <b>Trailer</b> an. Über das Kabel gehen nur noch Bits. Beim Empfänger rechts läuft alles umgekehrt: Jede Schicht liest „ihren“ Header und entfernt ihn.</p>
+      </header>
+
+      <article class="card">
+        <h2>Kapselung Schritt für Schritt</h2>
+        <div class="osi-ctrl">
+          <label class="field"><span>Nachricht des Senders</span><input id="osi-msg" value="Hallo!" maxlength="12" spellcheck="false" autocomplete="off"></label>
+          <div class="row-actions">
+            <button type="button" class="btn primary" id="osi-step">Nächster Schritt →</button>
+            <button type="button" class="btn" id="osi-go">▶ Automatisch abspielen</button>
+            <button type="button" class="btn ghost" id="osi-reset">Von vorn</button>
+          </div>
+        </div>
+        <div class="osi-flow" id="osi-flow"></div>
+        <div class="osi-say" id="osi-say" aria-live="polite"></div>
+        <div class="legend osi-legend">
+          <span><i class="sw osi-c7"></i>H7 Anwendung</span><span><i class="sw osi-c6"></i>H6 Präsentation</span><span><i class="sw osi-c5"></i>H5 Sitzung</span><span><i class="sw osi-c4"></i>H4 Transport</span><span><i class="sw osi-c3"></i>H3 Netzwerk</span><span><i class="sw osi-c2"></i>H2 / T2 Datensicherung</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Was dabei passiert</h2>
+        <ul class="ticks">
+          <li><b>Kapselung (Encapsulation):</b> Beim Sender packt jede Schicht die Daten von oben in einen eigenen „Umschlag“. Was für die obere Schicht der ganze Inhalt war, ist für die untere nur noch die Nutzlast.</li>
+          <li><b>Entkapselung (Decapsulation):</b> Beim Empfänger liest jede Schicht nur ihren eigenen Header, wertet ihn aus, entfernt ihn und reicht den Rest nach oben.</li>
+          <li><b>Partnerschichten:</b> Der Header einer Schicht ist nur für dieselbe Schicht auf der Gegenseite bestimmt – der Transport-Header des Senders wird von der Transportschicht des Empfängers gelesen. Die gestrichelten Linien im Bild zeigen diese gedachte Verbindung.</li>
+          <li><b>Der Trailer</b> von Schicht 2 enthält eine Prüfsumme (FCS, Frame Check Sequence). Der Empfänger rechnet sie nach – stimmt sie nicht, wird der Frame verworfen.</li>
+          <li><b>Geräte dazwischen</b> packen nur so weit aus, wie sie müssen: Ein <b>Switch</b> liest bis Schicht 2 (MAC-Adressen), ein <b>Router</b> bis Schicht 3 (IP-Adressen) und baut dann einen neuen Frame.</li>
+        </ul>
+        <p class="callout"><b>Merke:</b> Sender: Schicht 7 → 1, Header kommen <b>dazu</b>. Empfänger: Schicht 1 → 7, Header werden <b>entfernt</b>. Die Dateneinheiten heißen von oben nach unten <b>Daten → Segment → Paket → Frame → Bits</b>.</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Jetzt üben</h2>
+        <p>Im OSI-Dojo trainierst du die Schichtnamen, den Merksatz, die Zuordnung von Geräten und Protokollen und die Kapselung.</p>
+        <a class="btn primary" href="#osi-dojo">Weiter zum OSI-Dojo →</a>
+      </article>
+    </section>
+
+    <!-- ============================ OSI 3 ============================ -->
+    <section id="osi-dojo" class="page" data-theme="osi">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-puppe.webp" alt="">
+        <p class="eyebrow">OSI · Station 3 · Training</p>
+        <h1>OSI-Dojo</h1>
+        <p class="lead">Vier Gürtel, vier Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten.</p>
+      </header>
+      <div class="dojo-layout" id="d-osi"></div>
+
       <article class="card next-card has-art">
         <img class="card-art" src="assets/images/el-laternchen.webp" alt="">
-        <h2>Alle drei Themen geschafft!</h2>
-        <p>Du hast IPv4, Topologien und IPv6 durchgearbeitet. Wiederholen kannst du jederzeit – am besten in den drei Übungs-Dojos, bis alle Gürtel in Farbe leuchten.</p>
-        <a class="btn primary" href="#grundlagen">Zurück zum Anfang ↺</a>
+        <h2>Alle Themen geschafft!</h2>
+        <p>Du hast MAC-Adressen, IPv4, Topologien, IPv6 und das OSI-Modell durchgearbeitet. Wiederholen kannst du jederzeit – am besten in den Übungs-Dojos, bis alle Gürtel in Farbe leuchten.</p>
+        <a class="btn primary" href="#mac-grundlagen">Zurück zum Anfang ↺</a>
       </article>
     </section>
 
@@ -1184,6 +1307,7 @@ Ablaufverfolgung beendet.</pre>
   <script src="assets/ipv4.js"></script>
   <script src="assets/ui.js"></script>
   <script src="assets/mac.js"></script>
+  <script src="assets/osi.js"></script>
   <script src="assets/grundlagen.js"></script>
   <script src="assets/werkstatt.js"></script>
   <script src="assets/klassen.js"></script>
@@ -1192,6 +1316,7 @@ Ablaufverfolgung beendet.</pre>
   <script src="assets/dojo-engine.js"></script>
   <script src="assets/dojo.js"></script>
   <script src="assets/mac-dojo.js"></script>
+  <script src="assets/osi-dojo.js"></script>
   <script src="assets/planer.js"></script>
   <script src="assets/topo.js"></script>
   <script src="assets/topologien.js"></script>

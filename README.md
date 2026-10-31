@@ -1,7 +1,7 @@
 # Netzwerktechnik-Dojo
 # [Hier öffnen](https://flowthetensor.github.io/Netzwerk-Dojo/)
 
-Interaktive Lernseite für Netzwerktechnik – MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien und IPv6, gedacht für den Unterricht.
+Interaktive Lernseite für Netzwerktechnik – MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien, IPv6 und das ISO/OSI-Modell, gedacht für den Unterricht.
 Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schritt und lädt
 **keine externen Ressourcen** (keine Web-Fonts, kein CDN, kein Tracking).
 
@@ -50,6 +50,16 @@ Wird freigeschaltet, sobald alle Topologie-Stationen einmal geöffnet wurden.
 | 4 | Drei Adressen | ipconfig mit Link-Local, global und temporär; EUI-64 Schritt für Schritt; Vertiefung RA/SLAAC, NDP, DHCPv6 |
 | 5 | IPv6-Dojo | 6 Gürtel: kürzen, ausschreiben, Adresstyp, Präfix & Interface-ID, EUI-64, Header-Wissen |
 
+## Thema OSI-Modell
+
+Wird freigeschaltet, sobald alle IPv6-Stationen einmal geöffnet wurden.
+
+| # | Station | Inhalt |
+|---|---------|--------|
+| 1 | OSI-Schichten | Warum Schichten, die 7 Schichten deutsch/englisch mit Aufgabe, Beispielen und Dateneinheit, Merksatz-Puzzle: Die Wörter von „Please Do Not Throw Salami Pizza Away“ ohne Vorlage den Schichten zuordnen; nach der Lösung leuchten die Anfangsbuchstaben in der Schichtfarbe (passt zu den deutschen und englischen Namen) |
+| 2 | Daten auf Reisen | Animation: Der Sender schreibt auf Schicht 7 eine Nachricht, jede Schicht ergänzt ihren Header (Schicht 2 auch den Trailer), Bits übers Kabel, der Empfänger entfernt die Header von Schicht 1 bis 7 |
+| 3 | OSI-Dojo | 4 Gürtel: Schichten & Nummern, Merksatz, Geräte & Protokolle, Kapselung |
+
 ## Hinweise für Lehrkräfte
 
 - Der Planer übt **nur gleich große Subnetze (FLSM)** – alle Abteilungen bekommen dieselbe Maske.
@@ -74,6 +84,8 @@ index.html            Alle Stationen (Navigation über #grundlagen, #werkstatt, 
 assets/style.css      Gestaltung inkl. Dark Mode und Druckansicht
 assets/tor.css        Dojo-Tor als Rahmen um die ganze Seite (Dach, Säulen, Boden)
 assets/tor.js         Blütenblätter neben den Säulen
+assets/osi.js         OSI-Schichten (auch fürs Dojo), Merksatz-Puzzle, Kapselungs-Animation
+assets/osi-dojo.js    OSI Station 3
 assets/mac.js         MAC-Rechenkern und MAC-Stationen 1–2
 assets/mac-dojo.js    MAC-Station 3
 assets/ipv4.js        Rechenkern (Parsen, Masken, Netz/Broadcast, Klassen, RFC 1918)
