@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Subnet-Dojo</title>
-  <meta name="description" content="Interaktives Lern-Dojo für IPv4-Adressen, Subnetzmasken und Subnetting – inklusive Firmennetz-Planer.">
+  <title>Netzwerktechnik-Dojo</title>
+  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien und IPv6.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23C81E3A'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3E/%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/style.css">
 </head>
@@ -12,29 +12,40 @@
   <header class="site-header">
     <div class="header-inner">
       <a class="brand" href="#grundlagen">
-        <span class="brand-title">Subnet-<i>Dojo</i></span>
-        <span class="eyebrow">IPv4 · Subnetzmaske · Subnetting</span>
+        <span class="brand-title">Netzwerktechnik-<i>Dojo</i></span>
+        <span class="eyebrow">IPv4 · Topologien · IPv6</span>
       </a>
       <a class="school-logo" href="https://www.bsnes.de" target="_blank" rel="noopener" title="Jakob-Preh-Schule"><img src="assets/jps-logo.png" alt="Logo der Jakob-Preh-Schule" width="324" height="182"></a>
     </div>
     <div class="sig-rail" id="sigRail" aria-hidden="true"></div>
   </header>
 
-  <nav class="topnav" aria-label="Stationen">
-    <a href="#grundlagen"><span class="tab-num">1</span>Grundlagen</a>
-    <a href="#werkstatt"><span class="tab-num">2</span>Masken-Werkstatt</a>
-    <a href="#klassen"><span class="tab-num">3</span>Netzklassen</a>
-    <a href="#dojo"><span class="tab-num">4</span>Übungs-Dojo</a>
-    <a href="#planer"><span class="tab-num">5</span>Firmennetz-Planer</a>
+  <nav class="topnav" aria-label="Themen und Stationen">
+    <div class="themebar">
+      <span class="themebar-lbl">Thema</span>
+      <a href="#grundlagen" data-theme="ipv4">IPv4</a>
+      <a href="#topo-grundlagen" data-theme="topo">Topologien</a>
+      <span class="soon" aria-disabled="true">IPv6 <small>bald</small></span>
+    </div>
+    <div class="stationbar">
+      <a href="#grundlagen" data-theme="ipv4"><span class="tab-num">1</span>Grundlagen</a>
+      <a href="#werkstatt" data-theme="ipv4"><span class="tab-num">2</span>Masken-Werkstatt</a>
+      <a href="#klassen" data-theme="ipv4"><span class="tab-num">3</span>Netzklassen</a>
+      <a href="#dojo" data-theme="ipv4"><span class="tab-num">4</span>Übungs-Dojo</a>
+      <a href="#planer" data-theme="ipv4"><span class="tab-num">5</span>Firmennetz-Planer</a>
+      <a href="#topo-grundlagen" data-theme="topo"><span class="tab-num">1</span>Topologien verstehen</a>
+      <a href="#topo-baukasten" data-theme="topo"><span class="tab-num">2</span>Baukasten</a>
+      <a href="#topo-dojo" data-theme="topo"><span class="tab-num">3</span>Topologie-Dojo</a>
+    </div>
   </nav>
 
   <main>
     <!-- ============================ 1 GRUNDLAGEN ============================ -->
-    <section id="grundlagen" class="page">
+    <section id="grundlagen" class="page" data-theme="ipv4">
       <header class="page-head">
-        <p class="eyebrow">Station 1 · Grundlagen</p>
+        <p class="eyebrow">IPv4 · Station 1 · Grundlagen</p>
         <h1>IPv4 verstehen – Bit für Bit.</h1>
-        <p class="lead">Im Subnet-Dojo lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die fünf Stationen.</p>
+        <p class="lead">Im ersten Thema des Netzwerktechnik-Dojos lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die fünf Stationen – danach wird das nächste Thema <b>Topologien</b> freigeschaltet.</p>
       </header>
 
       <article class="card">
@@ -95,9 +106,9 @@
     </section>
 
     <!-- ============================ 2 WERKSTATT ============================ -->
-    <section id="werkstatt" class="page">
+    <section id="werkstatt" class="page" data-theme="ipv4">
       <header class="page-head">
-        <p class="eyebrow">Station 2 · Interaktiv</p>
+        <p class="eyebrow">IPv4 · Station 2 · Interaktiv</p>
         <h1>Masken-Werkstatt</h1>
         <p class="lead">Gib eine IP-Adresse ein und verschiebe die Grenze zwischen Netz- und Hostanteil – mit dem Regler, per Maske oder durch Klick auf die Bits der Maske.</p>
       </header>
@@ -137,9 +148,9 @@
     </section>
 
     <!-- ============================ 3 KLASSEN ============================ -->
-    <section id="klassen" class="page">
+    <section id="klassen" class="page" data-theme="ipv4">
       <header class="page-head">
-        <p class="eyebrow">Station 3 · Geschichte &amp; Missverständnis</p>
+        <p class="eyebrow">IPv4 · Station 3 · Geschichte &amp; Missverständnis</p>
         <h1>Netzklassen</h1>
         <p class="lead">Woran erkennt man eine Klasse? Und warum heißt es oft „192.168.x.x ist ein Klasse-C-Netz mit 255.255.255.0“, während in RFC 1918 „192.168/16“ steht? Wer hat recht?</p>
       </header>
@@ -258,33 +269,13 @@
     </section>
 
     <!-- ============================ 4 DOJO ============================ -->
-    <section id="dojo" class="page">
+    <section id="dojo" class="page" data-theme="ipv4">
       <header class="page-head">
-        <p class="eyebrow">Station 4 · Training</p>
+        <p class="eyebrow">IPv4 · Station 4 · Training</p>
         <h1>Übungs-Dojo</h1>
         <p class="lead">Sieben Gürtel, sieben Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten. Die Aufgaben werden zufällig erzeugt – du kannst also beliebig lange trainieren.</p>
       </header>
-      <div class="dojo-layout">
-        <aside class="belts" id="d-belts" aria-label="Gürtel"></aside>
-        <div class="card dojo-main">
-          <div class="dojo-top">
-            <h2 id="d-title"></h2>
-            <div class="streak" id="d-streak" aria-label="Serie"></div>
-          </div>
-          <div class="dojo-q" id="d-q"></div>
-          <form id="d-form" class="dojo-form" autocomplete="off">
-            <input id="d-input" spellcheck="false" autocomplete="off" aria-label="Deine Antwort">
-            <button class="btn primary" type="submit">Prüfen</button>
-          </form>
-          <div id="d-choices" class="choices" hidden></div>
-          <div id="d-fb" class="dojo-fb" aria-live="polite"></div>
-          <div class="row-actions">
-            <button type="button" class="btn primary" id="d-next" hidden>Nächste Aufgabe →</button>
-            <button type="button" class="btn ghost" id="d-show">Lösung zeigen</button>
-          </div>
-          <p class="note">Antworten: Adressen als <code>a.b.c.d</code>, Präfixe als <code>/26</code> oder <code>26</code>, Masken als <code>255.255.255.192</code>. Der Fortschritt wird nur in diesem Browser gespeichert.</p>
-        </div>
-      </div>
+      <div class="dojo-layout" id="d-ipv4"></div>
 
       <article class="card next-card">
         <h2>Bereit für die Praxis?</h2>
@@ -294,9 +285,9 @@
     </section>
 
     <!-- ============================ 5 PLANER ============================ -->
-    <section id="planer" class="page">
+    <section id="planer" class="page" data-theme="ipv4">
       <header class="page-head">
-        <p class="eyebrow">Station 5 · Praxis</p>
+        <p class="eyebrow">IPv4 · Station 5 · Praxis</p>
         <h1>Firmennetz-Planer</h1>
         <p class="lead">Eine Firma hat drei Abteilungen: <b class="c-d0">Verwaltung</b>, <b class="c-d1">Entwicklung</b> und <b class="c-d2">Reparatur</b>. Jede Abteilung soll ein <b>eigenes Subnetz</b> bekommen, ein Router verbindet sie. Plane das Netz Schritt für Schritt – das Dojo prüft jede Eingabe sofort.</p>
         <label class="switch"><input type="checkbox" id="p-help"><span>Hilfen einblenden</span></label>
@@ -365,16 +356,189 @@
       </article>
 
       <article class="card next-card no-print">
-        <h2>Geschafft!</h2>
-        <p>Du hast alle fünf Stationen durchlaufen. Wenn du etwas nachschlagen willst, fang einfach wieder bei den Grundlagen an.</p>
-        <a class="btn primary" href="#grundlagen">Zurück zu den Grundlagen ↺</a>
+        <h2>Geschafft – weiter zum nächsten Thema!</h2>
+        <p>Du hast alle fünf IPv4-Stationen durchlaufen. Als Nächstes geht es um <b>Topologien</b>: Wie werden Geräte in einem Netzwerk miteinander verkabelt – und was passiert, wenn etwas ausfällt?</p>
+        <a class="btn primary" href="#topo-grundlagen">Weiter zum Thema Topologien →</a>
+      </article>
+    </section>
+
+    <!-- ============================ TOPOLOGIEN 1 ============================ -->
+    <section id="topo-grundlagen" class="page" data-theme="topo">
+      <header class="page-head">
+        <p class="eyebrow">Topologien · Station 1 · Grundlagen</p>
+        <h1>Netzwerk-Topologien</h1>
+        <p class="lead">Die <b>Topologie</b> beschreibt, wie die Geräte eines Netzwerks miteinander verbunden sind – die Form des Netzes. Sie entscheidet, wie viele Leitungen man braucht, wie teuer das Netz wird und was passiert, wenn ein Gerät oder eine Leitung ausfällt.</p>
+      </header>
+
+      <p class="callout t-try">Probier es aus: <b>Klick in den Bildern auf ein Gerät oder eine Leitung</b>, um einen Ausfall zu simulieren. Ausgegraute Geräte können mit niemandem mehr kommunizieren.</p>
+
+      <div class="t-grid">
+        <article class="card t-card">
+          <h2>Punkt-zu-Punkt</h2>
+          <p>Genau <b>zwei Geräte</b> sind über <b>eine Leitung</b> direkt miteinander verbunden – ohne Switch dazwischen.</p>
+          <div class="tp-wrap" data-fig="p2p"></div>
+          <p class="t-fail" aria-live="polite"></p>
+          <div class="two-col t-pc">
+            <div><h3>Vorteile</h3><ul class="ticks"><li>einfachste Verbindung, kein weiteres Gerät nötig</li><li>die Leitung gehört den beiden Geräten allein</li></ul></div>
+            <div><h3>Nachteile</h3><ul class="ticks"><li>nur zwei Teilnehmer</li><li>Leitung weg = Verbindung weg</li></ul></div>
+          </div>
+          <p class="t-prax"><b>Praxis:</b> PC direkt an der SPS zum Programmieren, Richtfunkstrecke zwischen zwei Gebäuden, Verbindung zwischen zwei Routern.</p>
+        </article>
+
+        <article class="card t-card">
+          <h2>Stern</h2>
+          <p>Alle Endgeräte hängen mit je einer eigenen Leitung an einem <b>zentralen Gerät</b>, heute einem Switch.</p>
+          <div class="tp-wrap" data-fig="stern"></div>
+          <p class="t-fail" aria-live="polite"></p>
+          <div class="two-col t-pc">
+            <div><h3>Vorteile</h3><ul class="ticks"><li>ein Kabelfehler betrifft nur ein Gerät</li><li>leicht erweiterbar und übersichtlich</li></ul></div>
+            <div><h3>Nachteile</h3><ul class="ticks"><li>fällt der Switch aus, steht alles</li><li>viele Kabel laufen an einer Stelle zusammen</li></ul></div>
+          </div>
+          <p class="t-prax"><b>Praxis:</b> Büro, Klassenzimmer, Heimnetz – die häufigste Topologie überhaupt.</p>
+          <p class="note"><b>Randnotiz Bus:</b> Früher hingen alle Geräte hintereinander an einem gemeinsamen Kabel (Bus, z. B. mit Koaxialkabel). Ein einziger Kabelbruch legte das ganze Netz lahm. Deshalb hat der Stern den Bus abgelöst.</p>
+        </article>
+
+        <article class="card t-card">
+          <h2>Baum</h2>
+          <p>Mehrere Sterne werden <b>hierarchisch</b> verbunden: Ein Hauptverteiler versorgt Unterverteiler, an denen die Endgeräte hängen. Es gibt keine Kreise.</p>
+          <div class="tp-wrap" data-fig="baum"></div>
+          <p class="t-fail" aria-live="polite"></p>
+          <div class="two-col t-pc">
+            <div><h3>Vorteile</h3><ul class="ticks"><li>gut für große Netze über mehrere Etagen</li><li>einfach um ganze Äste erweiterbar</li></ul></div>
+            <div><h3>Nachteile</h3><ul class="ticks"><li>fällt ein Unterverteiler aus, ist sein ganzer Ast getrennt</li><li>fällt der Hauptverteiler aus, sind die Äste voneinander getrennt</li></ul></div>
+          </div>
+          <p class="t-prax"><b>Praxis:</b> Schul- oder Firmennetz – Hauptverteiler im Serverraum, ein Switch pro Etage, darunter die Räume.</p>
+        </article>
+
+        <article class="card t-card">
+          <h2>Ring</h2>
+          <p>Jedes Gerät hat <b>genau zwei Nachbarn</b>, alle zusammen bilden einen geschlossenen Kreis.</p>
+          <div class="tp-wrap" data-fig="ring"></div>
+          <p class="t-fail" aria-live="polite"></p>
+          <div class="two-col t-pc">
+            <div><h3>Vorteile</h3><ul class="ticks"><li>eine Unterbrechung wird verkraftet: Es gibt immer noch den anderen Weg</li><li>wenig Kabel</li></ul></div>
+            <div><h3>Nachteile</h3><ul class="ticks"><li>zwei Unterbrechungen teilen das Netz</li><li>braucht ein Redundanzprotokoll, damit Daten nicht endlos im Kreis laufen</li></ul></div>
+          </div>
+          <p class="t-prax"><b>Praxis:</b> Industrie, z. B. ein <b>PROFINET-Ring mit MRP</b> (Media Redundancy Protocol), eingerichtet im TIA Portal. Im Normalbetrieb ist eine Leitung des Rings logisch blockiert. Fällt eine Leitung aus, schaltet der Ring innerhalb von Millisekunden auf den anderen Weg um (typisch höchstens 200 ms) – die Anlage läuft weiter.</p>
+        </article>
+
+        <article class="card t-card t-wide">
+          <h2>Mesh (vermascht)</h2>
+          <p>Die Geräte sind über <b>mehrere Wege</b> miteinander verbunden. <b>Vollständig vermascht:</b> jedes Gerät mit jedem. <b>Teilweise vermascht:</b> mehrere Wege, aber nicht alle Verbindungen.</p>
+          <div class="seg small t-mesh-seg" role="group" aria-label="Art der Vermaschung">
+            <button type="button" data-mesh="vollmesh" class="active"><b>vollständig</b></button>
+            <button type="button" data-mesh="teilmesh"><b>teilweise</b></button>
+          </div>
+          <div class="tp-wrap" data-fig="vollmesh" id="t-fig-mesh"></div>
+          <p class="t-fail" aria-live="polite"></p>
+          <div class="two-col t-pc">
+            <div><h3>Vorteile</h3><ul class="ticks"><li>sehr ausfallsicher – meist gibt es einen Umweg</li><li>Last kann auf mehrere Wege verteilt werden</li></ul></div>
+            <div><h3>Nachteile</h3><ul class="ticks"><li>sehr viele Leitungen und Anschlüsse, teuer</li><li>aufwendig zu planen</li></ul></div>
+          </div>
+          <p class="t-prax"><b>Praxis:</b> Internet-Backbone und Verbindungen zwischen Rechenzentren (meist teilweise vermascht), WLAN-Mesh im Haus.</p>
+        </article>
+      </div>
+
+      <article class="card">
+        <h2>Wie viele Leitungen braucht ein Vollmesh?</h2>
+        <p>Jedes der <i>n</i> Geräte wird mit allen <i>n</i> − 1 anderen verbunden. Weil jede Leitung zwei Geräte verbindet, würde man sie so doppelt zählen – also teilen durch 2:</p>
+        <p class="t-formula">Leitungen = <i>n</i> · (<i>n</i> − 1) / 2</p>
+        <div class="t-mesh-calc">
+          <div>
+            <label class="field field-range"><span>Anzahl Geräte <output id="t-mesh-out">5</output></span><input type="range" id="t-mesh-n" min="2" max="12" value="5"></label>
+            <p id="t-mesh-res" aria-live="polite"></p>
+          </div>
+          <div class="tp-wrap" id="t-mesh-fig"></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Vergleich</h2>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Topologie</th><th>Leitungen bei n Geräten</th><th>Ein Endgerät / eine Leitung fällt aus</th><th>Zentrales Gerät fällt aus</th><th>Aufwand</th></tr></thead>
+            <tbody>
+              <tr><td><b>Punkt-zu-Punkt</b></td><td>1</td><td>Verbindung weg</td><td>– (keins vorhanden)</td><td>sehr gering</td></tr>
+              <tr><td><b>Stern</b></td><td>n (Endgeräte)</td><td>nur dieses Gerät betroffen</td><td>alles fällt aus</td><td>gering</td></tr>
+              <tr><td><b>Baum</b></td><td>n − 1</td><td>nur dieses Gerät betroffen</td><td>ganzer Ast bzw. Äste getrennt</td><td>mittel</td></tr>
+              <tr><td><b>Ring</b></td><td>n</td><td>alle weiter erreichbar (anderer Weg)</td><td>– (keins vorhanden)</td><td>gering</td></tr>
+              <tr><td><b>Vollmesh</b></td><td>n · (n − 1) / 2</td><td>alle weiter erreichbar</td><td>– (keins vorhanden)</td><td>sehr hoch</td></tr>
+              <tr><td><b>Teilmesh</b></td><td>zwischen n und n · (n − 1) / 2</td><td>meist alle weiter erreichbar</td><td>– (keins vorhanden)</td><td>hoch</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Jetzt selbst bauen</h2>
+        <p>Im Baukasten verbindest du Geräte selbst – so, dass die verlangte Topologie entsteht.</p>
+        <a class="btn primary" href="#topo-baukasten">Weiter zum Baukasten →</a>
+      </article>
+    </section>
+
+    <!-- ============================ TOPOLOGIEN 2 ============================ -->
+    <section id="topo-baukasten" class="page" data-theme="topo">
+      <header class="page-head">
+        <p class="eyebrow">Topologien · Station 2 · Interaktiv</p>
+        <h1>Topologie-Baukasten</h1>
+        <p class="lead">Wähle eine Topologie und verbinde die Geräte so, dass sie entsteht. <b>Klick auf ein Gerät und dann auf ein zweites</b> – schon liegt eine Leitung. Ein Klick auf eine Leitung entfernt sie wieder. Geräte kannst du per <b>Drag-and-drop</b> an eine andere Stelle ziehen.</p>
+      </header>
+
+      <article class="card" id="tb-card">
+        <div class="seg small tb-kinds" id="tb-kinds" role="group" aria-label="Topologie wählen"></div>
+        <p class="muted small" id="tb-count"></p>
+        <p class="tb-task" id="tb-task"></p>
+        <div class="tp-wrap" id="tb-canvas"></div>
+        <div class="row-actions">
+          <button type="button" class="btn primary" id="tb-check">Prüfen</button>
+          <button type="button" class="btn" id="tb-new">🎲 Geräte neu mischen</button>
+          <button type="button" class="btn ghost" id="tb-clear">Alle Leitungen entfernen</button>
+        </div>
+        <div class="dojo-fb" id="tb-fb" aria-live="polite"></div>
+        <p class="note">Tastatur: Mit <kbd>Tab</kbd> zu einem Gerät springen, mit <kbd>Enter</kbd> auswählen, mit den <kbd>Pfeiltasten</kbd> verschieben, <kbd>Esc</kbd> bricht ab.</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Bereit für die Prüfung?</h2>
+        <p>Im Topologie-Dojo erkennst, zählst und baust du Topologien mit zufälligen Aufgaben – Gürtel für Gürtel.</p>
+        <a class="btn primary" href="#topo-dojo">Weiter zum Topologie-Dojo →</a>
+      </article>
+    </section>
+
+    <!-- ============================ TOPOLOGIEN 3 ============================ -->
+    <section id="topo-dojo" class="page" data-theme="topo">
+      <header class="page-head">
+        <p class="eyebrow">Topologien · Station 3 · Training</p>
+        <h1>Topologie-Dojo</h1>
+        <p class="lead">Vier Gürtel: Topologien erkennen, Leitungen zählen, Ausfälle einschätzen und selbst bauen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten.</p>
+      </header>
+      <div class="dojo-layout" id="d-topo"></div>
+
+      <article class="card next-card">
+        <h2>Wie geht es weiter?</h2>
+        <p>Als nächstes Thema kommt <b>IPv6</b> – es ist in Vorbereitung. Bis dahin kannst du jederzeit zu IPv4 und den Topologien zurückkehren.</p>
+        <a class="btn primary" href="#topo-grundlagen">Zurück zu den Topologien ↺</a>
+      </article>
+    </section>
+
+    <!-- ============================ GESPERRT ============================ -->
+    <section id="gesperrt" class="page lock-page">
+      <header class="page-head">
+        <p class="eyebrow">Noch gesperrt</p>
+        <h1>🔒 <span id="lock-theme"></span></h1>
+        <p class="lead">Dieses Thema wird freigeschaltet, sobald du alle Stationen des Themas <b id="lock-req"></b> durchgearbeitet hast.</p>
+      </header>
+      <article class="card">
+        <h2>Deine Stationen</h2>
+        <ul class="lock-list" id="lock-list"></ul>
+        <p class="note">Öffne jede Station einmal – danach geht es hier weiter. Der Fortschritt wird nur in diesem Browser gespeichert.</p>
       </article>
     </section>
   </main>
 
   <footer class="site-footer">
     <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996)</p>
-    <p>Subnet-Dojo · Jakob-Preh-Schule · statische HTML-Seite, läuft komplett im Browser – keine Daten werden übertragen, keine externen Dienste geladen.</p>
+    <p>Netzwerktechnik-Dojo · Jakob-Preh-Schule · statische HTML-Seite, läuft komplett im Browser – keine Daten werden übertragen, keine externen Dienste geladen.</p>
   </footer>
 
   <script src="assets/ipv4.js"></script>
@@ -382,7 +546,11 @@
   <script src="assets/grundlagen.js"></script>
   <script src="assets/werkstatt.js"></script>
   <script src="assets/klassen.js"></script>
+  <script src="assets/dojo-engine.js"></script>
   <script src="assets/dojo.js"></script>
   <script src="assets/planer.js"></script>
+  <script src="assets/topo.js"></script>
+  <script src="assets/topologien.js"></script>
+  <script src="assets/topo-dojo.js"></script>
 </body>
 </html>

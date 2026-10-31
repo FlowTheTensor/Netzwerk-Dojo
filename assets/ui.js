@@ -1,4 +1,4 @@
-/* Subnet-Dojo – gemeinsame UI-Bausteine: Bit-Darstellung, Legende, Speicher, Navigation */
+/* Netzwerktechnik-Dojo – gemeinsame UI-Bausteine: Bit-Darstellung, Legende, Speicher, Navigation */
 'use strict';
 
 const UI = (() => {
@@ -66,17 +66,78 @@ const UI = (() => {
     },
   };
 
+  /* ---------- Themen und Freischaltung ----------
+     Ein Thema wird freigeschaltet, sobald alle Stationen des vorherigen Themas geöffnet wurden. */
+  const THEMES = {
+    ipv4: { name: 'IPv4' },
+    topo: { name: 'Topologien', after: 'ipv4' },
+  };
+  const themeOf = page => page.dataset.theme;
+  const stationsOf = theme => $$(`.page[data-theme="${theme}"]:not(.lock-page)`);
+  const visited = () => new Set(store.get('visited', []) || []);
+
+  function isUnlocked(theme) {
+    const req = THEMES[theme]?.after;
+    if (!req) return true;
+    const seen = visited();
+    return stationsOf(req).every(p => seen.has(p.id));
+  }
+
+  function toast(html) {
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.setAttribute('role', 'status');
+    t.innerHTML = html;
+    document.body.appendChild(t);
+    setTimeout(() => t.classList.add('out'), 5200);
+    setTimeout(() => t.remove(), 5800);
+  }
+
+  // Sperrseite: zeigt, welche Stationen noch fehlen
+  function renderLock(theme) {
+    const req = THEMES[theme].after;
+    const seen = visited();
+    $('#lock-theme').textContent = THEMES[theme].name;
+    $('#lock-req').textContent = THEMES[req].name;
+    $('#lock-list').innerHTML = stationsOf(req).map(p => {
+      const name = $(`.stationbar a[href="#${p.id}"]`)?.textContent.replace(/^\d+/, '').trim() || p.id;
+      const ok = seen.has(p.id);
+      return `<li class="${ok ? 'done' : ''}"><span class="lock-mark">${ok ? '✔' : '○'}</span><a href="#${p.id}">${esc(name)}</a></li>`;
+    }).join('');
+  }
+
   function initRouter() {
     const pages = $$('.page');
-    const links = $$('.topnav a');
+    const stationLinks = $$('.stationbar a');
+    const themeLinks = $$('.themebar [data-theme]');
     function show() {
       const id = location.hash.slice(1);
-      const target = pages.find(p => p.id === id) || pages[0];
+      let target = pages.find(p => p.id === id && !p.classList.contains('lock-page')) || pages[0];
+      const theme = themeOf(target);
+      const locked = !isUnlocked(theme);
+      if (locked) {
+        renderLock(theme);
+        target = $('#gesperrt');
+      } else {
+        const before = Object.keys(THEMES).filter(isUnlocked);
+        const seen = visited();
+        if (!seen.has(target.id)) {
+          seen.add(target.id);
+          store.set('visited', [...seen]);
+          Object.keys(THEMES).filter(t => isUnlocked(t) && !before.includes(t))
+            .forEach(t => toast(`🔓 Neues Thema freigeschaltet: <b>${THEMES[t].name}</b>`));
+        }
+      }
       pages.forEach(p => p.classList.toggle('active', p === target));
-      links.forEach(a => {
-        const on = a.getAttribute('href') === '#' + target.id;
+      stationLinks.forEach(a => {
+        a.hidden = a.dataset.theme !== theme || locked;
+        const on = !locked && a.getAttribute('href') === '#' + target.id;
         a.classList.toggle('active', on);
         if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      });
+      themeLinks.forEach(a => {
+        a.classList.toggle('active', a.dataset.theme === theme);
+        a.classList.toggle('locked', !isUnlocked(a.dataset.theme));
       });
       // Der Browser springt nach dem Hashwechsel zum Anker – danach wieder nach oben
       requestAnimationFrame(() => window.scrollTo(0, 0));
@@ -101,7 +162,7 @@ const UI = (() => {
     }
   }
 
-  return { $, $$, esc, role, bitRow, legend, columnHover, store, initRouter, initSigRail };
+  return { $, $$, esc, role, bitRow, legend, columnHover, store, isUnlocked, toast, initRouter, initSigRail };
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
