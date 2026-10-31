@@ -216,12 +216,89 @@
     };
   }
 
+  // Lila: besondere Adressen erkennen
+  function genSpecial() {
+    const MEAN = {
+      loop: 'Loopback – das Gerät selbst',
+      apipa: 'APIPA – kein DHCP-Server erreichbar',
+      priv: 'privat (RFC 1918)',
+      pub: 'öffentlich',
+      mcast: 'Multicast',
+      bcast: 'Broadcast an alle im eigenen Netz',
+    };
+    const make = {
+      loop: () => pick([ip(127, 0, 0, 1), ip(127, 0, 0, 1), ip(127, rnd(0, 255), rnd(0, 255), rnd(1, 254))]),
+      apipa: () => ip(169, 254, rnd(1, 254), rnd(1, 254)),
+      priv: () => pick([ip(10, rnd(0, 255), rnd(0, 255), rnd(1, 254)), ip(172, rnd(16, 31), rnd(0, 255), rnd(1, 254)), ip(192, 168, rnd(0, 255), rnd(1, 254))]),
+      pub: () => pick([ip(8, 8, 8, 8), ip(1, 1, 1, 1), ip(pick([5, 31, 46, 62, 80, 85, 91, 141, 151, 185, 193, 212, 217]), rnd(0, 255), rnd(0, 255), rnd(1, 254))]),
+      mcast: () => pick([ip(224, 0, 0, 1), ip(224, 0, 0, rnd(2, 254)), ip(rnd(225, 239), rnd(0, 255), rnd(0, 255), rnd(1, 254))]),
+      bcast: () => ip(255, 255, 255, 255),
+    };
+    const v = rnd(0, 5);
+    if (v <= 1) {
+      const k = pick(Object.keys(MEAN));
+      const a = make[k]();
+      const r = IPv4.special(a);
+      return {
+        q: `Was für eine Adresse ist <b>${F(a)}</b>?`,
+        choices: Object.values(MEAN),
+        check: x => x === MEAN[k],
+        sol: `<b>${F(a)}</b>${r.cidr !== '–' ? ` liegt in <code>${r.cidr}</code>` : ''}: ${r.name}. ${r.text}`,
+      };
+    }
+    if (v === 2) {
+      const a = make.apipa();
+      const causes = ['Kein DHCP-Server erreichbar', 'IP-Adresse doppelt vergeben', 'Falscher DNS-Server eingetragen', 'Subnetzmaske zu klein gewählt'];
+      return {
+        q: `<code>ipconfig</code> zeigt bei einem PC die Adresse <b>${F(a)}</b>, Maske 255.255.0.0 und <b>kein Standardgateway</b>. Was ist die wahrscheinlichste Ursache?`,
+        choices: [...causes].sort(() => Math.random() - .5),
+        check: x => x === causes[0],
+        sol: '169.254.x.x ist eine <b>APIPA-Adresse</b>: Der PC hat sich selbst eine Adresse gegeben, weil <b>kein DHCP-Server geantwortet</b> hat. Prüfen: Kabel, Switch-Port, WLAN, VLAN, DHCP-Server.',
+      };
+    }
+    if (v === 3) {
+      const c = pick([
+        { a: ip(127, 0, 0, rnd(1, 9)), p: 8, ok: false, why: 'Loopback – das ist immer das Gerät selbst.' },
+        { a: ip(0, 0, 0, 0), p: 0, ok: false, why: '0.0.0.0 bedeutet „noch keine Adresse“.' },
+        { a: ip(255, 255, 255, 255), p: 32, ok: false, why: 'Das ist der Broadcast an alle im eigenen Netz.' },
+        { a: ip(224, 0, 0, rnd(1, 20)), p: 4, ok: false, why: 'Multicast-Adressen bezeichnen eine Empfängergruppe, kein einzelnes Gerät.' },
+        { a: ip(192, 168, rnd(0, 255), 0), p: 24, ok: false, why: 'Bei /24 ist das die Netzadresse.' },
+        { a: ip(192, 168, rnd(0, 255), 255), p: 24, ok: false, why: 'Bei /24 ist das die Broadcastadresse.' },
+        { a: ip(192, 168, rnd(0, 255), rnd(1, 254)), p: 24, ok: true, why: 'Private Adresse, weder Netz- noch Broadcastadresse.' },
+        { a: ip(10, rnd(0, 255), rnd(0, 255), rnd(1, 254)), p: 16, ok: true, why: 'Private Adresse aus 10.0.0.0/8 – kein Sonderfall.' },
+        { a: ip(172, rnd(16, 31), rnd(0, 255), rnd(1, 254)), p: 24, ok: true, why: 'Private Adresse aus 172.16.0.0/12 – kein Sonderfall.' },
+      ]);
+      const shown = c.p >= 8 && c.p <= 30 ? `${F(c.a)}/${c.p}` : F(c.a);
+      return {
+        q: `Darf man die Adresse <b>${shown}</b> einem PC fest als IP-Adresse eintragen?`,
+        choices: ['ja', 'nein'],
+        check: x => (x === 'ja') === c.ok,
+        sol: `<b>${c.ok ? 'Ja' : 'Nein'}</b> – ${c.why}`,
+      };
+    }
+    if (v === 4) {
+      return {
+        q: 'Welche IP-Adresse steckt hinter dem Namen <b>localhost</b>?',
+        ph: 'a.b.c.d',
+        check: x => IPv4.parse(x) === ip(127, 0, 0, 1),
+        sol: '<b>localhost</b> = <b>127.0.0.1</b> (Loopback, das Gerät selbst).',
+      };
+    }
+    return {
+      q: 'Welche <b>Subnetzmaske</b> bekommt ein Gerät, das sich per APIPA selbst eine Adresse gegeben hat?',
+      ph: 'Maske oder /Präfix',
+      check: x => IPv4.parseMask(x) === 16,
+      sol: 'APIPA nutzt den Bereich <b>169.254.0.0/16</b> – also die Maske <b>255.255.0.0</b>.',
+    };
+  }
+
   const BELTS = [
     { id: 'weiss', name: 'Weißer Gürtel', topic: 'Binär ↔ Dezimal', color: '#f4f1ea', gen: genBinary },
     { id: 'gelb', name: 'Gelber Gürtel', topic: 'Präfix ↔ Subnetzmaske', color: '#facc15', gen: genMask },
     { id: 'orange', name: 'Oranger Gürtel', topic: 'Klassen & private Adressen', color: '#f97316', gen: genClass },
     { id: 'gruen', name: 'Grüner Gürtel', topic: 'Netzadresse bestimmen', color: '#16a34a', gen: genNetwork },
     { id: 'blau', name: 'Blauer Gürtel', topic: 'Broadcast & Hostbereich', color: '#2563eb', gen: genRange },
+    { id: 'lila', name: 'Lila Gürtel', topic: 'Besondere Adressen', color: '#7c3aed', gen: genSpecial },
     { id: 'braun', name: 'Brauner Gürtel', topic: 'Hosts zählen & Präfix wählen', color: '#8b5a2b', gen: genHosts },
     { id: 'schwarz', name: 'Schwarzer Gürtel', topic: 'Subnetting', color: '#1c1917', gen: genSubnet },
   ];

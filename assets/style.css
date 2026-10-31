@@ -511,7 +511,7 @@ blockquote.rfc cite { display: block; margin-top: .5rem; font: italic .85rem var
 .belt-img { display: block; width: 58px; height: auto; transition: opacity .3s; }
 .belt-btn:not(.earned) .belt-img { opacity: .75; }
 .belt-btn:not(.earned):hover .belt-img, .belt-btn.active:not(.earned) .belt-img { opacity: 1; }
-.belt-award { display: block; width: min(220px, 60%); height: auto; margin: .4rem auto .2rem; animation: award .7s cubic-bezier(.3, 1.5, .5, 1) both; }
+.belt-award { display: block; width: 110px; height: auto; margin: .4rem 0 .2rem; animation: award .7s cubic-bezier(.3, 1.5, .5, 1) both; }
 @keyframes award { 0% { transform: scale(.2) rotate(-25deg); opacity: 0; } 100% { transform: none; opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .belt-award { animation: none; } }
 @media (prefers-color-scheme: dark) {
@@ -818,3 +818,81 @@ kbd { font: 600 .8em var(--mono); border: 1px solid var(--line-strong); border-b
 .tp-edit:not(.locked) .tp-node { cursor: grab; }
 .dragging, .dragging .tp-edit .tp-node { cursor: grabbing; }
 .dragging .tp-rubber { display: none; }
+
+/* ---------- Bilder: Dojo-Tor, Illustrationen ---------- */
+.page { position: relative; }
+/* Illustration rechts neben dem Stationskopf – nur, wenn daneben Platz ist */
+.head-art { position: absolute; right: 0; top: 22px; height: 150px; width: auto; pointer-events: none; }
+@media (max-width: 1120px) { .head-art { display: none; } }
+
+/* Start eines Themas: Titel und Einleitung im Dojo-Tor */
+.hero { position: relative; max-width: 960px; margin: 14px auto 6px; padding: 0; container-type: inline-size; }
+.hero-frame { display: block; width: 100%; height: auto; }
+.hero-in {
+  position: absolute; left: 17%; right: 17%; top: 21%; bottom: 12%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+}
+.hero-in .eyebrow { font-size: clamp(9px, 1.15cqi, 11px); }
+.hero-in h1 { font-size: clamp(20px, 4.3cqi, 40px); margin: .3em 0 .35em; }
+.hero-in .lead { font-size: clamp(12px, 1.72cqi, 16px); line-height: 1.55; }
+@media (max-width: 700px) {
+  .hero { margin: 0; }
+  .hero-frame { display: none; }
+  .hero-in { position: static; display: block; text-align: left; padding: 28px 0 22px; }
+  .hero-in h1 { font-size: 24px; margin: 10px 0 12px; }
+  .hero-in .lead { font-size: 15px; line-height: 1.7; }
+}
+
+/* Pokal in der Abschlusskarte, Bonsai in der Fußzeile */
+.has-art { display: flow-root; }
+.card-art { float: right; height: 120px; width: auto; margin: -4px 0 4px 16px; }
+@media (max-width: 600px) { .card-art { height: 80px; } }
+.site-footer { display: flow-root; }
+.footer-art { float: right; height: 86px; width: auto; margin: -8px 0 0 16px; }
+
+/* Gürtel-Verleihung: Fenster mit dem Dojo-Tor */
+.award {
+  position: fixed; inset: 0; z-index: 900; display: grid; place-items: center; padding: 16px;
+  background: rgb(0 0 0 / .55); animation: fade .25s ease;
+}
+.award.out { opacity: 0; transition: opacity .25s; }
+.award-frame { position: relative; width: min(760px, 100%); container-type: inline-size; animation: award-pop .5s cubic-bezier(.3, 1.4, .5, 1) both; }
+.award-frame::before {
+  content: ""; position: absolute; left: 11%; right: 11%; top: 14%; bottom: 9%;
+  background: var(--surface); border-radius: 6px;
+}
+.award-bg { position: relative; display: block; width: 100%; height: auto; }
+.award-in {
+  position: absolute; left: 17%; right: 17%; top: 20%; bottom: 12%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+}
+.award-belt { width: 36cqi; max-width: 260px; height: auto; animation: award .7s .15s cubic-bezier(.3, 1.5, .5, 1) both; }
+.award-t { font: 700 clamp(16px, 4cqi, 30px)/1.2 var(--display); margin: .3em 0 0; color: var(--ink); }
+.award-s { font-size: clamp(11px, 1.9cqi, 15px); color: var(--muted); margin: .25em 0 .9em; }
+@keyframes award-pop { from { transform: scale(.7); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (max-width: 480px) { .award-ok { font-size: 11px; padding: 6px 10px; } }
+@media (prefers-reduced-motion: reduce) { .award, .award-frame, .award-belt { animation: none; } }
+@media print { .head-art, .card-art, .footer-art, .hero-frame { display: none !important; } .hero-in { position: static; } }
+
+/* ---------- Besondere Adressen ---------- */
+.b-split { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 1.25rem; align-items: start; }
+@media (max-width: 900px) { .b-split { grid-template-columns: minmax(0, 1fr); } }
+.console {
+  margin: .4rem 0 0; padding: 14px 16px; border-radius: 10px; overflow-x: auto;
+  background: #0C0C0C; color: #CCCCCC; font: 500 12.5px/1.6 var(--mono); white-space: pre;
+}
+.console .c-cmd { color: #F2F2F2; font-weight: 700; }
+.console .c-hi { color: #F9D65C; }
+.b-steps { padding-left: 1.3rem; }
+.b-steps li { margin: .3rem 0; }
+.b-tbl td.no { color: var(--err); font-weight: 600; }
+.b-tbl td.yes { color: var(--ok); font-weight: 600; }
+.b-field { max-width: 320px; }
+.b-out { margin-top: .9rem; }
+.b-res { border-left: 4px solid var(--info); background: var(--info-bg); border-radius: 0 10px 10px 0; padding: .7rem 1rem; }
+.b-res p { margin: .3rem 0; }
+.b-res.b-priv, .b-res.b-pub { border-color: var(--ok); background: var(--ok-bg); }
+.b-res.b-apipa, .b-res.b-loop, .b-res.b-null, .b-res.b-bcast { border-color: var(--accent-2); background: color-mix(in srgb, var(--accent-2) 12%, var(--surface)); }
+.b-name { font: 700 1.1rem var(--display); }
+.b-host.yes { color: var(--ok); font-weight: 600; }
+.b-host.no { color: var(--err); font-weight: 600; }

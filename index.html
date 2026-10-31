@@ -31,8 +31,9 @@
       <a href="#grundlagen" data-theme="ipv4"><span class="tab-num">1</span>Grundlagen</a>
       <a href="#werkstatt" data-theme="ipv4"><span class="tab-num">2</span>Masken-Werkstatt</a>
       <a href="#klassen" data-theme="ipv4"><span class="tab-num">3</span>Netzklassen</a>
-      <a href="#dojo" data-theme="ipv4"><span class="tab-num">4</span>Übungs-Dojo</a>
-      <a href="#planer" data-theme="ipv4"><span class="tab-num">5</span>Firmennetz-Planer</a>
+      <a href="#besondere" data-theme="ipv4"><span class="tab-num">4</span>Besondere Adressen</a>
+      <a href="#dojo" data-theme="ipv4"><span class="tab-num">5</span>Übungs-Dojo</a>
+      <a href="#planer" data-theme="ipv4"><span class="tab-num">6</span>Firmennetz-Planer</a>
       <a href="#topo-grundlagen" data-theme="topo"><span class="tab-num">1</span>Topologien verstehen</a>
       <a href="#topo-baukasten" data-theme="topo"><span class="tab-num">2</span>Baukasten</a>
       <a href="#topo-dojo" data-theme="topo"><span class="tab-num">3</span>Topologie-Dojo</a>
@@ -42,10 +43,13 @@
   <main>
     <!-- ============================ 1 GRUNDLAGEN ============================ -->
     <section id="grundlagen" class="page" data-theme="ipv4">
-      <header class="page-head">
-        <p class="eyebrow">IPv4 · Station 1 · Grundlagen</p>
-        <h1>IPv4 verstehen – Bit für Bit.</h1>
-        <p class="lead">Im ersten Thema des Netzwerktechnik-Dojos lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die fünf Stationen – danach wird das nächste Thema <b>Topologien</b> freigeschaltet.</p>
+      <header class="page-head hero">
+        <img class="hero-frame" src="assets/images/rahmen.webp" alt="" width="1200" height="676">
+        <div class="hero-in">
+          <p class="eyebrow">IPv4 · Station 1 · Grundlagen</p>
+          <h1>IPv4 verstehen – Bit für Bit.</h1>
+          <p class="lead">Im ersten Thema des Netzwerktechnik-Dojos lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die sechs Stationen – danach wird das nächste Thema <b>Topologien</b> freigeschaltet.</p>
+        </div>
       </header>
 
       <article class="card">
@@ -108,6 +112,7 @@
     <!-- ============================ 2 WERKSTATT ============================ -->
     <section id="werkstatt" class="page" data-theme="ipv4">
       <header class="page-head">
+        <img class="head-art" src="assets/images/el-laptop.webp" alt="">
         <p class="eyebrow">IPv4 · Station 2 · Interaktiv</p>
         <h1>Masken-Werkstatt</h1>
         <p class="lead">Gib eine IP-Adresse ein und verschiebe die Grenze zwischen Netz- und Hostanteil – mit dem Regler, per Maske oder durch Klick auf die Bits der Maske.</p>
@@ -150,6 +155,7 @@
     <!-- ============================ 3 KLASSEN ============================ -->
     <section id="klassen" class="page" data-theme="ipv4">
       <header class="page-head">
+        <img class="head-art" src="assets/images/el-rolle.webp" alt="">
         <p class="eyebrow">IPv4 · Station 3 · Geschichte &amp; Missverständnis</p>
         <h1>Netzklassen</h1>
         <p class="lead">Woran erkennt man eine Klasse? Und warum heißt es oft „192.168.x.x ist ein Klasse-C-Netz mit 255.255.255.0“, während in RFC 1918 „192.168/16“ steht? Wer hat recht?</p>
@@ -262,8 +268,109 @@
       </article>
 
       <article class="card next-card">
+        <h2>Und welche Adressen sind tabu?</h2>
+        <p>Neben den privaten Bereichen gibt es Adressen mit fester Sonderbedeutung – zum Beispiel 127.0.0.1 oder die 169.254.x.x, die Windows vergibt, wenn etwas schiefläuft.</p>
+        <a class="btn primary" href="#besondere">Weiter zu den besonderen Adressen →</a>
+      </article>
+    </section>
+
+    <!-- ============================ 4 BESONDERE ADRESSEN ============================ -->
+    <section id="besondere" class="page" data-theme="ipv4">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-laterne.webp" alt="">
+        <p class="eyebrow">IPv4 · Station 4 · Sonderfälle</p>
+        <h1>Besondere Adressen</h1>
+        <p class="lead">Nicht jede IPv4-Adresse darf einem Gerät gegeben werden. Manche Bereiche haben eine feste Bedeutung – und wer sie kennt, erkennt Fehler beim Einrichten sofort. Wer zum Beispiel bei <code>ipconfig</code> eine <b>169.254.x.x</b> sieht, weiß gleich, wo er suchen muss.</p>
+      </header>
+
+      <article class="card">
+        <h2>127.0.0.1 und localhost – das Gerät selbst</h2>
+        <div class="b-split">
+          <div>
+            <p>Der ganze Bereich <b>127.0.0.0/8</b> ist für das <b>Loopback</b> reserviert. Üblich ist <b>127.0.0.1</b>, dafür gibt es den Namen <b>localhost</b>. Pakete an diese Adresse verlassen den Rechner nie – sie werden intern „zurückgeschleift“.</p>
+            <ul class="ticks">
+              <li><code>ping 127.0.0.1</code> prüft, ob TCP/IP auf dem eigenen Rechner funktioniert – das klappt sogar ohne Netzwerkkabel. Über Netzwerkkarte, Kabel oder Netz sagt dieser Test deshalb <b>nichts</b> aus.</li>
+              <li>Programme auf demselben Rechner sprechen sich darüber an, z. B. ein Webserver unter <code>http://localhost</code>.</li>
+              <li>Einem Gerät darf man diese Adresse nie als „normale“ IP-Adresse geben.</li>
+            </ul>
+            <p class="note">In IPv6 heißt die Loopback-Adresse <code>::1</code> – mehr dazu im Thema IPv6.</p>
+          </div>
+          <pre class="console" aria-label="Windows-Eingabeaufforderung: ping 127.0.0.1"><span class="c-cmd">C:\&gt; ping 127.0.0.1</span>
+
+Ping wird ausgeführt für 127.0.0.1 mit 32 Bytes Daten:
+Antwort von 127.0.0.1: Bytes=32 Zeit&lt;1ms TTL=128
+Antwort von 127.0.0.1: Bytes=32 Zeit&lt;1ms TTL=128
+Antwort von 127.0.0.1: Bytes=32 Zeit&lt;1ms TTL=128
+Antwort von 127.0.0.1: Bytes=32 Zeit&lt;1ms TTL=128</pre>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>169.254.x.x – APIPA: Wenn DHCP nicht antwortet</h2>
+        <div class="b-split">
+          <div>
+            <p>Normalerweise bekommt ein PC seine Adresse automatisch von einem <b>DHCP-Server</b> (meist im Router). Antwortet keiner, gibt sich Windows selbst eine Adresse aus <b>169.254.0.0/16</b>. Das heißt <b>APIPA</b> (Automatic Private IP Addressing), allgemein <b>Link-Local-Adresse</b> (<a href="https://www.rfc-editor.org/info/rfc3927/" target="_blank" rel="noopener">RFC 3927</a>).</p>
+            <ol class="b-steps">
+              <li>Der PC ruft per Broadcast nach einem DHCP-Server – keine Antwort.</li>
+              <li>Er wählt zufällig eine Adresse zwischen <b>169.254.1.0</b> und <b>169.254.254.255</b> und prüft, ob sie schon jemand benutzt.</li>
+              <li>Maske <b>255.255.0.0</b>, <b>kein Standardgateway</b> – also kein Internet, nur Kontakt zu anderen 169.254-Geräten im selben Netzsegment.</li>
+              <li>Im Hintergrund fragt er weiter. Sobald ein DHCP-Server antwortet, wechselt er zur richtigen Adresse.</li>
+            </ol>
+          </div>
+          <pre class="console" aria-label="Windows-Ausgabe von ipconfig mit APIPA-Adresse"><span class="c-cmd">C:\&gt; ipconfig</span>
+
+Ethernet-Adapter Ethernet:
+
+   Verbindungsspezifisches DNS-Suffix:
+   <span class="c-hi">Autokonfiguration IPv4-Adresse  . : 169.254.83.17</span>
+   Subnetzmaske  . . . . . . . . . . : 255.255.0.0
+   <span class="c-hi">Standardgateway . . . . . . . . . :</span></pre>
+        </div>
+        <p class="callout"><b>Merke:</b> Siehst du 169.254.x.x, ist nicht die Adresse das Problem, sondern der <b>Weg zum DHCP-Server</b>: Kabel, Switch-Port, WLAN-Verbindung, falsches VLAN – oder der DHCP-Server selbst ist ausgefallen.</p>
+      </article>
+
+      <article class="card">
+        <h2>Weitere reservierte Adressen</h2>
+        <div class="tbl-wrap">
+          <table class="tbl compact b-tbl">
+            <thead><tr><th>Bereich</th><th>Bedeutung</th><th>Einem Gerät geben?</th><th>Wo begegnet sie dir?</th></tr></thead>
+            <tbody>
+              <tr><td><code>0.0.0.0</code></td><td>„noch keine Adresse“ bzw. „alle Schnittstellen“</td><td class="no">nein</td><td>Absender der ersten DHCP-Anfrage; als <code>0.0.0.0/0</code> die Standardroute in Routingtabellen</td></tr>
+              <tr><td><code>255.255.255.255</code></td><td>Broadcast an alle im eigenen Netz</td><td class="no">nein</td><td>DHCP-Anfrage des PCs; Router leiten sie nicht weiter</td></tr>
+              <tr><td>Netz- und Broadcastadresse eines Subnetzes</td><td>erste bzw. letzte Adresse, z. B. <code>192.168.1.0</code> und <code>192.168.1.255</code> bei /24</td><td class="no">nein</td><td>bei jeder Subnetz-Berechnung (<a href="#grundlagen">Grundlagen</a>)</td></tr>
+              <tr><td><code>127.0.0.0/8</code></td><td>Loopback, das Gerät selbst</td><td class="no">nein</td><td><code>ping 127.0.0.1</code>, <code>localhost</code></td></tr>
+              <tr><td><code>169.254.0.0/16</code></td><td>APIPA / Link-Local</td><td class="no">nein (vergibt sich das Gerät selbst)</td><td><code>ipconfig</code>, wenn DHCP fehlt</td></tr>
+              <tr><td><code>10.0.0.0/8</code> · <code>172.16.0.0/12</code> · <code>192.168.0.0/16</code></td><td>privat (RFC 1918)</td><td class="yes">ja</td><td>jedes Heim-, Schul- und Firmennetz (<a href="#klassen">Netzklassen</a>)</td></tr>
+              <tr><td><code>100.64.0.0/10</code></td><td>Provider-NAT (Carrier-Grade NAT)</td><td class="no">nein</td><td>WAN-Adresse von LTE-/5G-Routern: Man teilt sich eine öffentliche Adresse mit anderen Kunden</td></tr>
+              <tr><td><code>192.0.2.0/24</code> · <code>198.51.100.0/24</code> · <code>203.0.113.0/24</code></td><td>nur für Dokumentation</td><td class="no">nein</td><td>Beispiele in Büchern und Anleitungen</td></tr>
+              <tr><td><code>224.0.0.0/4</code></td><td>Multicast (ehemals Klasse D)</td><td class="no">nein</td><td>Nachrichten an eine Gruppe, z. B. Video-Streaming oder Routing-Protokolle</td></tr>
+              <tr><td><code>240.0.0.0/4</code></td><td>reserviert (ehemals Klasse E)</td><td class="no">nein</td><td>praktisch nirgends</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Adress-Detektor</h2>
+        <p>Gib eine beliebige IPv4-Adresse ein und finde heraus, ob sie etwas Besonderes ist.</p>
+        <label class="field b-field"><span>IPv4-Adresse</span><input id="b-ip" value="169.254.83.17" spellcheck="false" autocomplete="off" inputmode="decimal"></label>
+        <div class="presets"><span class="muted">Ausprobieren:</span>
+          <button type="button" class="pill" data-b="127.0.0.1">127.0.0.1</button>
+          <button type="button" class="pill" data-b="169.254.83.17">169.254.83.17</button>
+          <button type="button" class="pill" data-b="192.168.178.20">192.168.178.20</button>
+          <button type="button" class="pill" data-b="0.0.0.0">0.0.0.0</button>
+          <button type="button" class="pill" data-b="255.255.255.255">255.255.255.255</button>
+          <button type="button" class="pill" data-b="100.72.14.3">100.72.14.3</button>
+          <button type="button" class="pill" data-b="224.0.0.1">224.0.0.1</button>
+          <button type="button" class="pill" data-b="203.0.113.5">203.0.113.5</button>
+          <button type="button" class="pill" data-b="8.8.8.8">8.8.8.8</button>
+        </div>
+        <div id="b-out" class="b-out" aria-live="polite"></div>
+      </article>
+
+      <article class="card next-card">
         <h2>Jetzt selbst rechnen</h2>
-        <p>Im Übungs-Dojo trainierst du Netzadressen, Broadcasts, Masken und Hostanzahlen mit zufällig erzeugten Aufgaben – Gürtel für Gürtel.</p>
+        <p>Im Übungs-Dojo trainierst du Netzadressen, Broadcasts, Masken, Hostanzahlen und besondere Adressen mit zufällig erzeugten Aufgaben – Gürtel für Gürtel.</p>
         <a class="btn primary" href="#dojo">Weiter zum Übungs-Dojo →</a>
       </article>
     </section>
@@ -271,9 +378,10 @@
     <!-- ============================ 4 DOJO ============================ -->
     <section id="dojo" class="page" data-theme="ipv4">
       <header class="page-head">
-        <p class="eyebrow">IPv4 · Station 4 · Training</p>
+        <img class="head-art" src="assets/images/el-puppe.webp" alt="">
+        <p class="eyebrow">IPv4 · Station 5 · Training</p>
         <h1>Übungs-Dojo</h1>
-        <p class="lead">Sieben Gürtel, sieben Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten. Die Aufgaben werden zufällig erzeugt – du kannst also beliebig lange trainieren.</p>
+        <p class="lead">Acht Gürtel, acht Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten. Die Aufgaben werden zufällig erzeugt – du kannst also beliebig lange trainieren.</p>
       </header>
       <div class="dojo-layout" id="d-ipv4"></div>
 
@@ -287,7 +395,8 @@
     <!-- ============================ 5 PLANER ============================ -->
     <section id="planer" class="page" data-theme="ipv4">
       <header class="page-head">
-        <p class="eyebrow">IPv4 · Station 5 · Praxis</p>
+        <img class="head-art" src="assets/images/el-rack.webp" alt="">
+        <p class="eyebrow">IPv4 · Station 6 · Praxis</p>
         <h1>Firmennetz-Planer</h1>
         <p class="lead">Eine Firma hat drei Abteilungen: <b class="c-d0">Verwaltung</b>, <b class="c-d1">Entwicklung</b> und <b class="c-d2">Reparatur</b>. Jede Abteilung soll ein <b>eigenes Subnetz</b> bekommen, ein Router verbindet sie. Plane das Netz Schritt für Schritt – das Dojo prüft jede Eingabe sofort.</p>
         <label class="switch"><input type="checkbox" id="p-help"><span>Hilfen einblenden</span></label>
@@ -355,19 +464,23 @@
         <div id="p-share-fb"></div>
       </article>
 
-      <article class="card next-card no-print">
+      <article class="card next-card no-print has-art">
+        <img class="card-art" src="assets/images/el-pokal.webp" alt="">
         <h2>Geschafft – weiter zum nächsten Thema!</h2>
-        <p>Du hast alle fünf IPv4-Stationen durchlaufen. Als Nächstes geht es um <b>Topologien</b>: Wie werden Geräte in einem Netzwerk miteinander verkabelt – und was passiert, wenn etwas ausfällt?</p>
+        <p>Du hast alle sechs IPv4-Stationen durchlaufen. Als Nächstes geht es um <b>Topologien</b>: Wie werden Geräte in einem Netzwerk miteinander verkabelt – und was passiert, wenn etwas ausfällt?</p>
         <a class="btn primary" href="#topo-grundlagen">Weiter zum Thema Topologien →</a>
       </article>
     </section>
 
     <!-- ============================ TOPOLOGIEN 1 ============================ -->
     <section id="topo-grundlagen" class="page" data-theme="topo">
-      <header class="page-head">
-        <p class="eyebrow">Topologien · Station 1 · Grundlagen</p>
-        <h1>Netzwerk-Topologien</h1>
-        <p class="lead">Die <b>Topologie</b> beschreibt, wie die Geräte eines Netzwerks miteinander verbunden sind – die Form des Netzes. Sie entscheidet, wie viele Leitungen man braucht, wie teuer das Netz wird und was passiert, wenn ein Gerät oder eine Leitung ausfällt.</p>
+      <header class="page-head hero">
+        <img class="hero-frame" src="assets/images/rahmen.webp" alt="" width="1200" height="676">
+        <div class="hero-in">
+          <p class="eyebrow">Topologien · Station 1 · Grundlagen</p>
+          <h1>Netzwerk-Topologien</h1>
+          <p class="lead">Die <b>Topologie</b> beschreibt, wie die Geräte eines Netzwerks miteinander verbunden sind – die Form des Netzes. Sie entscheidet, wie viele Leitungen man braucht, wie teuer das Netz wird und was passiert, wenn ein Gerät oder eine Leitung ausfällt.</p>
+        </div>
       </header>
 
       <p class="callout t-try">Probier es aus: <b>Klick in den Bildern auf ein Gerät oder eine Leitung</b>, um einen Ausfall zu simulieren. Ausgegraute Geräte können mit niemandem mehr kommunizieren.</p>
@@ -479,6 +592,7 @@
     <!-- ============================ TOPOLOGIEN 2 ============================ -->
     <section id="topo-baukasten" class="page" data-theme="topo">
       <header class="page-head">
+        <img class="head-art" src="assets/images/el-kabel.webp" alt="">
         <p class="eyebrow">Topologien · Station 2 · Interaktiv</p>
         <h1>Topologie-Baukasten</h1>
         <p class="lead">Wähle eine Topologie und verbinde die Geräte so, dass sie entsteht. <b>Klick auf ein Gerät und dann auf ein zweites</b> – schon liegt eine Leitung. Ein Klick auf eine Leitung entfernt sie wieder. Geräte kannst du per <b>Drag-and-drop</b> an eine andere Stelle ziehen.</p>
@@ -508,6 +622,7 @@
     <!-- ============================ TOPOLOGIEN 3 ============================ -->
     <section id="topo-dojo" class="page" data-theme="topo">
       <header class="page-head">
+        <img class="head-art" src="assets/images/el-puppe.webp" alt="">
         <p class="eyebrow">Topologien · Station 3 · Training</p>
         <h1>Topologie-Dojo</h1>
         <p class="lead">Vier Gürtel: Topologien erkennen, Leitungen zählen, Ausfälle einschätzen und selbst bauen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten.</p>
@@ -524,6 +639,7 @@
     <!-- ============================ GESPERRT ============================ -->
     <section id="gesperrt" class="page lock-page">
       <header class="page-head">
+        <img class="head-art" src="assets/images/el-tor.webp" alt="">
         <p class="eyebrow">Noch gesperrt</p>
         <h1>🔒 <span id="lock-theme"></span></h1>
         <p class="lead">Dieses Thema wird freigeschaltet, sobald du alle Stationen des Themas <b id="lock-req"></b> durchgearbeitet hast.</p>
@@ -537,7 +653,8 @@
   </main>
 
   <footer class="site-footer">
-    <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996)</p>
+    <img class="footer-art" src="assets/images/el-bonsai.webp" alt="">
+    <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996) · <a href="https://www.rfc-editor.org/info/rfc3927/" target="_blank" rel="noopener">RFC 3927</a> (APIPA/Link-Local) · <a href="https://www.rfc-editor.org/info/rfc6890/" target="_blank" rel="noopener">RFC 6890</a> (Besondere Adressbereiche)</p>
     <p>Netzwerktechnik-Dojo · Jakob-Preh-Schule · statische HTML-Seite, läuft komplett im Browser – keine Daten werden übertragen, keine externen Dienste geladen.</p>
   </footer>
 
@@ -546,6 +663,7 @@
   <script src="assets/grundlagen.js"></script>
   <script src="assets/werkstatt.js"></script>
   <script src="assets/klassen.js"></script>
+  <script src="assets/besondere.js"></script>
   <script src="assets/dojo-engine.js"></script>
   <script src="assets/dojo.js"></script>
   <script src="assets/planer.js"></script>

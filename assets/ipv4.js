@@ -87,8 +87,49 @@ const IPv4 = (() => {
   const bin = n => n.toString(2).padStart(32, '0');
   const fmtNum = x => x.toLocaleString('de-DE');
 
+  /* Besondere Adressbereiche (IANA-Register nach RFC 6890), spezifischste zuerst.
+     host: darf die Adresse einem Gerät zugewiesen werden? */
+  const SPECIAL = [
+    { cidr: '0.0.0.0/32', key: 'null', name: 'Diese Adresse / unbekannt', host: false,
+      text: 'Steht für „noch keine Adresse“ bzw. „alle Schnittstellen“. Ein PC nutzt sie als Absender, solange er per DHCP noch auf seine Adresse wartet. In Routingtabellen bedeutet 0.0.0.0/0 die Standardroute.' },
+    { cidr: '255.255.255.255/32', key: 'bcast', name: 'Broadcast an alle im eigenen Netz', host: false,
+      text: 'Erreicht alle Geräte im eigenen Netzsegment, wird aber von keinem Router weitergeleitet. Die erste DHCP-Anfrage („DHCP Discover“) geht an diese Adresse.' },
+    { cidr: '0.0.0.0/8', key: 'null', name: '„Dieses Netz“', host: false,
+      text: 'Der ganze Bereich 0.x.x.x ist reserviert und wird keinem Gerät zugewiesen.' },
+    { cidr: '127.0.0.0/8', key: 'loop', name: 'Loopback (localhost)', host: false,
+      text: 'Das Gerät selbst. Pakete an 127.0.0.1 verlassen den Rechner nie. Der Name <b>localhost</b> steht für 127.0.0.1.' },
+    { cidr: '169.254.0.0/16', key: 'apipa', name: 'APIPA / Link-Local', host: false,
+      text: 'Hat sich ein Gerät selbst gegeben, weil kein DHCP-Server geantwortet hat. Kein Gateway, kein Internet – nur Geräte mit 169.254.x.x im selben Segment sind erreichbar.' },
+    { cidr: '10.0.0.0/8', key: 'priv', name: 'Privat (RFC 1918)', host: true,
+      text: 'Darf in jedem lokalen Netz frei verwendet werden, wird im Internet aber nicht geroutet.' },
+    { cidr: '172.16.0.0/12', key: 'priv', name: 'Privat (RFC 1918)', host: true,
+      text: 'Darf in jedem lokalen Netz frei verwendet werden, wird im Internet aber nicht geroutet.' },
+    { cidr: '192.168.0.0/16', key: 'priv', name: 'Privat (RFC 1918)', host: true,
+      text: 'Darf in jedem lokalen Netz frei verwendet werden, wird im Internet aber nicht geroutet.' },
+    { cidr: '100.64.0.0/10', key: 'cgn', name: 'Provider-NAT (Carrier-Grade NAT)', host: false,
+      text: 'Gehört dem Internetanbieter (RFC 6598). Taucht z. B. als WAN-Adresse eines LTE-/5G-Routers auf – dann teilt man sich eine öffentliche Adresse mit anderen Kunden. Nicht fürs eigene Netz verwenden.' },
+    { cidr: '192.0.2.0/24', key: 'doc', name: 'Dokumentation (Beispieladressen)', host: false,
+      text: 'Nur für Beispiele in Büchern und Anleitungen (RFC 5737) – wie 555-Telefonnummern im Film.' },
+    { cidr: '198.51.100.0/24', key: 'doc', name: 'Dokumentation (Beispieladressen)', host: false,
+      text: 'Nur für Beispiele in Büchern und Anleitungen (RFC 5737).' },
+    { cidr: '203.0.113.0/24', key: 'doc', name: 'Dokumentation (Beispieladressen)', host: false,
+      text: 'Nur für Beispiele in Büchern und Anleitungen (RFC 5737).' },
+    { cidr: '224.0.0.0/4', key: 'mcast', name: 'Multicast (ehemals Klasse D)', host: false,
+      text: 'Adresse einer Empfängergruppe, nicht eines einzelnen Geräts – z. B. 224.0.0.1 = alle Geräte im Segment.' },
+    { cidr: '240.0.0.0/4', key: 'res', name: 'Reserviert (ehemals Klasse E)', host: false,
+      text: 'Für zukünftige Nutzung reserviert und praktisch nicht verwendbar.' },
+  ].map(r => {
+    const [a, p] = r.cidr.split('/');
+    return { ...r, net: parse(a), prefix: Number(p) };
+  });
+
+  // Passender Sonderbereich oder „öffentlich“
+  const special = ip => SPECIAL.find(r => contains(r.net, r.prefix, ip)) ||
+    { cidr: '–', key: 'pub', name: 'Öffentliche Adresse', host: true,
+      text: 'Weltweit eindeutig und im Internet erreichbar. Wird vom Provider bzw. der Regional Internet Registry vergeben – nicht einfach selbst ausdenken.' };
+
   return {
-    RFC1918, CLASSES, parse, format, octets, mask, prefixOfMask, parseMask, network, broadcast,
-    size, hosts, prefixForHosts, classOf, privateBlock, contains, overlaps, bin, fmtNum,
+    RFC1918, CLASSES, SPECIAL, parse, format, octets, mask, prefixOfMask, parseMask, network, broadcast,
+    size, hosts, prefixForHosts, classOf, privateBlock, contains, overlaps, special, bin, fmtNum,
   };
 })();

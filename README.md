@@ -12,12 +12,13 @@ Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schrit
 | 1 | Grundlagen | 32 Bit, Oktette, Netz-/Hostanteil, Maske, UND-Verknüpfung, 2ⁿ − 2 |
 | 2 | Masken-Werkstatt | IP + Maske eingeben, Bits live eingefärbt, Maskenbits anklickbar, Subnetzliste |
 | 3 | Netzklassen | Klärt das Missverständnis RFC 791 (Klassen) ↔ RFC 1918 (CIDR-Blöcke), Block-Explorer, Zeitstrahl |
-| 4 | Übungs-Dojo | 7 Gürtel mit zufällig erzeugten Aufgaben (5 richtige in Folge = Gürtel) |
-| 5 | Firmennetz-Planer | Verwaltung, Entwicklung, Reparatur: Bedarf → Klasse/CIDR wählen → Subnetting → Adressraum-Karte → Netzplan mit IP-Vergabe → Zusammenfassung |
+| 4 | Besondere Adressen | 127.0.0.1/localhost, 169.254.x.x (APIPA), 0.0.0.0, 255.255.255.255, Provider-NAT, Dokumentations- und Multicast-Adressen; Adress-Detektor |
+| 5 | Übungs-Dojo | 8 Gürtel mit zufällig erzeugten Aufgaben (5 richtige in Folge = Gürtel) |
+| 6 | Firmennetz-Planer | Verwaltung, Entwicklung, Reparatur: Bedarf → Klasse/CIDR wählen → Subnetting → Adressraum-Karte → Netzplan mit IP-Vergabe → Zusammenfassung |
 
 ## Thema Topologien
 
-Wird freigeschaltet, sobald alle fünf IPv4-Stationen einmal geöffnet wurden.
+Wird freigeschaltet, sobald alle sechs IPv4-Stationen einmal geöffnet wurden.
 
 | # | Station | Inhalt |
 |---|---------|--------|
@@ -51,12 +52,14 @@ assets/dojo-engine.js Übungs-Mechanik für alle Themen: Gürtel, Serie, Stempel
 assets/grundlagen.js  Station 1
 assets/werkstatt.js   Station 2
 assets/klassen.js     Station 3
-assets/dojo.js        Station 4 (Aufgaben)
-assets/planer.js      Station 5
+assets/besondere.js   Station 4
+assets/dojo.js        Station 5 (Aufgaben)
+assets/planer.js      Station 6
 assets/topo.js        Topologie-Kern: Geräte zeichnen, Leitungen ziehen, Struktur prüfen
 assets/topologien.js  Topologien Station 1 und 2
 assets/topo-dojo.js   Topologien Station 3
-assets/images/        Gürtelbilder aus Netzwerkkabel (guertel-<farbe>.png)
+assets/images/        Gürtelbilder aus Netzwerkkabel (guertel-<farbe>.png), Dojo-Tor als Rahmen
+                      (rahmen.webp) und Illustrationen der Stationen (el-*.webp)
 ```
 
 ## Gestaltung

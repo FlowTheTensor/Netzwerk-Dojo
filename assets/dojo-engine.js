@@ -54,11 +54,39 @@ const FX = (() => {
     el.classList.add('shake');
   }
 
+  // Gürtel-Verleihung: großes Fenster mit dem Dojo-Tor als Rahmen
+  function award({ img, title, sub }) {
+    const prev = document.activeElement;
+    const ov = document.createElement('div');
+    ov.className = 'award';
+    ov.innerHTML = `
+      <div class="award-frame" role="dialog" aria-modal="true" aria-labelledby="award-t">
+        <img class="award-bg" src="assets/images/rahmen.webp" alt="">
+        <div class="award-in">
+          <img class="award-belt" src="${img}" alt="">
+          <p class="award-t" id="award-t">${title}</p>
+          <p class="award-s">${sub}</p>
+          <button type="button" class="btn primary award-ok">Weiter trainieren</button>
+        </div>
+      </div>`;
+    const close = () => {
+      ov.classList.add('out');
+      document.removeEventListener('keydown', onKey);
+      setTimeout(() => ov.remove(), calm.matches ? 0 : 250);
+      prev?.focus?.({ preventScroll: true });
+    };
+    const onKey = e => { if (e.key === 'Escape' || e.key === 'Enter') { e.preventDefault(); close(); } };
+    ov.addEventListener('click', e => { if (e.target === ov || e.target.closest('.award-ok')) close(); });
+    document.addEventListener('keydown', onKey);
+    document.body.appendChild(ov);
+    ov.querySelector('.award-ok').focus({ preventScroll: true });
+  }
+
   const stamp = big => (big
     ? '<span class="hanko big" aria-hidden="true"><b>★</b><small>bestanden</small></span>'
     : '<span class="hanko" aria-hidden="true"><b>✔</b><small>richtig</small></span>');
 
-  return { burst, burstFrom, celebrate, pop, shake, stamp, calm };
+  return { burst, burstFrom, celebrate, pop, shake, stamp, award, calm };
 })();
 
 /* ---------- Übungs-Dojo ----------
@@ -185,6 +213,7 @@ const Dojo = (() => {
       const res = task.check(v);
       const right = typeof res === 'object' ? res.ok : res;
       let fx;
+      let earned = null;
       if (right) {
         streak++;
         fx = { pop: true };
@@ -197,6 +226,7 @@ const Dojo = (() => {
             progress[belt.id] = true;
             UI.store.set(o.storeKey, progress);
             renderBelts();
+            earned = belt;
             h += `<img class="belt-award" src="${beltImg(belt)}" alt="${esc(belt.name)}"><p class="earned-msg">Glückwunsch! Du hast den <b>${belt.name.replace(/er Gürtel$/, 'en Gürtel')}</b> erreicht.</p>`;
           } else {
             h += '<p class="earned-msg">🔥 Wieder 5 in Folge – stark!</p>';
@@ -225,6 +255,13 @@ const Dojo = (() => {
         });
       }
       finish(fx);
+      if (earned) {
+        FX.award({
+          img: beltImg(earned),
+          title: `${esc(earned.name.replace(/er Gürtel$/, 'en Gürtel'))} erreicht!`,
+          sub: `${esc(earned.topic)} – 5 Aufgaben in Folge richtig.`,
+        });
+      }
     }
 
     q('.dojo-form').addEventListener('submit', e => {
