@@ -1,7 +1,7 @@
 # Netzwerktechnik-Dojo
 # [Hier öffnen](https://flowthetensor.github.io/Netzwerk-Dojo/)
 
-Interaktive Lernseite für Netzwerktechnik – MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell, Kabel und Leitungscodes sowie Netzwerkdienste (DHCP, DNS, URL, Ports), gedacht für den Unterricht.
+Interaktive Lernseite für Netzwerktechnik – MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell, Kabel und Leitungscodes Netzwerkdienste (DHCP, DNS, URL, Ports) sowie Verschlüsselung und Anonymität, gedacht für den Unterricht.
 Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schritt und lädt
 **keine externen Ressourcen** (keine Web-Fonts, kein CDN, kein Tracking).
 
@@ -88,6 +88,22 @@ HTTPS/IMAPS/SSH statt der unverschlüsselten Dienste, DHCP immer UDP 67/68).
 | 4 | Ports | Portbereiche mit Nachschlagen, Tabelle wichtiger Ports, Socket-Demo (Quell-/Zielport, zwei Tabs), TCP oder UDP, Ablauf „Webseite öffnen“ mit Fehlersuche |
 | 5 | Dienste-Dojo | 6 Gürtel: DHCP, DNS, URL, Portnummern, Portbereiche & Sockets, Fehlersuche & Zusammenspiel |
 
+## Thema Verschlüsselung & Anonymität
+
+Letztes Thema, wird nach den Netzwerkdiensten freigeschaltet. Grundlage sind die Arbeitsblätter Verschlüsselung
+und Anonym im Netz, fachlich korrigiert und aktualisiert (digitale Signatur ohne „Schlüsseltausch“, TLS 1.3 mit
+Diffie-Hellman statt Pre-Master-Secret, Zwiebelprinzip „jeder Knoten entfernt eine Schicht“, Proxy-Stufen nach
+weitergegebenen Daten, Warnung vor freien Proxys).
+
+| # | Station | Inhalt |
+|---|---------|--------|
+| 1 | Symmetrisch | Prinzip, Caesar mit Alphabet-Leiste, Caesar knacken mit Häufigkeitsanalyse, XOR/One-Time-Pad (Bits wie auf dem Arbeitsblatt, Wort mit Zufallsschlüssel), DES bis AES, Schlüsselanzahl n·(n−1)/2 |
+| 2 | Öffentlich & privat | Schlüsselpaar und Briefkasten, „Welcher Schlüssel wofür?“ (Alice, Bob, Eve), Mini-RSA zum Nachrechnen, digitale Signatur mit Hashwert, symmetrisch vs. asymmetrisch, hybrid |
+| 3 | HTTPS & Zertifikate | Schutzziele, Diffie-Hellman mit kleinen Zahlen, TLS-1.3-Handshake als Ablauf, Forward Secrecy, Zertifikatskette, Browser-Warnungen (abgelaufen, falscher Name, selbst signiert, Angreifer im WLAN) |
+| 4 | Proxy & VPN | Pizza-Party als Proxy, Proxy-Stufen, Proxy-Kette und eigener Provider, VPN (Site-to-Site, Remote Access, kommerziell) mit Schalter |
+| 5 | Tor & Anonymität | Zwiebelprinzip Schritt für Schritt, Tabelle „Wer sieht was?“ für direkt/Proxy/VPN/Tor mit und ohne HTTPS, Grenzen der Anonymität |
+| 6 | Sicherheits-Dojo | 6 Gürtel: Caesar & XOR, symmetrisch & asymmetrisch, Schlüsselpaar/Signatur/RSA, HTTPS & Zertifikate, Proxy & VPN, Tor & „Wer sieht was?“ |
+
 ## Hinweise für Lehrkräfte
 
 - Der Planer übt **nur gleich große Subnetze (FLSM)** – alle Abteilungen bekommen dieselbe Maske.
@@ -122,6 +138,10 @@ assets/dhcp.js        Schritt-Steuerung der Dienste-Stationen, Dienste-Station 1
 assets/dns.js         Dienste-Station 2
 assets/ports.js       URL-Zerleger und Portdaten (auch fürs Dojo), Dienste-Stationen 3–4
 assets/dienste-dojo.js  Dienste-Station 5
+assets/krypto.js      Krypto-Rechenkern (Caesar, XOR, RSA; auch fürs Dojo), Sicherheits-Stationen 1–2
+assets/tls.js         Sicherheits-Station 3
+assets/anonym.js      „Wer sieht was?“-Daten (auch fürs Dojo), Sicherheits-Stationen 4–5
+assets/krypto-dojo.js Sicherheits-Station 6
 assets/mac.js         MAC-Rechenkern und MAC-Stationen 1–2
 assets/mac-dojo.js    MAC-Station 3
 assets/ipv4.js        Rechenkern (Parsen, Masken, Netz/Broadcast, Klassen, RFC 1918)
@@ -163,3 +183,4 @@ Das Schullogo (`assets/jps-logo.png`) gehört der Jakob-Preh-Schule.
 - [RFC 1034](https://www.rfc-editor.org/info/rfc1034/) / [RFC 1035](https://www.rfc-editor.org/info/rfc1035/) – Domain Name System
 - [RFC 3986](https://www.rfc-editor.org/info/rfc3986/) – URI: Generic Syntax
 - [RFC 6335](https://www.rfc-editor.org/info/rfc6335/) – Portbereiche und Vergabe durch die IANA
+- [RFC 8446](https://www.rfc-editor.org/info/rfc8446/) – TLS 1.3

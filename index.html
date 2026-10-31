@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Netzwerktechnik-Dojo</title>
-  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: MAC-Adressen, IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell, Kabel und Leitungscodes sowie DHCP, DNS, URLs und Ports.">
+  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: MAC-Adressen, IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell, Kabel und Leitungscodes DHCP, DNS, URLs und Ports sowie Verschlüsselung und Anonymität im Netz.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23C81E3A'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3E/%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/tor.css">
@@ -15,7 +15,7 @@
     <div class="header-inner">
       <a class="brand" href="#mac-grundlagen">
         <span class="brand-title">Netzwerktechnik-<i>Dojo</i></span>
-        <span class="eyebrow">MAC · IPv4 · Topologien · IPv6 · OSI · Kabel · Dienste</span>
+        <span class="eyebrow">MAC · IPv4 · Topologien · IPv6 · OSI · Kabel · Dienste · Sicherheit</span>
       </a>
       <a class="school-logo" href="https://www.bsnes.de" target="_blank" rel="noopener" title="Jakob-Preh-Schule"><img src="assets/jps-logo.png" alt="Logo der Jakob-Preh-Schule" width="324" height="182"></a>
     </div>
@@ -31,6 +31,7 @@
       <a href="#osi-grundlagen" data-theme="osi">OSI</a>
       <a href="#kabel-typen" data-theme="kabel">Kabel &amp; Signale</a>
       <a href="#dienst-dhcp" data-theme="dienste">Netzwerkdienste</a>
+      <a href="#sec-sym" data-theme="krypto">Verschlüsselung</a>
     </div>
     <div class="stationbar">
       <a href="#mac-grundlagen" data-theme="mac"><span class="tab-num">1</span>MAC verstehen</a>
@@ -65,6 +66,12 @@
       <a href="#dienst-url" data-theme="dienste"><span class="tab-num">3</span>URL</a>
       <a href="#dienst-ports" data-theme="dienste"><span class="tab-num">4</span>Ports</a>
       <a href="#dienst-dojo" data-theme="dienste"><span class="tab-num">5</span>Dienste-Dojo</a>
+      <a href="#sec-sym" data-theme="krypto"><span class="tab-num">1</span>Symmetrisch</a>
+      <a href="#sec-asym" data-theme="krypto"><span class="tab-num">2</span>Öffentlich &amp; privat</a>
+      <a href="#sec-tls" data-theme="krypto"><span class="tab-num">3</span>HTTPS &amp; Zertifikate</a>
+      <a href="#sec-proxy" data-theme="krypto"><span class="tab-num">4</span>Proxy &amp; VPN</a>
+      <a href="#sec-tor" data-theme="krypto"><span class="tab-num">5</span>Tor &amp; Anonymität</a>
+      <a href="#sec-dojo" data-theme="krypto"><span class="tab-num">6</span>Sicherheits-Dojo</a>
     </div>
   </nav>
 
@@ -1942,8 +1949,410 @@ Ablaufverfolgung beendet.</pre>
 
       <article class="card next-card has-art">
         <img class="card-art" src="assets/images/el-laternchen.webp" alt="">
+        <h2>Geschafft – weiter zum letzten Thema!</h2>
+        <p>Zum Abschluss geht es um Sicherheit: Wie verschlüsselt man Daten, wie funktioniert HTTPS – und wie anonym ist man im Netz wirklich?</p>
+        <a class="btn primary" href="#sec-sym">Weiter zum Thema Verschlüsselung &amp; Anonymität →</a>
+      </article>
+    </section>
+
+    <!-- ============================ KRYPTO 1 ============================ -->
+    <section id="sec-sym" class="page" data-theme="krypto">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-schloss.webp" alt="">
+        <p class="eyebrow">Verschlüsselung &amp; Anonymität · Station 1 · Interaktiv</p>
+        <h1>Symmetrisch verschlüsseln</h1>
+        <p class="lead">Eine Verschlüsselung macht aus einer lesbaren Nachricht (<b>Klartext</b>) einen unlesbaren <b>Geheimtext</b>. Zurück geht es nur mit dem richtigen <b>Schlüssel</b>. Bei der <b>symmetrischen</b> Verschlüsselung gibt es genau einen Schlüssel – damit wird ver- <i>und</i> entschlüsselt.</p>
+      </header>
+
+      <article class="card">
+        <h2>Das Prinzip</h2>
+        <div class="kr-flow">
+          <div class="kr-box"><b>Sender</b><span>Klartext</span></div>
+          <div class="kr-arrow"><span class="kr-key k-sym">🔑</span><small>verschlüsseln</small></div>
+          <div class="kr-box kr-cipher"><b>Geheimtext</b><span>unterwegs im Netz</span></div>
+          <div class="kr-arrow"><span class="kr-key k-sym">🔑</span><small>entschlüsseln</small></div>
+          <div class="kr-box"><b>Empfänger</b><span>Klartext</span></div>
+        </div>
+        <p class="callout"><b>Das Problem:</b> Beide brauchen <b>denselben</b> Schlüssel – und der muss vorher irgendwie sicher zum Empfänger kommen. Wird er dabei abgefangen, ist die ganze Verschlüsselung nutzlos.</p>
+      </article>
+
+      <article class="card">
+        <h2>Caesar: Buchstaben verschieben</h2>
+        <p>Schon Julius Caesar verschob jeden Buchstaben um eine feste Zahl von Stellen im Alphabet. Die Zahl ist der Schlüssel: Bei Schlüssel 2 wird aus <code>abcde</code> der Geheimtext <code>cdefg</code>.</p>
+        <div class="kr-caesar-ctrl">
+          <label class="field"><span>Klartext</span><input id="kr-c-in" value="Treffen um acht am Tor" spellcheck="false" autocomplete="off"></label>
+          <label class="field field-range"><span>Schlüssel <output id="kr-c-k-out">3</output></span><input type="range" id="kr-c-k" min="0" max="25" value="3"></label>
+        </div>
+        <div class="kr-alpha" id="kr-c-alpha"></div>
+        <div class="kr-out"><small>Geheimtext</small><code id="kr-c-out"></code></div>
+      </article>
+
+      <article class="card">
+        <h2>Übung: Caesar knacken</h2>
+        <p>Diese Nachricht wurde mit einem unbekannten Schlüssel verschoben. Es gibt nur 25 mögliche Schlüssel – man könnte alle ausprobieren. Schneller geht es mit <b>Statistik</b>: In deutschen Texten ist <b>e</b> mit Abstand der häufigste Buchstabe.</p>
+        <div id="kr-crack"></div>
+      </article>
+
+      <article class="card">
+        <h2>XOR und das One-Time-Pad</h2>
+        <p>Computer verschlüsseln Bits. Ein einfacher Baustein dafür ist <b>XOR</b> (Exklusiv-ODER, ⊕): Das Ergebnis ist 1, wenn genau eines der beiden Bits 1 ist. Das Besondere: Wer zweimal mit demselben Schlüssel XOR rechnet, bekommt den Klartext zurück. Klicke Schlüsselbits an, um sie umzuschalten.</p>
+        <div class="kr-xor-rules">
+          <span>0 ⊕ 0 = <b>0</b></span><span>0 ⊕ 1 = <b>1</b></span><span>1 ⊕ 0 = <b>1</b></span><span>1 ⊕ 1 = <b>0</b></span>
+        </div>
+        <div class="tp-wrap"><div id="kr-xor"></div></div>
+        <h3 class="kr-h3">Mit einem Wort</h3>
+        <div class="kr-caesar-ctrl">
+          <label class="field"><span>Klartext (bis 6 Zeichen)</span><input id="kr-otp-in" value="HALLO" maxlength="6" spellcheck="false" autocomplete="off"></label>
+          <button type="button" class="btn" id="kr-otp-new">Neuer Zufallsschlüssel</button>
+        </div>
+        <div class="tbl-wrap"><table class="tbl compact kr-otp" id="kr-otp"></table></div>
+        <ul class="ticks">
+          <li>Das <b>One-Time-Pad</b> ist beweisbar unknackbar – aber nur, wenn der Schlüssel <b>echt zufällig</b>, <b>so lang wie die Nachricht</b> und <b>nur ein einziges Mal</b> benutzt wird.</li>
+          <li>Wird ein Schlüssel zweimal verwendet, kann ein Angreifer die beiden Geheimtexte miteinander XOR rechnen – der Schlüssel fällt heraus, übrig bleibt Klartext ⊕ Klartext. Daraus lässt sich viel erraten.</li>
+          <li>Für den Alltag ist es unpraktisch: Für 1 GB Daten bräuchte man 1 GB Schlüssel, vorher sicher ausgetauscht.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Heute: AES</h2>
+        <p>Moderne symmetrische Verfahren mischen und verschieben die Bits in vielen Runden. Ihr Schlüssel ist kurz (128 oder 256 Bit) und trotzdem nicht durch Ausprobieren zu finden.</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Verfahren</th><th>Jahr</th><th>Schlüssel</th><th>Stand heute</th></tr></thead>
+            <tbody>
+              <tr><td><b>DES</b></td><td>1977</td><td>56 Bit</td><td><span class="kb-old">unsicher</span> in wenigen Stunden durch Ausprobieren geknackt</td></tr>
+              <tr><td><b>3DES</b></td><td>1998</td><td>112 Bit</td><td><span class="kb-old">veraltet</span> dreimal DES hintereinander, langsam</td></tr>
+              <tr><td><b>IDEA</b></td><td>1991</td><td>128 Bit</td><td><span class="kb-old">veraltet</span> früher in PGP, heute kaum noch verwendet</td></tr>
+              <tr><td><b>AES</b></td><td>2001</td><td>128, 192, 256 Bit</td><td><b>Standard</b> – in HTTPS, WLAN (WPA2/WPA3), VPN, BitLocker, Smartphones</td></tr>
+              <tr><td><b>ChaCha20</b></td><td>2008</td><td>256 Bit</td><td>moderne Alternative, schnell auf Geräten ohne AES-Beschleunigung</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">2<sup>128</sup> mögliche Schlüssel: Selbst bei einer Billion Versuchen pro Sekunde bräuchte man rund 10<sup>19</sup> Jahre – fast eine Milliarde Mal so lange, wie das Universum alt ist.</p>
+      </article>
+
+      <article class="card">
+        <h2>Wie viele Schlüssel braucht eine Klasse?</h2>
+        <p>Jedes Paar, das sich geheime Nachrichten schicken will, braucht einen eigenen Schlüssel. Bei vielen Personen wird das schnell unübersichtlich:</p>
+        <label class="field field-range kr-n-field"><span>Personen <output id="kr-n-out">30</output></span><input type="range" id="kr-n" min="2" max="100" value="30"></label>
+        <div id="kr-n-res" class="kb-res" aria-live="polite"></div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Ein Schlüssel für alle?</h2>
+        <p>Es gibt einen Trick, mit dem man sich den geheimen Schlüsselaustausch spart: zwei Schlüssel, die zusammengehören.</p>
+        <a class="btn primary" href="#sec-asym">Weiter zu Öffentlich &amp; privat →</a>
+      </article>
+    </section>
+
+    <!-- ============================ KRYPTO 2 ============================ -->
+    <section id="sec-asym" class="page" data-theme="krypto">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-schluessel.webp" alt="">
+        <p class="eyebrow">Verschlüsselung &amp; Anonymität · Station 2 · Interaktiv</p>
+        <h1>Öffentlich &amp; privat</h1>
+        <p class="lead">Bei der <b>asymmetrischen</b> Verschlüsselung hat jede Person ein <b>Schlüsselpaar</b>: einen <b>öffentlichen</b> Schlüssel, den jeder haben darf, und einen <b>privaten</b>, den nur sie selbst kennt. Was mit dem einen verschlüsselt wurde, lässt sich nur mit dem anderen entschlüsseln.</p>
+      </header>
+
+      <article class="card">
+        <h2>Das Schlüsselpaar</h2>
+        <div class="two-col">
+          <div class="mini-card kr-pub"><h3>🔓 Öffentlicher Schlüssel</h3><p>Darf jeder haben – man kann ihn auf die Homepage stellen. Damit <b>verschlüsselt</b> man Nachrichten <b>an</b> den Besitzer und <b>prüft</b> seine Unterschriften.</p></div>
+          <div class="mini-card kr-priv"><h3>🔐 Privater Schlüssel</h3><p>Bleibt geheim beim Besitzer. Damit <b>entschlüsselt</b> er Nachrichten an sich und <b>unterschreibt</b> (signiert) Dokumente.</p></div>
+        </div>
+        <p><b>Wie ein Briefkasten:</b> Jeder kann einen Brief einwerfen (mit dem öffentlichen Schlüssel verschlüsseln). Von außen sieht man den Inhalt nicht. Öffnen kann ihn nur, wer den Briefkastenschlüssel hat (den privaten Schlüssel).</p>
+      </article>
+
+      <article class="card">
+        <h2>Welcher Schlüssel wofür?</h2>
+        <p>Alice will Bob etwas schicken. Eve lauscht mit. Wähle, mit welchem Schlüssel Alice ihre Nachricht bearbeitet:</p>
+        <div class="seg kr-keys" id="kr-keys">
+          <button type="button" data-k="bob-pub" class="active"><b>Bobs öffentlicher</b><small>kennt jeder</small></button>
+          <button type="button" data-k="bob-priv"><b>Bobs privater</b><small>hat nur Bob</small></button>
+          <button type="button" data-k="alice-pub"><b>Alices öffentlicher</b><small>kennt jeder</small></button>
+          <button type="button" data-k="alice-priv"><b>Alices privater</b><small>hat nur Alice</small></button>
+        </div>
+        <div id="kr-keys-out" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>RSA zum Nachrechnen</h2>
+        <p>Das bekannteste asymmetrische Verfahren ist <b>RSA</b> (1977). Es beruht darauf, dass man zwei große Primzahlen leicht multiplizieren kann – das Ergebnis aber kaum wieder in seine Faktoren zerlegen. Hier mit winzigen Zahlen:</p>
+        <div class="fields kr-rsa-fields">
+          <label class="field"><span>Primzahl p</span><select id="kr-p" class="kb-select"></select></label>
+          <label class="field"><span>Primzahl q</span><select id="kr-q" class="kb-select"></select></label>
+          <label class="field"><span>Nachricht m (Zahl kleiner als n)</span><input id="kr-m" type="number" min="0" value="7"></label>
+        </div>
+        <div id="kr-rsa" aria-live="polite"></div>
+        <p class="note">Echte RSA-Schlüssel haben 2048 bis 4096 Bit – n hat dann über 600 Dezimalstellen. Diese Zahl zu zerlegen, schafft kein heutiger Computer.</p>
+      </article>
+
+      <article class="card">
+        <h2>Digitale Signatur</h2>
+        <p>Asymmetrische Verfahren können auch beweisen, <b>von wem</b> ein Dokument stammt und dass es <b>nicht verändert</b> wurde. Dazu bildet Alice einen <b>Hashwert</b> – eine Art Fingerabdruck – des Dokuments und verschlüsselt ihn mit ihrem <b>privaten</b> Schlüssel. Das ist die Signatur. Jeder kann sie mit Alices <b>öffentlichem</b> Schlüssel prüfen.</p>
+        <label class="field"><span>Dokument</span><textarea id="kr-doc" rows="3" spellcheck="false">Ich überweise Bob 50 Euro. – Alice</textarea></label>
+        <div class="row-actions">
+          <button type="button" class="btn primary" id="kr-sign">Alice signiert</button>
+          <button type="button" class="btn ghost" id="kr-unsign">Signatur entfernen</button>
+        </div>
+        <div id="kr-sig" aria-live="polite"></div>
+        <p class="note">Die Schlüssel werden dabei <b>nicht vertauscht</b>: Der private Schlüssel bleibt immer geheim, der öffentliche ist immer öffentlich. Nur ihre Rolle ändert sich – beim Signieren benutzt die Besitzerin ihren privaten Schlüssel, beim Prüfen nimmt man ihren öffentlichen.</p>
+      </article>
+
+      <article class="card">
+        <h2>Das Beste aus beiden: hybrid</h2>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th></th><th>symmetrisch</th><th>asymmetrisch</th></tr></thead>
+            <tbody>
+              <tr><th>Schlüssel</th><td>einer, beide kennen ihn</td><td>Schlüsselpaar pro Person</td></tr>
+              <tr><th>Geschwindigkeit</th><td>sehr schnell</td><td>hundert- bis tausendmal langsamer</td></tr>
+              <tr><th>gleich sicher wie AES-128</th><td>128 Bit</td><td>RSA: 3072 Bit · elliptische Kurven: 256 Bit</td></tr>
+              <tr><th>Problem</th><td>Schlüssel muss sicher ausgetauscht werden</td><td>langsam; man muss sicher sein, dass der öffentliche Schlüssel echt ist</td></tr>
+              <tr><th>Beispiele</th><td>AES, ChaCha20</td><td>RSA, Diffie-Hellman, elliptische Kurven (ECC)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="callout"><b>In der Praxis</b> kombiniert man beides: Mit dem asymmetrischen Verfahren einigen sich die Partner auf einen Schlüssel und prüfen, mit wem sie reden. Die eigentlichen Daten werden dann schnell symmetrisch verschlüsselt. Genau so funktioniert HTTPS.</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Das Schloss im Browser</h2>
+        <p>Wie Browser und Webserver beide Verfahren zusammen benutzen, siehst du an HTTPS.</p>
+        <a class="btn primary" href="#sec-tls">Weiter zu HTTPS &amp; Zertifikate →</a>
+      </article>
+    </section>
+
+    <!-- ============================ KRYPTO 3 ============================ -->
+    <section id="sec-tls" class="page" data-theme="krypto">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-fingerabdruck.webp" alt="">
+        <p class="eyebrow">Verschlüsselung &amp; Anonymität · Station 3 · Interaktiv</p>
+        <h1>HTTPS &amp; Zertifikate</h1>
+        <p class="lead">Bei <code>http://</code> geht alles im Klartext übers Netz – jeder auf dem Weg kann mitlesen, auch Passwörter. <code>https://</code> sichert die Verbindung mit <b>TLS</b> (Transport Layer Security, früher SSL). Aktuell ist <b>TLS 1.3</b> (RFC 8446, seit 2018); TLS 1.2 ist noch erlaubt, alle älteren Versionen gelten als unsicher.</p>
+      </header>
+
+      <article class="card">
+        <h2>Was HTTPS schützt – und was nicht</h2>
+        <div class="kr-goals">
+          <div class="mini-card"><h3>Vertraulichkeit</h3><p>Niemand unterwegs kann den Inhalt lesen.</p></div>
+          <div class="mini-card"><h3>Integrität</h3><p>Niemand kann den Inhalt unbemerkt verändern.</p></div>
+          <div class="mini-card"><h3>Authentizität</h3><p>Der Server beweist, dass er wirklich <code>www.example.com</code> ist.</p></div>
+        </div>
+        <p><b>Nicht</b> verborgen bleibt, <b>mit wem</b> du sprichst: Die IP-Adresse des Servers und meist auch der Domainname sind sichtbar, ebenso Zeitpunkt und Datenmenge. TLS sitzt zwischen Transportschicht (TCP) und Anwendung (HTTP) – im OSI-Modell ordnet man es meist den Schichten 5 und 6 zu.</p>
+      </article>
+
+      <article class="card">
+        <h2>Diffie-Hellman: ein gemeinsames Geheimnis über eine offene Leitung</h2>
+        <p>Wie können sich zwei auf einen Schlüssel einigen, wenn Eve jede Nachricht mitliest? Mit dem <b>Diffie-Hellman-Schlüsselaustausch</b> (1976). Beide wählen eine geheime Zahl und schicken nur ein daraus berechnetes Zwischenergebnis. Hier mit kleinen Zahlen (p = 23, g = 5):</p>
+        <div class="kr-dh-ctrl">
+          <label class="field field-range"><span>Geheimzahl von Alice a <output id="kr-a-out">6</output></span><input type="range" id="kr-a" min="2" max="21" value="6"></label>
+          <label class="field field-range"><span>Geheimzahl von Bob b <output id="kr-b-out">15</output></span><input type="range" id="kr-b" min="2" max="21" value="15"></label>
+        </div>
+        <div class="kr-dh" id="kr-dh"></div>
+        <p class="note">Eve kennt p, g, A und B. Um den Schlüssel auszurechnen, müsste sie a oder b herausfinden – bei echten, riesigen Zahlen ist das praktisch unmöglich (diskreter Logarithmus).</p>
+      </article>
+
+      <article class="card">
+        <h2>Der TLS-1.3-Handshake</h2>
+        <p>Bevor die Webseite fließt, handeln Browser und Server in einer einzigen Hin-und-zurück-Runde alles aus.</p>
+        <div class="row-actions">
+          <button type="button" class="btn primary" id="kr-tls-step">Nächster Schritt →</button>
+          <button type="button" class="btn" id="kr-tls-go">▶ Automatisch abspielen</button>
+          <button type="button" class="btn ghost" id="kr-tls-reset">Von vorn</button>
+        </div>
+        <div class="tp-wrap"><div id="kr-tls"></div></div>
+        <div class="osi-say" id="kr-tls-say" aria-live="polite"></div>
+        <ul class="ticks">
+          <li><b>Forward Secrecy:</b> Der Sitzungsschlüssel entsteht jedes Mal neu per Diffie-Hellman und wird danach weggeworfen. Selbst wer später den privaten Schlüssel des Servers stiehlt, kann aufgezeichnete Verbindungen nicht entschlüsseln.</li>
+          <li>Bis TLS 1.2 durfte der Browser auch ein selbst ausgedachtes Geheimnis (Pre-Master-Secret) mit dem öffentlichen RSA-Schlüssel des Servers verschlüsselt schicken. TLS 1.3 hat das abgeschafft – genau wegen der fehlenden Forward Secrecy.</li>
+          <li>Der <b>Browser</b> weist sich normalerweise nicht aus. Wer du bist, erfährt der Server erst, wenn du dich anmeldest – dann aber schon verschlüsselt.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Zertifikate: Ist das wirklich der richtige Server?</h2>
+        <p>Diffie-Hellman allein schützt nicht vor einem Angreifer, der sich <b>dazwischen</b> schaltet und beiden Seiten seine eigenen Werte unterschiebt (<b>Man-in-the-Middle</b>). Deshalb beweist der Server mit einem <b>Zertifikat</b>, dass sein öffentlicher Schlüssel wirklich zu <code>www.example.com</code> gehört. Ausgestellt und signiert wird es von einer <b>Zertifizierungsstelle</b> (CA, Certificate Authority).</p>
+        <div class="kr-chain" id="kr-chain"></div>
+        <ul class="ticks">
+          <li>Betriebssysteme und Browser bringen eine Liste von rund 150 vertrauenswürdigen <b>Root-CAs</b> mit. Diese signieren Zwischenzertifikate, die wiederum die Serverzertifikate signieren – die <b>Vertrauenskette</b>.</li>
+          <li>Zertifikate gelten nur kurz: Seit März 2026 höchstens 200 Tage, bis 2029 sinkt die Grenze schrittweise auf 47 Tage. Let's Encrypt stellt sie kostenlos und automatisch aus.</li>
+          <li>Das Zertifikat siehst du, wenn du auf das Symbol links in der Adresszeile klickst.</li>
+        </ul>
+      </article>
+
+      <article class="card has-art">
+        <img class="card-art" src="assets/images/el-anonym.webp" alt="">
+        <h2>Darf der Browser vertrauen?</h2>
+        <p>Du rufst <code>https://www.example.com</code> auf. Wähle, welches Zertifikat der Server schickt:</p>
+        <div class="seg small kr-certs" id="kr-certs">
+          <button type="button" data-c="ok" class="active"><b>alles in Ordnung</b></button>
+          <button type="button" data-c="expired"><b>abgelaufen</b></button>
+          <button type="button" data-c="name"><b>falscher Name</b></button>
+          <button type="button" data-c="self"><b>selbst signiert</b></button>
+          <button type="button" data-c="mitm"><b>Angreifer im WLAN</b></button>
+        </div>
+        <div id="kr-cert-out" aria-live="polite"></div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Verschlüsselt heißt nicht anonym</h2>
+        <p>HTTPS verbirgt den Inhalt – aber nicht, wer mit wem spricht. Dafür gibt es Proxy, VPN und Tor.</p>
+        <a class="btn primary" href="#sec-proxy">Weiter zu Proxy &amp; VPN →</a>
+      </article>
+    </section>
+
+    <!-- ============================ KRYPTO 4 ============================ -->
+    <section id="sec-proxy" class="page" data-theme="krypto">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-inkognito.webp" alt="">
+        <p class="eyebrow">Verschlüsselung &amp; Anonymität · Station 4 · Interaktiv</p>
+        <h1>Proxy &amp; VPN</h1>
+        <p class="lead">Jeder Server, den du aufrufst, sieht deine öffentliche IP-Adresse – und über deinen Internetanbieter lässt sie sich dir zuordnen. Ein <b>Proxy</b> oder ein <b>VPN</b> schiebt einen Vermittler dazwischen: Der Server sieht dann nur noch dessen Adresse.</p>
+      </header>
+
+      <article class="card">
+        <h2>Der Proxy: Pizza für die Party</h2>
+        <p>Auf einer Party bestellt nur Dieter beim Lieferdienst. Die Gäste sagen ihm, was sie wollen; der Lieferdienst kennt nur Dieter. Dafür muss Dieter sich merken, welche Pizza zu wem gehört. Wähle einen Gast:</p>
+        <div class="seg small kr-guests" id="kr-guests">
+          <button type="button" data-g="0" class="active"><b>Klaus</b></button>
+          <button type="button" data-g="1"><b>Eva</b></button>
+          <button type="button" data-g="2"><b>Maria</b></button>
+        </div>
+        <div id="kr-pizza"></div>
+        <ul class="ticks">
+          <li>Der <b>Proxy-Server</b> nimmt Anfragen an, stellt sie mit seiner eigenen IP-Adresse und reicht die Antworten zurück. Der Webserver sieht nur den Proxy.</li>
+          <li><b>Nicht anonym gegenüber dem Proxy:</b> Er kennt deine IP-Adresse und – bei <code>http://</code> – alles, was du abrufst. Je nach Land kann der Betreiber gezwungen werden, Daten herauszugeben.</li>
+          <li>In Firmen und Schulen filtern Proxys oft Webseiten oder speichern häufig abgerufene Inhalte zwischen (Cache).</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Was der Proxy weitergibt</h2>
+        <p>Proxy-Listen teilen Proxys in drei Stufen ein. Entscheidend ist, was der Proxy dem Webserver in seiner Anfrage <b>mitteilt</b> – nicht, was er selbst speichert:</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Stufe</th><th>Webserver sieht deine IP?</th><th>Webserver merkt, dass ein Proxy dazwischen ist?</th></tr></thead>
+            <tbody>
+              <tr><td><b>Transparent</b> (Level 3)</td><td class="kr-yes">ja – im Header <code>X-Forwarded-For</code></td><td class="kr-yes">ja</td></tr>
+              <tr><td><b>Anonym</b> (Level 2)</td><td class="kr-no">nein</td><td class="kr-yes">ja</td></tr>
+              <tr><td><b>Elite</b> (Level 1)</td><td class="kr-no">nein</td><td class="kr-no">nein</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="callout"><b>Vorsicht mit kostenlosen Proxys:</b> Wer sie betreibt und warum, weiß man nicht. Ein Proxy kann unverschlüsselte Seiten mitlesen und sogar verändern. Wenn überhaupt, dann nur mit <code>https://</code> benutzen – und nie für Anmeldungen.</p>
+      </article>
+
+      <article class="card has-art">
+        <img class="card-art" src="assets/images/el-globus.webp" alt="">
+        <h2>Proxy-Kette – und der eigene Provider</h2>
+        <p>Schaltet man mehrere Proxys hintereinander, kennt jeder nur seinen Vorgänger und Nachfolger. Aber: Jede Anfrage läuft zuerst über den eigenen <b>Internetanbieter</b> (ISP). Ist die Verbindung zum ersten Proxy unverschlüsselt, sieht der Provider weiter genau, was du bestellst.</p>
+        <div class="kr-chainline">
+          <span class="kr-node me">💻 Eva</span><i>→</i><span class="kr-node isp">☁ eigener ISP<small>sieht „Pizza für Eva“</small></span><i>→</i><span class="kr-node">Proxy 1<small>192.0.2.12:8080</small></span><i>→</i><span class="kr-node">Proxy 2<small>198.51.100.227:3128</small></span><i>→</i><span class="kr-node">Proxy 3<small>203.0.113.168:4711</small></span><i>→</i><span class="kr-node web">Webserver<small>sieht Proxy 3</small></span>
+        </div>
+      </article>
+
+      <article class="card has-art">
+        <img class="card-art" src="assets/images/el-vpn.webp" alt="">
+        <h2>VPN: ein Tunnel durchs Internet</h2>
+        <p>Ein <b>Virtual Private Network</b> verbindet Geräte oder ganze Netze über das Internet so, als hingen sie im selben privaten Netz. Die Daten laufen verschlüsselt durch einen <b>Tunnel</b>: Das ursprüngliche Paket wird verschlüsselt und in ein neues Paket an den VPN-Server verpackt.</p>
+        <div class="two-col">
+          <div class="mini-card"><h3>Standort-Verbindung (Site-to-Site)</h3><p>Zwei Firmenstandorte: Die Router bauen einen Tunnel auf. Geräte erreichen sich mit ihren <b>privaten</b> Adressen, obwohl das Internet dazwischen liegt.</p></div>
+          <div class="mini-card"><h3>Fernzugriff (Remote Access)</h3><p>Im Homeoffice verbindet sich der Laptop per VPN mit dem Firmennetz und kommt so an Server und Laufwerke, die nicht im Internet stehen.</p></div>
+        </div>
+        <ul class="ticks">
+          <li><b>Tunnelprotokolle:</b> IPsec (Schicht 3), WireGuard (modern, schlank, über UDP), OpenVPN (nutzt TLS), SSH-Tunnel.</li>
+          <li><b>Kommerzielle VPN-Dienste</b> leiten deinen ganzen Verkehr über ihre Server. Dein Provider sieht dann nur noch „Verbindung zum VPN-Server“. Dafür sieht der <b>VPN-Anbieter</b> alles, was vorher der Provider gesehen hat – man verschiebt das Vertrauen, man schafft es nicht ab.</li>
+        </ul>
+        <div class="seg small kr-vpn-seg" id="kr-vpn-seg">
+          <button type="button" data-v="0" class="active"><b>ohne VPN</b></button>
+          <button type="button" data-v="1"><b>mit VPN</b></button>
+        </div>
+        <div id="kr-vpn"></div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Noch anonymer?</h2>
+        <p>Proxy und VPN haben eine Schwachstelle: Einer kennt immer beides – wer du bist und was du aufrufst. Tor verteilt dieses Wissen auf drei Stationen.</p>
+        <a class="btn primary" href="#sec-tor">Weiter zu Tor &amp; Anonymität →</a>
+      </article>
+    </section>
+
+    <!-- ============================ KRYPTO 5 ============================ -->
+    <section id="sec-tor" class="page" data-theme="krypto">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-tor-zwiebel.webp" alt="">
+        <p class="eyebrow">Verschlüsselung &amp; Anonymität · Station 5 · Interaktiv</p>
+        <h1>Tor &amp; Anonymität</h1>
+        <p class="lead"><b>Tor</b> (The Onion Router) leitet jede Verbindung über drei zufällig gewählte Knoten. Das Prinzip „Onion Routing“ entstand in den 1990er-Jahren am Forschungslabor der US-Marine; heute betreibt das gemeinnützige <b>Tor Project</b> die Software. Die rund 7 000 Knoten stellen Freiwillige auf der ganzen Welt bereit.</p>
+      </header>
+
+      <article class="card">
+        <h2>Schicht um Schicht: die Zwiebel</h2>
+        <p>Der Tor-Browser lädt eine Liste aller Knoten und wählt drei aus: <b>Eintrittsknoten</b>, <b>Mittelknoten</b>, <b>Austrittsknoten</b>. Dann verschlüsselt er seine Anfrage dreimal – wie Schalen einer Zwiebel.</p>
+        <div class="row-actions">
+          <button type="button" class="btn primary" id="kr-onion-step">Nächster Schritt →</button>
+          <button type="button" class="btn" id="kr-onion-go">▶ Automatisch abspielen</button>
+          <button type="button" class="btn ghost" id="kr-onion-reset">Von vorn</button>
+        </div>
+        <div class="tp-wrap"><div id="kr-onion"></div></div>
+        <div class="osi-say" id="kr-onion-say" aria-live="polite"></div>
+        <ul class="ticks">
+          <li>Jeder Knoten entfernt <b>eine</b> Schicht und kennt nur seinen Vorgänger und seinen Nachfolger. Kein einzelner Knoten weiß, wer mit wem spricht.</li>
+          <li>Die Route wird für neue Verbindungen etwa alle 10 Minuten gewechselt.</li>
+          <li>Der Austrittsknoten schickt die Anfrage im Original weiter. Ohne <code>https://</code> kann er den Inhalt mitlesen!</li>
+          <li>Webseiten mit der Endung <code>.onion</code> liegen direkt im Tor-Netz – dann verlässt die Verbindung Tor gar nicht und es gibt keinen Austrittsknoten.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Wer sieht was?</h2>
+        <p>Vergleiche, was die Stationen unterwegs über deine Verbindung zu <code>www.example.com</code> erfahren:</p>
+        <div class="seg small kr-who-seg" id="kr-who-seg">
+          <button type="button" data-w="direct" class="active"><b>direkt</b></button>
+          <button type="button" data-w="proxy"><b>Proxy</b></button>
+          <button type="button" data-w="vpn"><b>VPN</b></button>
+          <button type="button" data-w="tor"><b>Tor</b></button>
+        </div>
+        <label class="switch small"><input type="checkbox" id="kr-who-https" checked><span>Die Seite benutzt HTTPS</span></label>
+        <div class="tbl-wrap"><table class="tbl kr-who" id="kr-who"></table></div>
+        <p id="kr-who-txt" class="kr-who-txt"></p>
+      </article>
+
+      <article class="card has-art">
+        <img class="card-art" src="assets/images/el-unbeobachtet.webp" alt="">
+        <h2>Grenzen der Anonymität</h2>
+        <ul class="ticks">
+          <li><b>Du verrätst dich selbst:</b> Wer sich anmeldet, Cookies behält oder seinen Namen eintippt, ist für die Webseite nicht mehr anonym – egal wie gut die Verbindung versteckt ist.</li>
+          <li><b>Browser-Fingerabdruck:</b> Bildschirmgröße, Schriftarten, Sprache, Grafikkarte … zusammen sind sie oft eindeutig. Der Tor-Browser sorgt dafür, dass alle Nutzer möglichst gleich aussehen.</li>
+          <li><b>Eintritt und Austritt in einer Hand:</b> Wer beide Knoten einer Route kontrolliert oder den Verkehr an beiden Enden beobachtet, kann über Zeit und Datenmenge zuordnen, wer was aufruft.</li>
+          <li><b>Schadsoftware</b> auf dem eigenen Gerät sieht alles vor der Verschlüsselung.</li>
+          <li><b>Vertrauen bleibt nötig:</b> beim Proxy-Betreiber, beim VPN-Anbieter oder bei der Tor-Software. Absolute Anonymität gibt es nicht.</li>
+        </ul>
+        <p class="note">Tor, VPN und Proxys zu benutzen ist in Deutschland erlaubt. Journalistinnen, Menschen in Ländern mit Zensur und alle, die nicht überall Spuren hinterlassen wollen, sind auf solche Werkzeuge angewiesen. Was im Netz verboten ist, bleibt es aber auch mit Anonymisierung.</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Jetzt üben</h2>
+        <p>Im Sicherheits-Dojo trainierst du Caesar und XOR, symmetrische und asymmetrische Verfahren, HTTPS und Zertifikate sowie Proxy, VPN und Tor.</p>
+        <a class="btn primary" href="#sec-dojo">Weiter zum Sicherheits-Dojo →</a>
+      </article>
+    </section>
+
+    <!-- ============================ KRYPTO 6 ============================ -->
+    <section id="sec-dojo" class="page" data-theme="krypto">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-ninja.webp" alt="">
+        <p class="eyebrow">Verschlüsselung &amp; Anonymität · Station 6 · Training</p>
+        <h1>Sicherheits-Dojo</h1>
+        <p class="lead">Sechs Gürtel, sechs Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten.</p>
+      </header>
+      <div class="dojo-layout" id="d-krypto"></div>
+
+      <article class="card next-card has-art">
+        <img class="card-art" src="assets/images/el-laternchen.webp" alt="">
         <h2>Alle Themen geschafft!</h2>
-        <p>Du hast MAC-Adressen, IPv4, Topologien, IPv6, das OSI-Modell, Kabel und Signale sowie die Netzwerkdienste durchgearbeitet. Wiederholen kannst du jederzeit – am besten in den Übungs-Dojos, bis alle Gürtel in Farbe leuchten.</p>
+        <p>Du hast MAC-Adressen, IPv4, Topologien, IPv6, das OSI-Modell, Kabel und Signale, die Netzwerkdienste sowie Verschlüsselung und Anonymität durchgearbeitet. Wiederholen kannst du jederzeit – am besten in den Übungs-Dojos, bis alle Gürtel in Farbe leuchten.</p>
         <a class="btn primary" href="#mac-grundlagen">Zurück zum Anfang ↺</a>
       </article>
     </section>
@@ -1966,7 +2375,7 @@ Ablaufverfolgung beendet.</pre>
 
   <footer class="site-footer">
     <img class="footer-art" src="assets/images/el-bonsai.webp" alt="">
-    <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996) · <a href="https://www.rfc-editor.org/info/rfc3927/" target="_blank" rel="noopener">RFC 3927</a> (APIPA/Link-Local) · <a href="https://www.rfc-editor.org/info/rfc6890/" target="_blank" rel="noopener">RFC 6890</a> (Besondere Adressbereiche) · <a href="https://www.rfc-editor.org/info/rfc2131/" target="_blank" rel="noopener">RFC 2131</a> (DHCP) · <a href="https://www.rfc-editor.org/info/rfc1034/" target="_blank" rel="noopener">RFC 1034</a> (DNS) · <a href="https://www.rfc-editor.org/info/rfc3986/" target="_blank" rel="noopener">RFC 3986</a> (URI) · <a href="https://www.rfc-editor.org/info/rfc6335/" target="_blank" rel="noopener">RFC 6335</a> (Portbereiche)</p>
+    <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996) · <a href="https://www.rfc-editor.org/info/rfc3927/" target="_blank" rel="noopener">RFC 3927</a> (APIPA/Link-Local) · <a href="https://www.rfc-editor.org/info/rfc6890/" target="_blank" rel="noopener">RFC 6890</a> (Besondere Adressbereiche) · <a href="https://www.rfc-editor.org/info/rfc2131/" target="_blank" rel="noopener">RFC 2131</a> (DHCP) · <a href="https://www.rfc-editor.org/info/rfc1034/" target="_blank" rel="noopener">RFC 1034</a> (DNS) · <a href="https://www.rfc-editor.org/info/rfc3986/" target="_blank" rel="noopener">RFC 3986</a> (URI) · <a href="https://www.rfc-editor.org/info/rfc6335/" target="_blank" rel="noopener">RFC 6335</a> (Portbereiche) · <a href="https://www.rfc-editor.org/info/rfc8446/" target="_blank" rel="noopener">RFC 8446</a> (TLS 1.3)</p>
     <p>Netzwerktechnik-Dojo · Jakob-Preh-Schule · statische HTML-Seite, läuft komplett im Browser – keine Daten werden übertragen, keine externen Dienste geladen.</p>
   </footer>
 
@@ -1993,6 +2402,10 @@ Ablaufverfolgung beendet.</pre>
   <script src="assets/dns.js"></script>
   <script src="assets/ports.js"></script>
   <script src="assets/dienste-dojo.js"></script>
+  <script src="assets/krypto.js"></script>
+  <script src="assets/tls.js"></script>
+  <script src="assets/anonym.js"></script>
+  <script src="assets/krypto-dojo.js"></script>
   <script src="assets/planer.js"></script>
   <script src="assets/topo.js"></script>
   <script src="assets/topologien.js"></script>
