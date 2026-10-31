@@ -39,6 +39,22 @@ const UI = (() => {
     return h + '</div></div>';
   }
 
+  /* Header als Raster: jede Zeile 32 Bit, Feldbreite maßstäblich.
+     rows: [[ [Schlüssel, Name, Bit, Klasse, Zeilen = 1, Beispielwert?], … ], …] */
+  function headerGrid(rows) {
+    let h = '';
+    let row = 1;
+    rows.forEach(r => {
+      let col = 1;
+      r.forEach(([k, name, bits, cls, span = 1, val]) => {
+        h += `<button type="button" class="v6-f h-${cls}" data-f="${k}" style="grid-column:${col} / span ${bits};grid-row:${row} / span ${span}"><span>${name}</span>${bits < 32 ? `<small>${bits} Bit</small>` : ''}${val != null ? `<em class="hv">${val}</em>` : ''}</button>`;
+        col += bits;
+      });
+      row += Math.max(...r.map(f => f[4] || 1));
+    });
+    return h;
+  }
+
   const legend = items => '<div class="legend">' +
     Object.entries(items).map(([k, t]) => `<span><i class="sw ${k}"></i>${t}</span>`).join('') + '</div>';
 
@@ -69,8 +85,10 @@ const UI = (() => {
   /* ---------- Themen und Freischaltung ----------
      Ein Thema wird freigeschaltet, sobald alle Stationen des vorherigen Themas geöffnet wurden. */
   const THEMES = {
-    ipv4: { name: 'IPv4' },
+    mac: { name: 'MAC-Adressen' },
+    ipv4: { name: 'IPv4', after: 'mac' },
     topo: { name: 'Topologien', after: 'ipv4' },
+    ipv6: { name: 'IPv6', after: 'topo' },
   };
   const themeOf = page => page.dataset.theme;
   const stationsOf = theme => $$(`.page[data-theme="${theme}"]:not(.lock-page)`);
@@ -162,7 +180,7 @@ const UI = (() => {
     }
   }
 
-  return { $, $$, esc, role, bitRow, legend, columnHover, store, isUnlocked, toast, initRouter, initSigRail };
+  return { $, $$, esc, role, bitRow, headerGrid, legend, columnHover, store, isUnlocked, toast, initRouter, initSigRail };
 })();
 
 document.addEventListener('DOMContentLoaded', () => {

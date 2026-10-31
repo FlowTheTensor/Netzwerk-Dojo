@@ -1,11 +1,22 @@
 # Netzwerktechnik-Dojo
 # [Hier öffnen](https://flowthetensor.github.io/Subnet-Dojo/)
 
-Interaktive Lernseite für Netzwerktechnik – IPv4 und Subnetting, Netzwerk-Topologien und (in Vorbereitung) IPv6, gedacht für den Unterricht.
+Interaktive Lernseite für Netzwerktechnik – MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien und IPv6, gedacht für den Unterricht.
 Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schritt und lädt
 **keine externen Ressourcen** (keine Web-Fonts, kein CDN, kein Tracking).
 
+## Thema MAC-Adressen
+
+| # | Station | Inhalt |
+|---|---------|--------|
+| 1 | MAC verstehen | Aufbau (48 Bit, OUI + Gerätenummer), Schreibweisen, die IEEE und ihre Standards (802.3, 802.11), I/G- und U/L-Bit, Broadcast, MAC-Analyse |
+| 2 | Switch & MAC-Tabelle | Frames senden: Der Switch lernt Quell-MACs, leitet gezielt weiter oder flutet |
+| 3 | MAC-Dojo | 5 Gürtel: Hexadezimal, Aufbau & Schreibweisen, IEEE, Adressarten, Switch |
+
 ## Thema IPv4
+
+Wird freigeschaltet, sobald alle MAC-Stationen einmal geöffnet wurden.
+
 
 | # | Station | Inhalt |
 |---|---------|--------|
@@ -13,18 +24,31 @@ Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schrit
 | 2 | Masken-Werkstatt | IP + Maske eingeben, Bits live eingefärbt, Maskenbits anklickbar, Subnetzliste |
 | 3 | Netzklassen | Klärt das Missverständnis RFC 791 (Klassen) ↔ RFC 1918 (CIDR-Blöcke), Block-Explorer, Zeitstrahl |
 | 4 | Besondere Adressen | 127.0.0.1/localhost, 169.254.x.x (APIPA), 0.0.0.0, 255.255.255.255, Provider-NAT, Dokumentations- und Multicast-Adressen; Adress-Detektor |
-| 5 | Übungs-Dojo | 8 Gürtel mit zufällig erzeugten Aufgaben (5 richtige in Folge = Gürtel) |
-| 6 | Firmennetz-Planer | Verwaltung, Entwicklung, Reparatur: Bedarf → Klasse/CIDR wählen → Subnetting → Adressraum-Karte → Netzplan mit IP-Vergabe → Zusammenfassung |
+| 5 | Der IPv4-Header | Alle Felder maßstäblich und erklärt, Beispielpaket mit echten Werten, TTL-Regler mit echter Prüfsumme, TTL bei ping und tracert |
+| 6 | Übungs-Dojo | 8 Gürtel mit zufällig erzeugten Aufgaben (5 richtige in Folge = Gürtel) |
+| 7 | Firmennetz-Planer | Verwaltung, Entwicklung, Reparatur: Bedarf → Klasse/CIDR wählen → Subnetting → Adressraum-Karte → Netzplan mit IP-Vergabe → Zusammenfassung |
 
 ## Thema Topologien
 
-Wird freigeschaltet, sobald alle sechs IPv4-Stationen einmal geöffnet wurden.
+Wird freigeschaltet, sobald alle sieben IPv4-Stationen einmal geöffnet wurden.
 
 | # | Station | Inhalt |
 |---|---------|--------|
 | 1 | Topologien verstehen | Punkt-zu-Punkt, Stern (mit Randnotiz Bus), Baum, Ring (PROFINET/MRP), Mesh voll und teilweise; Ausfälle per Klick simulieren; Kabelrechner fürs Vollmesh; Vergleichstabelle |
 | 2 | Baukasten | Geräte per Klick verbinden, bis die verlangte Topologie entsteht; die Prüfung erklärt, was noch fehlt |
 | 3 | Topologie-Dojo | 4 Gürtel: erkennen, Leitungen zählen, Ausfälle einschätzen, selbst bauen |
+
+## Thema IPv6
+
+Wird freigeschaltet, sobald alle Topologie-Stationen einmal geöffnet wurden.
+
+| # | Station | Inhalt |
+|---|---------|--------|
+| 1 | IPv6 verstehen | Warum IPv6, 2¹²⁸ im Vergleich, Aufbau (8 Blöcke à 16 Bit, Hex), Präfix statt Subnetzmaske |
+| 2 | Adress-Werkstatt | Adresse eingeben → volle und gekürzte Form mit beiden Regeln, Fehlererklärung, Präfix-Regler |
+| 3 | Der Header | IPv4- und IPv6-Header maßstäblich, weggefallen/umbenannt/neu, Animation TTL + Prüfsumme vs. Hop Limit |
+| 4 | Drei Adressen | ipconfig mit Link-Local, global und temporär; EUI-64 Schritt für Schritt; Vertiefung RA/SLAAC, NDP, DHCPv6 |
+| 5 | IPv6-Dojo | 6 Gürtel: kürzen, ausschreiben, Adresstyp, Präfix & Interface-ID, EUI-64, Header-Wissen |
 
 ## Hinweise für Lehrkräfte
 
@@ -50,6 +74,8 @@ index.html            Alle Stationen (Navigation über #grundlagen, #werkstatt, 
 assets/style.css      Gestaltung inkl. Dark Mode und Druckansicht
 assets/tor.css        Dojo-Tor als Rahmen um die ganze Seite (Dach, Säulen, Boden)
 assets/tor.js         Blütenblätter neben den Säulen
+assets/mac.js         MAC-Rechenkern und MAC-Stationen 1–2
+assets/mac-dojo.js    MAC-Station 3
 assets/ipv4.js        Rechenkern (Parsen, Masken, Netz/Broadcast, Klassen, RFC 1918)
 assets/ui.js          Bit-Darstellung, Legende, Speicher, Navigation mit Themen und Freischaltung
 assets/dojo-engine.js Übungs-Mechanik für alle Themen: Gürtel, Serie, Stempel, Feuerwerk
@@ -57,11 +83,15 @@ assets/grundlagen.js  Station 1
 assets/werkstatt.js   Station 2
 assets/klassen.js     Station 3
 assets/besondere.js   Station 4
-assets/dojo.js        Station 5 (Aufgaben)
-assets/planer.js      Station 6
+assets/header4.js     Station 5
+assets/dojo.js        Station 6 (Aufgaben)
+assets/planer.js      Station 7
 assets/topo.js        Topologie-Kern: Geräte zeichnen, Leitungen ziehen, Struktur prüfen
 assets/topologien.js  Topologien Station 1 und 2
 assets/topo-dojo.js   Topologien Station 3
+assets/ipv6.js        IPv6-Rechenkern (parsen, kürzen, Typ, Präfix, EUI-64)
+assets/ipv6-stationen.js  IPv6 Stationen 1–4
+assets/ipv6-dojo.js   IPv6 Station 5
 assets/images/        Gürtelbilder aus Netzwerkkabel (guertel-<farbe>.png), Dojo-Tor als Rahmen
                       (rahmen.webp) und Illustrationen der Stationen (el-*.webp)
 assets/images/tor/    Einzelteile des Seitenrahmens und Blütenblätter

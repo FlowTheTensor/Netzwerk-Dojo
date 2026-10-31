@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Netzwerktechnik-Dojo</title>
-  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien und IPv6.">
+  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: MAC-Adressen, IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien und IPv6.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23C81E3A'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3E/%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/tor.css">
@@ -13,9 +13,9 @@
   <div class="tor">
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="#grundlagen">
+      <a class="brand" href="#mac-grundlagen">
         <span class="brand-title">Netzwerktechnik-<i>Dojo</i></span>
-        <span class="eyebrow">IPv4 · Topologien · IPv6</span>
+        <span class="eyebrow">MAC · IPv4 · Topologien · IPv6</span>
       </a>
       <a class="school-logo" href="https://www.bsnes.de" target="_blank" rel="noopener" title="Jakob-Preh-Schule"><img src="assets/jps-logo.png" alt="Logo der Jakob-Preh-Schule" width="324" height="182"></a>
     </div>
@@ -24,24 +24,205 @@
 
   <nav class="topnav" aria-label="Themen und Stationen">
     <div class="themebar">
+      <a href="#mac-grundlagen" data-theme="mac">MAC</a>
       <a href="#grundlagen" data-theme="ipv4">IPv4</a>
       <a href="#topo-grundlagen" data-theme="topo">Topologien</a>
-      <span class="soon" aria-disabled="true">IPv6 <small>bald</small></span>
+      <a href="#v6-grundlagen" data-theme="ipv6">IPv6</a>
     </div>
     <div class="stationbar">
+      <a href="#mac-grundlagen" data-theme="mac"><span class="tab-num">1</span>MAC verstehen</a>
+      <a href="#mac-switch" data-theme="mac"><span class="tab-num">2</span>Switch &amp; MAC-Tabelle</a>
+      <a href="#mac-dojo" data-theme="mac"><span class="tab-num">3</span>MAC-Dojo</a>
       <a href="#grundlagen" data-theme="ipv4"><span class="tab-num">1</span>Grundlagen</a>
       <a href="#werkstatt" data-theme="ipv4"><span class="tab-num">2</span>Masken-Werkstatt</a>
       <a href="#klassen" data-theme="ipv4"><span class="tab-num">3</span>Netzklassen</a>
       <a href="#besondere" data-theme="ipv4"><span class="tab-num">4</span>Besondere Adressen</a>
-      <a href="#dojo" data-theme="ipv4"><span class="tab-num">5</span>Übungs-Dojo</a>
-      <a href="#planer" data-theme="ipv4"><span class="tab-num">6</span>Firmennetz-Planer</a>
+      <a href="#v4-header" data-theme="ipv4"><span class="tab-num">5</span>Der IPv4-Header</a>
+      <a href="#dojo" data-theme="ipv4"><span class="tab-num">6</span>Übungs-Dojo</a>
+      <a href="#planer" data-theme="ipv4"><span class="tab-num">7</span>Firmennetz-Planer</a>
       <a href="#topo-grundlagen" data-theme="topo"><span class="tab-num">1</span>Topologien verstehen</a>
       <a href="#topo-baukasten" data-theme="topo"><span class="tab-num">2</span>Baukasten</a>
       <a href="#topo-dojo" data-theme="topo"><span class="tab-num">3</span>Topologie-Dojo</a>
+      <a href="#v6-grundlagen" data-theme="ipv6"><span class="tab-num">1</span>IPv6 verstehen</a>
+      <a href="#v6-werkstatt" data-theme="ipv6"><span class="tab-num">2</span>Adress-Werkstatt</a>
+      <a href="#v6-header" data-theme="ipv6"><span class="tab-num">3</span>Der Header</a>
+      <a href="#v6-adressen" data-theme="ipv6"><span class="tab-num">4</span>Drei Adressen</a>
+      <a href="#v6-dojo" data-theme="ipv6"><span class="tab-num">5</span>IPv6-Dojo</a>
     </div>
   </nav>
 
   <main>
+    <!-- ============================ MAC 1 ============================ -->
+    <section id="mac-grundlagen" class="page" data-theme="mac">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-kabel.webp" alt="">
+        <p class="eyebrow">MAC · Station 1 · Grundlagen</p>
+        <h1>Die MAC-Adresse</h1>
+        <p class="lead">Jede Netzwerkkarte – im PC, im Handy, in der SPS – hat eine eigene Hardware-Adresse: die <b>MAC-Adresse</b>. Mit ihr finden sich Geräte im <b>lokalen Netz</b>. Sie ist das Fundament, auf dem später die IP-Adressen aufbauen.</p>
+      </header>
+
+      <article class="card">
+        <h2>Was ist eine MAC-Adresse?</h2>
+        <p><b>MAC</b> steht für <b>Media Access Control</b>. Die Adresse wird vom Hersteller fest in die Netzwerkkarte eingetragen („eingebrannt“) und heißt deshalb auch <b>physische Adresse</b> oder Hardware-Adresse. Windows zeigt sie bei <code>ipconfig /all</code> als „Physische Adresse“.</p>
+        <div class="two-col">
+          <div class="mini-card">
+            <h3>MAC-Adresse</h3>
+            <p>Wie die <b>Seriennummer</b> eines Geräts: fest, weltweit eindeutig, ändert sich nicht, wenn das Gerät umzieht. Damit stellt ein Switch Daten <b>innerhalb eines Netzes</b> zu.</p>
+          </div>
+          <div class="mini-card">
+            <h3>IP-Adresse</h3>
+            <p>Wie die <b>Postanschrift</b>: hängt davon ab, in welchem Netz das Gerät gerade steckt. Damit finden Router den Weg <b>zwischen Netzen</b> – das kommt im Thema IPv4.</p>
+          </div>
+        </div>
+        <h3 class="sub-h">Warum nur im lokalen Netz?</h3>
+        <p>MAC-Adressen sind nach Hersteller sortiert, nicht nach Ort: Zwei Netzwerkkarten mit fast gleicher Adresse können in Berlin und in Tokio stecken. Wollte man das ganze Internet nur mit MAC-Adressen betreiben, bräuchte jeder Router ein riesiges <b>„Telefonbuch“</b> mit einem Eintrag für <b>jedes einzelne Gerät der Welt</b> – viele Milliarden Einträge, die sich ständig ändern, weil Geräte umziehen, neu dazukommen oder ausgeschaltet werden. Das wäre viel zu groß und zu langsam.</p>
+        <p>Deshalb gilt die MAC-Adresse nur im <b>lokalen Netz</b>, wo ein Switch sich ein paar Dutzend oder Hundert Einträge merken muss. Für den Weg durchs Internet gibt es die <b>IP-Adresse</b>: Sie ist wie eine Postanschrift nach Netzen geordnet, sodass ein Router nur wissen muss, in welche Richtung ein ganzes Netz liegt – nicht jedes einzelne Gerät.</p>
+        <ul class="ticks">
+          <li>Datenpakete im lokalen Netz heißen <b>Frames</b>. Jeder Frame trägt eine <b>Ziel-MAC</b> und eine <b>Quell-MAC</b>.</li>
+          <li>Ein Frame verlässt das lokale Netz nie: Ein Router packt die Daten in einen neuen Frame mit neuen MAC-Adressen. Die <b>IP-Adressen bleiben</b> auf dem ganzen Weg gleich, die <b>MAC-Adressen wechseln</b> bei jedem Router.</li>
+          <li>Kann man eine MAC-Adresse ändern? In der Netzwerkkarte steckt sie fest, das Betriebssystem kann aber eine andere verwenden. Handys nutzen im WLAN sogar absichtlich zufällige Adressen (siehe unten).</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>So ist eine MAC-Adresse aufgebaut</h2>
+        <p>Eine MAC-Adresse hat <b>48 Bit</b> = <b>6 Bytes</b>. Jedes Byte wird mit <b>2 Hex-Ziffern</b> geschrieben (0–9 und A–F), insgesamt also 12 Ziffern. Die erste Hälfte nennt den Hersteller, die zweite das einzelne Gerät:</p>
+        <div class="m-grid"><span class="m-byte m-oui">00</span><span class="m-sep">:</span><span class="m-byte m-oui">1A</span><span class="m-sep">:</span><span class="m-byte m-oui">2B</span><span class="m-sep">:</span><span class="m-byte m-dev">3C</span><span class="m-sep">:</span><span class="m-byte m-dev">4D</span><span class="m-sep">:</span><span class="m-byte m-dev">5E</span>
+          <span class="m-lbl m-oui">OUI · Herstellercode<small>24 Bit · von der IEEE vergeben</small></span><span class="m-lbl m-dev">Gerätenummer<small>24 Bit · vom Hersteller vergeben</small></span></div>
+        <ul class="ticks">
+          <li><b>OUI</b> = Organizationally Unique Identifier. Jeder Hersteller kauft bei der IEEE einen oder mehrere solcher Codes.</li>
+          <li>Mit einer OUI kann ein Hersteller 2<sup>24</sup> = <b>16.777.216</b> Geräte nummerieren. Insgesamt gibt es 2<sup>48</sup> ≈ <b>281 Billionen</b> MAC-Adressen.</li>
+          <li>Weil die IEEE jede OUI nur einmal vergibt und jeder Hersteller jede Gerätenummer nur einmal, ist jede MAC-Adresse <b>weltweit eindeutig</b>.</li>
+        </ul>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Wo?</th><th>Schreibweise</th></tr></thead>
+            <tbody>
+              <tr><td>Windows (<code>ipconfig /all</code>, <code>getmac</code>)</td><td><code>00-1A-2B-3C-4D-5E</code> – Bindestriche, groß</td></tr>
+              <tr><td>Linux, macOS, viele Geräte</td><td><code>00:1a:2b:3c:4d:5e</code> – Doppelpunkte</td></tr>
+              <tr><td>Cisco-Switches</td><td><code>001a.2b3c.4d5e</code> – je 2 Bytes mit Punkt</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Alle drei sind dieselbe Adresse – nur anders geschrieben. Groß- und Kleinbuchstaben sind gleichwertig.</p>
+      </article>
+
+      <article class="card">
+        <h2>Die IEEE – wer hinter der MAC-Adresse steckt</h2>
+        <p>Die <b>IEEE</b> (Institute of Electrical and Electronics Engineers, gesprochen „I triple E“) ist der weltweit größte Berufsverband für Elektrotechnik und Informatik. Sie entwickelt <b>Standards</b> – also Regeln, an die sich alle Hersteller halten, damit ihre Geräte zusammenpassen. Für lokale Netze ist das <b>Projekt 802</b> zuständig.</p>
+        <ol class="timeline">
+          <li><span class="tl-year">1973</span><div><b>Ethernet bei Xerox PARC.</b> Robert Metcalfe und David Boggs entwickeln im Forschungszentrum von Xerox ein Netz für Computer im Büro – mit eindeutigen Adressen für jede Netzwerkkarte.</div></li>
+          <li><span class="tl-year">1980</span><div><b>DIX-Ethernet und IEEE-Projekt 802.</b> DEC, Intel und Xerox veröffentlichen einen gemeinsamen Ethernet-Standard mit 48-Bit-Adressen. Im Februar 1980 startet die IEEE ihr Projekt für lokale Netze – daher der Name <b>802</b> (Jahr 80, Monat 2).</div></li>
+          <li><span class="tl-year">1983</span><div><b>IEEE 802.3 – Ethernet als offizieller Standard.</b> Die IEEE übernimmt das Adressschema und vergibt seitdem die Herstellercodes (OUIs) über ihre <b>Registration Authority</b>.</div></li>
+          <li><span class="tl-year">1997</span><div><b>IEEE 802.11 – WLAN.</b> Auch Funknetze nutzen dieselben 48-Bit-Adressen, ebenso Bluetooth.</div></li>
+          <li><span class="tl-year">heute</span><div><b>EUI-48.</b> Die IEEE nennt die Adresse heute <b>EUI-48</b> (Extended Unique Identifier). In IPv6 begegnet dir die längere Schwester <b>EUI-64</b>.</div></li>
+        </ol>
+        <p class="callout"><b>Merke:</b> MAC-Adressen und ihre Herstellercodes kommen von der <b>IEEE</b> (Standards 802.3 Ethernet, 802.11 WLAN). Die IP-Adressen dagegen verwaltet die <b>IANA</b> – zwei verschiedene Organisationen für zwei verschiedene Aufgaben.</p>
+      </article>
+
+      <article class="card">
+        <h2>Zwei besondere Bits im ersten Byte</h2>
+        <p>Die beiden <b>niedrigsten Bits des ersten Bytes</b> (ganz rechts) haben eine feste Bedeutung:</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Bit</th><th>0 bedeutet</th><th>1 bedeutet</th></tr></thead>
+            <tbody>
+              <tr><td><b>I/G-Bit</b> (ganz rechts)</td><td><b>Individual</b> – ein einzelnes Gerät (Unicast)</td><td><b>Group</b> – eine Gruppe von Geräten (Multicast)</td></tr>
+              <tr><td><b>U/L-Bit</b> (links daneben)</td><td><b>Universal</b> – vom Hersteller, weltweit eindeutig</td><td><b>Local</b> – per Software vergeben</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="ticks">
+          <li><b>Broadcast:</b> <code>FF:FF:FF:FF:FF:FF</code> – alle 48 Bit sind 1. Dieser Frame geht an <b>alle</b> Geräte im lokalen Netz.</li>
+          <li><b>Zufällige WLAN-Adressen:</b> Android, iOS und Windows verwenden im WLAN oft eine zufällige „private“ MAC-Adresse, damit man das Gerät nicht von Netz zu Netz verfolgen kann. Dort ist das U/L-Bit 1 – die zweite Hex-Ziffer ist dann 2, 6, A oder E.</li>
+          <li>Das U/L-Bit spielt auch bei IPv6 eine Rolle: Beim Verfahren EUI-64 wird genau dieses Bit umgedreht.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>MAC-Analyse</h2>
+        <p>Gib eine MAC-Adresse in beliebiger Schreibweise ein – zum Beispiel die deines eigenen PCs aus <code>ipconfig /all</code>.</p>
+        <label class="field b-field"><span>MAC-Adresse</span><input id="m-in" value="00-1A-2B-3C-4D-5E" spellcheck="false" autocomplete="off"></label>
+        <div class="presets"><span class="muted">Ausprobieren:</span>
+          <button type="button" class="pill" data-m="00:00:0C:12:34:56">Cisco</button>
+          <button type="button" class="pill" data-m="B8:27:EB:4A:11:02">Raspberry Pi</button>
+          <button type="button" class="pill" data-m="00:50:56:C0:00:08">VMware</button>
+          <button type="button" class="pill" data-m="DA:A1:19:6E:22:F3">zufällige WLAN-Adresse</button>
+          <button type="button" class="pill" data-m="01:00:5E:00:00:01">Multicast</button>
+          <button type="button" class="pill" data-m="FF:FF:FF:FF:FF:FF">Broadcast</button>
+        </div>
+        <div id="m-out" class="m-out" aria-live="polite"></div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Wer liest die MAC-Adressen?</h2>
+        <p>Ein Switch merkt sich, welche MAC-Adresse an welchem Anschluss hängt – und schickt Frames dann gezielt dorthin. Probier es aus.</p>
+        <a class="btn primary" href="#mac-switch">Weiter zu Switch &amp; MAC-Tabelle →</a>
+      </article>
+    </section>
+
+    <!-- ============================ MAC 2 ============================ -->
+    <section id="mac-switch" class="page" data-theme="mac">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-rack.webp" alt="">
+        <p class="eyebrow">MAC · Station 2 · Interaktiv</p>
+        <h1>Switch &amp; MAC-Tabelle</h1>
+        <p class="lead">Ein Switch verbindet die Geräte eines lokalen Netzes. Er schaut in jeden Frame auf die MAC-Adressen und lernt dabei selbstständig, welches Gerät an welchem Port hängt.</p>
+      </header>
+
+      <article class="card">
+        <h2>Der Switch lernt</h2>
+        <div class="m-ctrl">
+          <label class="field"><span>Absender</span><select id="m-from"><option>A</option><option>B</option><option>C</option><option>D</option></select></label>
+          <label class="field"><span>Empfänger</span><select id="m-to"><option>A</option><option>B</option><option selected>C</option><option>D</option><option value="all">alle (Broadcast)</option></select></label>
+          <div class="row-actions">
+            <button type="button" class="btn primary" id="m-send">Frame senden</button>
+            <button type="button" class="btn ghost" id="m-clear">MAC-Tabelle leeren</button>
+          </div>
+        </div>
+        <div class="m-lab">
+          <div class="tp-wrap" id="m-sw"></div>
+          <div><h3>MAC-Tabelle des Switches</h3><div class="tbl-wrap"><table class="tbl compact" id="m-table"></table></div></div>
+        </div>
+        <div id="m-log" class="m-log" aria-live="polite"></div>
+        <p class="note">Tipp: Schick zuerst einen Frame von A an C – der Switch kennt C noch nicht und flutet. Dann antworte von C an A: Jetzt kennt er A und schickt gezielt.</p>
+      </article>
+
+      <article class="card">
+        <h2>Die drei Regeln des Switches</h2>
+        <ol class="b-steps">
+          <li><b>Lernen:</b> Bei jedem Frame liest der Switch die <b>Quell-MAC</b> und merkt sich, an welchem Port sie hereinkam.</li>
+          <li><b>Gezielt weiterleiten:</b> Steht die <b>Ziel-MAC</b> in der Tabelle, geht der Frame nur an diesen einen Port.</li>
+          <li><b>Fluten:</b> Ist die Ziel-MAC unbekannt – oder ist es der Broadcast FF:FF:FF:FF:FF:FF –, geht der Frame an alle Ports außer dem, an dem er hereinkam.</li>
+        </ol>
+        <p>Einträge, die eine Weile nicht benutzt werden, löscht der Switch wieder (oft nach 5 Minuten). So bleibt die Tabelle aktuell, wenn ein Gerät umgesteckt wird. Ein Switch arbeitet nur mit MAC-Adressen – IP-Adressen schaut er sich nicht an.</p>
+        <p class="note">Vergleiche mit der Stern-Topologie im Thema Topologien: Der Switch in der Mitte ist genau so ein Gerät.</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Jetzt üben</h2>
+        <p>Im MAC-Dojo trainierst du Hexadezimalzahlen, Schreibweisen, Adressarten, das Wissen rund um die IEEE und die Arbeit des Switches.</p>
+        <a class="btn primary" href="#mac-dojo">Weiter zum MAC-Dojo →</a>
+      </article>
+    </section>
+
+    <!-- ============================ MAC 3 ============================ -->
+    <section id="mac-dojo" class="page" data-theme="mac">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-puppe.webp" alt="">
+        <p class="eyebrow">MAC · Station 3 · Training</p>
+        <h1>MAC-Dojo</h1>
+        <p class="lead">Fünf Gürtel, fünf Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten.</p>
+      </header>
+      <div class="dojo-layout" id="d-mac"></div>
+
+      <article class="card next-card">
+        <h2>Geschafft – weiter zum nächsten Thema!</h2>
+        <p>MAC-Adressen bringen Daten innerhalb eines Netzes ans Ziel. Für den Weg <b>zwischen</b> Netzen braucht man IP-Adressen – das ist das nächste Thema.</p>
+        <a class="btn primary" href="#grundlagen">Weiter zum Thema IPv4 →</a>
+      </article>
+    </section>
+
     <!-- ============================ 1 GRUNDLAGEN ============================ -->
     <section id="grundlagen" class="page" data-theme="ipv4">
       <header class="page-head hero">
@@ -49,7 +230,7 @@
         <div class="hero-in">
           <p class="eyebrow">IPv4 · Station 1 · Grundlagen</p>
           <h1>IPv4 verstehen – Bit für Bit.</h1>
-          <p class="lead">Im ersten Thema des Netzwerktechnik-Dojos lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die sechs Stationen – danach wird das nächste Thema <b>Topologien</b> freigeschaltet.</p>
+          <p class="lead">Nach den MAC-Adressen kommt jetzt die IP-Adresse. Hier lernst du, wie IPv4-Adressen aufgebaut sind, was die Subnetzmaske wirklich tut und wie man ein Firmennetz in Subnetze aufteilt. Arbeite dich durch die sieben Stationen – danach wird das nächste Thema <b>Topologien</b> freigeschaltet.</p>
         </div>
       </header>
 
@@ -370,6 +551,73 @@ Ethernet-Adapter Ethernet:
       </article>
 
       <article class="card next-card">
+        <h2>Was steht sonst noch im Paket?</h2>
+        <p>Die IP-Adressen reisen nicht allein: Jedes Paket trägt einen Header mit Absender, Ziel und weiteren Steuerinformationen. Die nächste Station zeigt, was darin steht.</p>
+        <a class="btn primary" href="#v4-header">Weiter zum IPv4-Header →</a>
+      </article>
+    </section>
+
+    <!-- ============================ 5 IPv4-HEADER ============================ -->
+    <section id="v4-header" class="page" data-theme="ipv4">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-rolle.webp" alt="">
+        <p class="eyebrow">IPv4 · Station 5 · Aufbau</p>
+        <h1>Der IPv4-Header</h1>
+        <p class="lead">Jedes IP-Paket besteht aus zwei Teilen: dem <b>Header</b> mit Steuerinformationen und den eigentlichen <b>Daten</b>. Im Header stehen nicht nur Absender- und Zieladresse – sondern alles, was ein Router zum Weiterleiten braucht.</p>
+      </header>
+
+      <article class="card">
+        <h2>Aufbau des Headers</h2>
+        <p>Jede Zeile entspricht <b>32 Bit</b>, die Breite der Felder ist maßstäblich. Ohne Optionen ist der Header <b>20 Byte</b> lang (5 Zeilen × 4 Byte). Klick auf ein Feld, um zu erfahren, wofür es da ist.</p>
+        <div class="legend v6-hlegend">
+          <span><i class="sw h-len"></i>Aufbau &amp; Länge</span>
+          <span><i class="sw h-ctl"></i>Weiterleitung</span>
+          <span><i class="sw h-frag"></i>Fragmentierung</span>
+          <span><i class="sw h-chk"></i>Prüfung</span>
+          <span><i class="sw h-addr"></i>Adressen</span>
+          <span><i class="sw h-opt"></i>Optionen</span>
+        </div>
+        <label class="switch small"><input type="checkbox" id="v4-vals"><span>Werte eines Beispielpakets einblenden (192.168.1.10 → 203.0.113.5, TCP)</span></label>
+        <div class="v4-hdr-wrap">
+          <div class="v6-hdr v4-hdr" id="v4-hdr"></div>
+          <div class="v4-data">Daten (z. B. TCP-Segment mit einer Webseite)</div>
+        </div>
+        <div id="v4-hdr-info" class="v6-hdr-info" aria-live="polite"><p class="muted">Klick auf ein Feld.</p></div>
+      </article>
+
+      <article class="card">
+        <h2>TTL und Prüfsumme hängen zusammen</h2>
+        <p>Jeder Router zieht von der <b>TTL</b> 1 ab. Weil die Prüfsumme über den ganzen Header berechnet wird, ändert sie sich dadurch jedes Mal mit – <b>jeder Router muss sie neu berechnen</b>. Verschiebe den Regler und beobachte die Prüfsumme (echt berechnet für das Beispielpaket):</p>
+        <label class="field field-range b-field"><span>TTL <output id="v4-ttl-out">64</output></span><input type="range" id="v4-ttl" min="0" max="128" value="64"></label>
+        <p id="v4-ttl-res" class="v4-ttl-res" aria-live="polite"></p>
+      </article>
+
+      <article class="card">
+        <h2>Header-Felder in der Praxis</h2>
+        <div class="b-split">
+          <div>
+            <ul class="ticks">
+              <li><b>TTL beim ping:</b> Die Antwort zeigt die restliche TTL. Windows startet mit 128, Linux und viele Router mit 64. Kommt <code>TTL=127</code> zurück, lag genau ein Router dazwischen.</li>
+              <li><b>tracert</b> nutzt die TTL gezielt: Es schickt Pakete mit TTL 1, 2, 3 … – jeder Router, bei dem die TTL auf 0 fällt, meldet sich. So sieht man den Weg durchs Netz.</li>
+              <li><b>Protokoll-Feld:</b> ping nutzt ICMP (1), Webseiten TCP (6), DNS und Video meist UDP (17).</li>
+              <li><b>Don’t Fragment:</b> Ist ein Paket mit DF-Flag zu groß für eine Leitung, wird es verworfen – ein typischer Grund, warum große Downloads hängen, kleine Seiten aber laden.</li>
+            </ul>
+          </div>
+          <pre class="console" aria-label="Windows-Ausgabe von tracert"><span class="c-cmd">C:\&gt; tracert 203.0.113.5</span>
+
+Routenverfolgung zu 203.0.113.5 über maximal 30 Hops
+
+  1    &lt;1 ms    &lt;1 ms    &lt;1 ms  192.168.1.1
+  2     8 ms     7 ms     8 ms  100.64.0.1
+  3    12 ms    11 ms    12 ms  198.51.100.9
+  4    14 ms    13 ms    14 ms  203.0.113.5
+
+Ablaufverfolgung beendet.</pre>
+        </div>
+        <p class="note">Wie IPv6 den Header vereinfacht – ohne Prüfsumme und mit fester Länge –, erfährst du später im Thema IPv6.</p>
+      </article>
+
+      <article class="card next-card">
         <h2>Jetzt selbst rechnen</h2>
         <p>Im Übungs-Dojo trainierst du Netzadressen, Broadcasts, Masken, Hostanzahlen und besondere Adressen mit zufällig erzeugten Aufgaben – Gürtel für Gürtel.</p>
         <a class="btn primary" href="#dojo">Weiter zum Übungs-Dojo →</a>
@@ -380,7 +628,7 @@ Ethernet-Adapter Ethernet:
     <section id="dojo" class="page" data-theme="ipv4">
       <header class="page-head">
         <img class="head-art" src="assets/images/el-puppe.webp" alt="">
-        <p class="eyebrow">IPv4 · Station 5 · Training</p>
+        <p class="eyebrow">IPv4 · Station 6 · Training</p>
         <h1>Übungs-Dojo</h1>
         <p class="lead">Acht Gürtel, acht Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten. Die Aufgaben werden zufällig erzeugt – du kannst also beliebig lange trainieren.</p>
       </header>
@@ -397,7 +645,7 @@ Ethernet-Adapter Ethernet:
     <section id="planer" class="page" data-theme="ipv4">
       <header class="page-head">
         <img class="head-art" src="assets/images/el-rack.webp" alt="">
-        <p class="eyebrow">IPv4 · Station 6 · Praxis</p>
+        <p class="eyebrow">IPv4 · Station 7 · Praxis</p>
         <h1>Firmennetz-Planer</h1>
         <p class="lead">Eine Firma hat drei Abteilungen: <b class="c-d0">Verwaltung</b>, <b class="c-d1">Entwicklung</b> und <b class="c-d2">Reparatur</b>. Jede Abteilung soll ein <b>eigenes Subnetz</b> bekommen, ein Router verbindet sie. Plane das Netz Schritt für Schritt – das Dojo prüft jede Eingabe sofort.</p>
         <label class="switch"><input type="checkbox" id="p-help"><span>Hilfen einblenden</span></label>
@@ -468,7 +716,7 @@ Ethernet-Adapter Ethernet:
       <article class="card next-card no-print has-art">
         <img class="card-art" src="assets/images/el-pokal.webp" alt="">
         <h2>Geschafft – weiter zum nächsten Thema!</h2>
-        <p>Du hast alle sechs IPv4-Stationen durchlaufen. Als Nächstes geht es um <b>Topologien</b>: Wie werden Geräte in einem Netzwerk miteinander verkabelt – und was passiert, wenn etwas ausfällt?</p>
+        <p>Du hast alle sieben IPv4-Stationen durchlaufen. Als Nächstes geht es um <b>Topologien</b>: Wie werden Geräte in einem Netzwerk miteinander verkabelt – und was passiert, wenn etwas ausfällt?</p>
         <a class="btn primary" href="#topo-grundlagen">Weiter zum Thema Topologien →</a>
       </article>
     </section>
@@ -632,9 +880,280 @@ Ethernet-Adapter Ethernet:
 
       <article class="card next-card has-art">
         <img class="card-art" src="assets/images/el-kirschbaum.webp" alt="">
-        <h2>Wie geht es weiter?</h2>
-        <p>Als nächstes Thema kommt <b>IPv6</b> – es ist in Vorbereitung. Bis dahin kannst du jederzeit zu IPv4 und den Topologien zurückkehren.</p>
-        <a class="btn primary" href="#topo-grundlagen">Zurück zu den Topologien ↺</a>
+        <h2>Geschafft – weiter zum nächsten Thema!</h2>
+        <p>Als Nächstes geht es um <b>IPv6</b>: Wie sehen die neuen Adressen aus, warum ist der Header einfacher – und warum hat jedes Gerät gleich mehrere Adressen?</p>
+        <a class="btn primary" href="#v6-grundlagen">Weiter zum Thema IPv6 →</a>
+      </article>
+    </section>
+
+    <!-- ============================ IPv6 1 ============================ -->
+    <section id="v6-grundlagen" class="page" data-theme="ipv6">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-schild.webp" alt="">
+        <p class="eyebrow">IPv6 · Station 1 · Grundlagen</p>
+        <h1>IPv6 verstehen</h1>
+        <p class="lead">Die IPv4-Adressen sind knapp geworden. IPv6 löst das mit viermal so langen Adressen – und räumt dabei gleich ein paar alte Schwächen auf. Hier lernst du, wie eine IPv6-Adresse aufgebaut ist.</p>
+      </header>
+
+      <article class="card">
+        <h2>Warum IPv6?</h2>
+        <p>IPv4 hat <b>32 Bit</b> – das ergibt 2<sup>32</sup> ≈ <b>4,3 Milliarden</b> Adressen. Für alle Smartphones, PCs, Server, Fernseher, Maschinen und Sensoren der Welt reicht das längst nicht mehr. Die letzten freien IPv4-Blöcke hat die zentrale Vergabestelle IANA schon 2011 verteilt. Heute behilft man sich mit Tricks wie NAT: Viele Geräte teilen sich eine öffentliche Adresse.</p>
+        <p>IPv6 hat <b>128 Bit</b>. Viermal so viele Bits bedeuten aber nicht viermal so viele Adressen – <b>jedes zusätzliche Bit verdoppelt</b> die Anzahl:</p>
+        <div class="v6-bars" aria-hidden="true">
+          <div class="v6-bar"><span class="v6-bar-l">IPv4</span><i style="width:25%"></i><span class="v6-bar-n">32 Bit</span></div>
+          <div class="v6-bar v6"><span class="v6-bar-l">IPv6</span><i style="width:100%"></i><span class="v6-bar-n">128 Bit</span></div>
+        </div>
+        <div class="v6-nums">
+          <div><span class="muted small">IPv4 · 2<sup>32</sup></span><b>4.294.967.296</b></div>
+          <div><span class="muted small">IPv6 · 2<sup>128</sup></span><b class="v6-big">340.282.366.920.938.463.463.374.607.431.768.211.456</b></div>
+        </div>
+        <ul class="ticks">
+          <li>Das sind für jeden der rund 8 Milliarden Menschen etwa <b>42 Quadrilliarden</b> Adressen (4,2 · 10<sup>28</sup>).</li>
+          <li>Schon ein einziges typisches IPv6-Netz (/64) hat 2<sup>64</sup> ≈ <b>18 Trillionen</b> Adressen – rund 4 Milliarden Mal so viele wie das ganze IPv4-Internet.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>So ist eine IPv6-Adresse aufgebaut</h2>
+        <p>Die 128 Bit werden in <b>8 Blöcke zu je 16 Bit</b> geteilt. Jeder Block wird <b>hexadezimal</b> mit 4 Ziffern geschrieben (0–9 und a–f), die Blöcke trennt ein <b>Doppelpunkt</b>. Eine Hex-Ziffer steht genau für <b>4 Bit</b>.</p>
+        <div id="v6-anatomy" class="v6-anatomy"></div>
+        <p class="note">Fahre mit der Maus über eine Hex-Ziffer, um ihre 4 Bit zu sehen. Hex-Ziffern: 0 = 0000 · 1 = 0001 · … · 9 = 1001 · a = 1010 · b = 1011 · c = 1100 · d = 1101 · e = 1110 · f = 1111</p>
+      </article>
+
+      <article class="card">
+        <h2>Präfix statt Subnetzmaske</h2>
+        <p>Wie bei CIDR gibt die Zahl nach dem Schrägstrich an, wie viele Bit zum Netz gehören: <code>2001:db8:85a3:42::/64</code>. Eine Subnetzmaske in Punktschreibweise gibt es bei IPv6 <b>nicht</b> mehr – auch Windows fragt in den IPv6-Einstellungen nur nach der <b>Subnetzpräfixlänge</b>.</p>
+        <ul class="ticks">
+          <li>Jedes lokale Netz (LAN) ist praktisch immer ein <b>/64</b>: 64 Bit Netzanteil, 64 Bit Interface-ID. Platz für Geräte gibt es damit mehr als genug – Hosts zählen wie bei IPv4 entfällt.</li>
+          <li>Ein Anschluss bekommt vom Provider meist ein <b>/56</b> oder <b>/48</b>. Daraus bildet man selbst die /64-Netze: Aus einem /48 werden 2<sup>16</sup> = 65.536 Netze.</li>
+        </ul>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th></th><th>IPv4</th><th>IPv6</th></tr></thead>
+            <tbody>
+              <tr><td><b>Länge</b></td><td>32 Bit</td><td>128 Bit</td></tr>
+              <tr><td><b>Schreibweise</b></td><td>4 Dezimalzahlen mit Punkt: <code>192.168.1.10</code></td><td>8 Hex-Blöcke mit Doppelpunkt: <code>2001:db8::1</code></td></tr>
+              <tr><td><b>Netz angeben</b></td><td>Subnetzmaske oder /Präfix</td><td>nur /Präfix</td></tr>
+              <tr><td><b>Typisches LAN</b></td><td>/24 mit 254 Hosts</td><td>/64 mit 18 Trillionen Adressen</td></tr>
+              <tr><td><b>Broadcast</b></td><td>ja</td><td>nein – stattdessen Multicast</td></tr>
+              <tr><td><b>Adressen pro Schnittstelle</b></td><td>meist eine</td><td>mehrere gleichzeitig (Station 4)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Lange Adressen kürzer schreiben</h2>
+        <p>Niemand tippt gern 39 Zeichen. In der Adress-Werkstatt lernst du die zwei Regeln, mit denen man IPv6-Adressen kürzt – und wie man sie wieder ausschreibt.</p>
+        <a class="btn primary" href="#v6-werkstatt">Weiter zur Adress-Werkstatt →</a>
+      </article>
+    </section>
+
+    <!-- ============================ IPv6 2 ============================ -->
+    <section id="v6-werkstatt" class="page" data-theme="ipv6">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-kabel.webp" alt="">
+        <p class="eyebrow">IPv6 · Station 2 · Interaktiv</p>
+        <h1>Adress-Werkstatt</h1>
+        <p class="lead">Gib eine IPv6-Adresse ein – gekürzt oder ausgeschrieben. Die Werkstatt zeigt die volle und die gekürzte Form, erklärt jeden Schritt und färbt Netzanteil und Interface-ID.</p>
+      </header>
+
+      <article class="card">
+        <div class="fields v6-fields">
+          <label class="field"><span>IPv6-Adresse</span><input id="v6-in" value="2001:0db8:0000:0000:0000:ff00:0042:8329" spellcheck="false" autocomplete="off"></label>
+          <label class="field field-range"><span>Präfix <output id="v6-p-out">/64</output></span><input type="range" id="v6-p" min="0" max="128" value="64"></label>
+        </div>
+        <div class="presets"><span class="muted">Ausprobieren:</span>
+          <button type="button" class="pill" data-v6="2001:0db8:0000:0000:0000:ff00:0042:8329">2001:0db8:0000:…:8329</button>
+          <button type="button" class="pill" data-v6="2001:0:0:1:0:0:0:1">2001:0:0:1:0:0:0:1 (2 Null-Folgen)</button>
+          <button type="button" class="pill" data-v6="2001:db8:0:0:1:0:0:1">2001:db8:0:0:1:0:0:1 (gleich lang)</button>
+          <button type="button" class="pill" data-v6="fe80::3c1d:9a2b:71f4:e8c0">fe80::3c1d:…</button>
+          <button type="button" class="pill" data-v6="::1">::1</button>
+          <button type="button" class="pill" data-v6="FD12:3456:789A:0001::1">FD12:3456:789A:0001::1</button>
+          <button type="button" class="pill" data-v6="2001::db8::1">2001::db8::1 (Fehler)</button>
+        </div>
+        <div id="v6-out" class="v6-out" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>Die zwei Regeln zum Kürzen</h2>
+        <div class="two-col">
+          <div class="mini-card">
+            <h3>1 · Führende Nullen weglassen</h3>
+            <p>In jedem Block dürfen Nullen <b>am Anfang</b> wegfallen: <code>0db8</code> → <code>db8</code>, <code>0042</code> → <code>42</code>, <code>0000</code> → <code>0</code>. Nullen in der Mitte oder am Ende bleiben: <code>ff00</code> bleibt <code>ff00</code>.</p>
+          </div>
+          <div class="mini-card">
+            <h3>2 · Einmal „::“ für Null-Blöcke</h3>
+            <p>Eine Folge von Blöcken, die nur aus Nullen bestehen, darf durch <code>::</code> ersetzt werden – aber nur <b>einmal</b> pro Adresse. Man nimmt die <b>längste</b> Folge, bei Gleichstand die erste. Ein einzelner Null-Block bleibt <code>0</code>.</p>
+            <p class="v6-ex">Beispiel: <code>2001:0:0:1:0:0:0:1</code> hat zwei Null-Folgen (2 und 3 Blöcke). Nur die längere wird zu „::“ → <code>2001:0:0:1::1</code>. Die kürzere bleibt als <code>0:0</code> stehen.</p>
+          </div>
+        </div>
+        <h3 class="sub-h">Typische Fehler</h3>
+        <ul class="ticks">
+          <li><code>2001::db8::1</code> – zweimal „::“: Man wüsste nicht, wie viele Nullen an welcher Stelle fehlen.</li>
+          <li><code>2001:db8:12345::1</code> – ein Block hat höchstens 4 Hex-Ziffern.</li>
+          <li><code>2001:db8:g::1</code> – „g“ ist keine Hex-Ziffer (nur 0–9 und a–f).</li>
+          <li><code>2001:db8:0:0:1::1</code> ist zwar gültig, aber nicht <b>fertig</b> gekürzt: Die beiden Null-Blöcke hätten mit „::“ zusammengefasst werden müssen → <code>2001:db8::1:0:1</code>.</li>
+        </ul>
+        <p class="note">Groß- oder Kleinbuchstaben sind gleichwertig, üblich ist klein. Die Regeln stehen in <a href="https://www.rfc-editor.org/info/rfc5952/" target="_blank" rel="noopener">RFC 5952</a>.</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Was steckt hinter der Adresse?</h2>
+        <p>Jedes IPv6-Paket beginnt mit einem Header. Der ist bei IPv6 deutlich aufgeräumter als bei IPv4 – sieh dir den Vergleich an.</p>
+        <a class="btn primary" href="#v6-header">Weiter zum Header →</a>
+      </article>
+    </section>
+
+    <!-- ============================ IPv6 3 ============================ -->
+    <section id="v6-header" class="page" data-theme="ipv6">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-laterne.webp" alt="">
+        <p class="eyebrow">IPv6 · Station 3 · Vergleich</p>
+        <h1>Der IPv6-Header</h1>
+        <p class="lead">Vor den eigentlichen Daten trägt jedes Paket einen Header mit Absender, Ziel und Steuerinformationen. Bei IPv6 ist er <b>einfacher und immer gleich lang</b> – das spart Routern Arbeit.</p>
+      </header>
+
+      <article class="card">
+        <h2>Zwei Header im Vergleich</h2>
+        <p>Jede Zeile entspricht 32 Bit, die Breite der Felder ist maßstäblich. Den IPv4-Header kennst du schon aus Station 5 des Themas IPv4 – hier siehst du, was sich geändert hat. Klick auf ein Feld, um mehr zu erfahren.</p>
+        <div class="legend v6-hlegend">
+          <span><i class="sw h-gone"></i>bei IPv6 weggefallen</span>
+          <span><i class="sw h-ren"></i>umbenannt</span>
+          <span><i class="sw h-new"></i>neu</span>
+          <span><i class="sw h-same"></i>gleich geblieben</span>
+        </div>
+        <div class="v6-hdrs">
+          <div><h3>IPv4-Header <small>20–60 Byte · 12 Felder + Optionen</small></h3><div class="v6-hdr" id="v6-hdr4"></div></div>
+          <div><h3>IPv6-Header <small>immer 40 Byte · 8 Felder</small></h3><div class="v6-hdr" id="v6-hdr6"></div></div>
+        </div>
+        <div id="v6-hdr-info" class="v6-hdr-info" aria-live="polite"><p class="muted">Klick auf ein Feld.</p></div>
+      </article>
+
+      <article class="card">
+        <h2>Was bringt das?</h2>
+        <ul class="ticks">
+          <li><b>Feste Länge:</b> Der IPv6-Header ist immer genau 40 Byte lang. Ein Router muss nicht erst ausrechnen, wo die Daten beginnen (das Feld „Header-Länge“ fällt weg).</li>
+          <li><b>Keine Header-Prüfsumme:</b> Bei IPv4 muss jeder Router nach dem Herunterzählen der TTL die Prüfsumme neu berechnen. Bei IPv6 entfällt das – Fehler erkennen schon Ethernet darunter und TCP/UDP darüber.</li>
+          <li><b>Keine Fragmentierung unterwegs:</b> Router zerlegen keine zu großen Pakete mehr. Das macht bei Bedarf nur noch der Absender.</li>
+          <li><b>Optionen ausgelagert:</b> Zusätzliche Angaben stehen in eigenen Erweiterungs-Headern (Extension Header), auf die das Feld „Next Header“ verweist. Der Grundheader bleibt schlank.</li>
+        </ul>
+        <p class="callout"><b>Achtung, zwei häufige Irrtümer:</b> Der IPv6-Header ist mit 40 Byte <b>größer</b> als der kleinste IPv4-Header (20 Byte) – wegen der viermal längeren Adressen. Er ist aber <b>einfacher</b>. Und die TTL ist nicht abgeschafft: Das Feld heißt jetzt <b>Hop Limit</b> und funktioniert genauso – jeder Router zieht 1 ab, bei 0 wird das Paket verworfen. Der neue Name passt besser, denn gezählt wurden schon immer Router-Durchgänge, keine Sekunden.</p>
+      </article>
+
+      <article class="card">
+        <h2>Ein Paket auf Reisen</h2>
+        <p>Dasselbe Paket läuft über drei Router – oben mit IPv4, unten mit IPv6. Jeder Router muss den Header ändern, bevor er das Paket weiterschickt. <b>Achte darauf, was er dabei jeweils zu tun hat</b> – darin steckt der Unterschied.</p>
+        <div class="row-actions">
+          <button type="button" class="btn primary" id="v6-step">Nächster Router →</button>
+          <button type="button" class="btn" id="v6-go">▶ Automatisch abspielen</button>
+          <button type="button" class="btn ghost" id="v6-reset">Von vorn</button>
+        </div>
+        <div id="v6-anim" class="v6-anim"></div>
+        <p class="note">Die Prüfsumme ist echt berechnet – für einen Beispiel-Header von 192.168.1.10 an 203.0.113.5. Eine einzelne Berechnung geht schnell; bei Millionen Paketen pro Sekunde summiert sie sich aber.</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Ein Gerät, mehrere Adressen</h2>
+        <p>Bei IPv6 hat jede Netzwerkkarte gleich mehrere Adressen. Welche das sind und wofür, zeigt die nächste Station.</p>
+        <a class="btn primary" href="#v6-adressen">Weiter zu den drei Adressen →</a>
+      </article>
+    </section>
+
+    <!-- ============================ IPv6 4 ============================ -->
+    <section id="v6-adressen" class="page" data-theme="ipv6">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-laptop.webp" alt="">
+        <p class="eyebrow">IPv6 · Station 4 · Praxis</p>
+        <h1>Drei Adressen pro Gerät</h1>
+        <p class="lead">Ruf auf einem Windows-PC <code>ipconfig</code> auf – bei IPv6 siehst du gleich drei Adressen für dieselbe Netzwerkkarte. Klick auf eine Zeile, um zu erfahren, was sie bedeutet.</p>
+      </header>
+
+      <article class="card">
+        <h2>So zeigt Windows die Adressen</h2>
+        <div class="b-split">
+          <pre class="console v6-ipc" id="v6-ipc" aria-label="Windows-Ausgabe von ipconfig mit IPv6-Adressen"></pre>
+          <div id="v6-ipc-info" class="v6-ipc-info" aria-live="polite"></div>
+        </div>
+        <p class="note">Beispieladressen aus dem Dokumentationsbereich 2001:db8::/32. Bei dir zu Hause beginnt die globale Adresse z. B. mit 2003: oder 2a02: – je nach Provider.</p>
+      </article>
+
+      <article class="card">
+        <h2>Die drei Adressen im Überblick</h2>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Adresse</th><th>Erkennbar an</th><th>Bedeutung</th></tr></thead>
+            <tbody>
+              <tr><td><b>Verbindungslokal</b> (Link-Local)</td><td>beginnt mit <code>fe80::</code></td><td>immer vorhanden, erzeugt sich das Gerät selbst; gilt nur im eigenen Netzsegment und wird nicht geroutet</td></tr>
+              <tr><td><b>Global</b> (Global Unicast)</td><td>beginnt mit <code>2</code> oder <code>3</code></td><td>weltweit eindeutig und erreichbar; das Präfix kommt vom Router, die Interface-ID bildet das Gerät</td></tr>
+              <tr><td><b>Temporär</b> (Privacy Extension)</td><td>gleiches Präfix wie die globale</td><td>wechselt regelmäßig (Windows: etwa täglich) und wird für ausgehende Verbindungen genutzt, damit das Gerät im Internet nicht dauerhaft wiedererkennbar ist</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3 class="sub-h">Weitere Adressen, die du kennen solltest</h3>
+        <ul class="ticks">
+          <li><code>::1</code> – Loopback, das Gerät selbst (wie 127.0.0.1).</li>
+          <li><code>fd…</code> – Unique Local Address (ULA, fc00::/7): für interne Netze, wird im Internet nicht geroutet (wie 192.168.x.x).</li>
+          <li><code>ff02::1</code> – Multicast an alle Geräte im Segment. Einen Broadcast gibt es bei IPv6 nicht mehr.</li>
+        </ul>
+        <p class="callout"><b>Wichtig:</b> Die globale und die temporäre Adresse gibt es nur, wenn ein <b>Router</b> im Netz ein Präfix bekannt gibt. Ohne Router – z. B. zwei Laptops direkt mit Kabel verbunden – hat jedes Gerät nur seine <code>fe80</code>-Adresse. Die reicht aber, um sich gegenseitig zu erreichen.</p>
+      </article>
+
+      <article class="card">
+        <h2>EUI-64: Interface-ID aus der MAC-Adresse</h2>
+        <p>Woher kommen die 64 Bit der Interface-ID? Das klassische Verfahren heißt <b>EUI-64</b>: Das Gerät baut sie aus seiner 48 Bit langen MAC-Adresse.</p>
+        <div id="v6-eui" class="v6-eui"></div>
+        <div class="row-actions">
+          <button type="button" class="btn primary" id="v6-eui-next">Nächster Schritt →</button>
+          <button type="button" class="btn ghost" id="v6-eui-reset">Von vorn</button>
+        </div>
+        <label class="field b-field v6-mac-field"><span>Eigene MAC-Adresse ausprobieren</span><input id="v6-mac" value="00:1A:2B:3C:4D:5E" spellcheck="false" autocomplete="off"></label>
+        <p class="callout"><b>Gut zu wissen:</b> Die meisten Endgeräte nutzen heute <b>kein</b> EUI-64 – weder Windows noch macOS/iOS noch Android (und viele Linux-Distributionen auch nicht). Sie bilden die Interface-ID zufällig bzw. „stabil, aber nicht aus der MAC ableitbar“, damit man ein Gerät nicht über seine MAC-Adresse verfolgen kann. EUI-64 findet man vor allem bei <b>Routern, Switches, Industriegeräten und eingebetteten Systemen</b>. Auf dem eigenen PC oder Handy siehst du deshalb meist kein <code>ff:fe</code> in der Mitte.</p>
+      </article>
+
+      <article class="card">
+        <h2>Für Interessierte: Wie kommt das Gerät an seine Adressen?</h2>
+        <details class="v6-more">
+          <summary>Router Advertisement und SLAAC</summary>
+          <p>Ein IPv6-Router meldet sich regelmäßig mit einem <b>Router Advertisement</b> (RA) im Netz – an die Multicast-Adresse ff02::1. Darin steht unter anderem das Präfix des Netzes, z. B. 2001:db8:4a00::/64. Ein neues Gerät muss nicht warten: Es fragt mit einer <b>Router Solicitation</b> (RS) aktiv nach.</p>
+          <p>Aus Präfix und eigener Interface-ID baut sich das Gerät seine globale Adresse dann selbst – das heißt <b>SLAAC</b> (Stateless Address Autoconfiguration). Ein DHCP-Server ist dafür nicht nötig. Als Standardgateway nimmt das Gerät die fe80-Adresse des Routers, von dem das RA kam.</p>
+        </details>
+        <details class="v6-more">
+          <summary>Zufällige und stabile Interface-IDs</summary>
+          <p>Statt EUI-64 erzeugen moderne Betriebssysteme eine <b>stabile</b> Interface-ID, die aus einem geheimen Schlüssel und dem Netz berechnet wird (RFC 7217): im selben Netz immer gleich, in einem anderen Netz anders – und nicht auf die MAC zurückführbar. Dazu kommt die <b>temporäre</b> Adresse mit zufälliger Interface-ID (RFC 8981), die regelmäßig wechselt.</p>
+        </details>
+        <details class="v6-more">
+          <summary>NDP statt ARP</summary>
+          <p>Bei IPv4 findet ein Gerät die MAC-Adresse zu einer IP-Adresse per <b>ARP</b> (Broadcast). IPv6 hat dafür das <b>Neighbor Discovery Protocol</b> (NDP) mit Neighbor Solicitation und Neighbor Advertisement – über Multicast statt Broadcast. NDP prüft auch, ob eine Adresse schon belegt ist (Duplicate Address Detection), und überträgt die Router Advertisements.</p>
+        </details>
+        <details class="v6-more">
+          <summary>DHCPv6</summary>
+          <p>DHCP gibt es auch für IPv6. <b>Stateful</b> DHCPv6 vergibt die Adressen selbst (wie bei IPv4), <b>stateless</b> DHCPv6 liefert nur Zusatzinfos wie DNS-Server, während die Adresse per SLAAC entsteht. Was gilt, sagt der Router im Router Advertisement (M- und O-Flag). Android unterstützt übrigens nur SLAAC, kein stateful DHCPv6.</p>
+        </details>
+      </article>
+
+      <article class="card next-card">
+        <h2>Jetzt üben</h2>
+        <p>Im IPv6-Dojo trainierst du Kürzen, Erweitern, Adresstypen, Präfixe, EUI-64 und den Header – Gürtel für Gürtel.</p>
+        <a class="btn primary" href="#v6-dojo">Weiter zum IPv6-Dojo →</a>
+      </article>
+    </section>
+
+    <!-- ============================ IPv6 5 ============================ -->
+    <section id="v6-dojo" class="page" data-theme="ipv6">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-puppe.webp" alt="">
+        <p class="eyebrow">IPv6 · Station 5 · Training</p>
+        <h1>IPv6-Dojo</h1>
+        <p class="lead">Sechs Gürtel, sechs Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten. Die Aufgaben werden zufällig erzeugt – du kannst also beliebig lange trainieren.</p>
+      </header>
+      <div class="dojo-layout" id="d-v6"></div>
+
+      <article class="card next-card has-art">
+        <img class="card-art" src="assets/images/el-laternchen.webp" alt="">
+        <h2>Alle drei Themen geschafft!</h2>
+        <p>Du hast IPv4, Topologien und IPv6 durchgearbeitet. Wiederholen kannst du jederzeit – am besten in den drei Übungs-Dojos, bis alle Gürtel in Farbe leuchten.</p>
+        <a class="btn primary" href="#grundlagen">Zurück zum Anfang ↺</a>
       </article>
     </section>
 
@@ -664,16 +1183,22 @@ Ethernet-Adapter Ethernet:
 
   <script src="assets/ipv4.js"></script>
   <script src="assets/ui.js"></script>
+  <script src="assets/mac.js"></script>
   <script src="assets/grundlagen.js"></script>
   <script src="assets/werkstatt.js"></script>
   <script src="assets/klassen.js"></script>
   <script src="assets/besondere.js"></script>
+  <script src="assets/header4.js"></script>
   <script src="assets/dojo-engine.js"></script>
   <script src="assets/dojo.js"></script>
+  <script src="assets/mac-dojo.js"></script>
   <script src="assets/planer.js"></script>
   <script src="assets/topo.js"></script>
   <script src="assets/topologien.js"></script>
   <script src="assets/topo-dojo.js"></script>
+  <script src="assets/ipv6.js"></script>
+  <script src="assets/ipv6-stationen.js"></script>
+  <script src="assets/ipv6-dojo.js"></script>
   <script src="assets/tor.js"></script>
 </body>
 </html>
