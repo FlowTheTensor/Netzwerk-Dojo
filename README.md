@@ -1,5 +1,5 @@
 # Netzwerktechnik-Dojo
-# [[Hier öffnen](https://flowthetensor.github.io/Subnet-Dojo/)
+# [Hier öffnen](https://flowthetensor.github.io/Subnet-Dojo/)
 
 Interaktive Lernseite für Netzwerktechnik – IPv4 und Subnetting, Netzwerk-Topologien und (in Vorbereitung) IPv6, gedacht für den Unterricht.
 Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schritt und lädt
@@ -48,6 +48,8 @@ Wird freigeschaltet, sobald alle sechs IPv4-Stationen einmal geöffnet wurden.
 ```
 index.html            Alle Stationen (Navigation über #grundlagen, #werkstatt, …, #topo-grundlagen, …)
 assets/style.css      Gestaltung inkl. Dark Mode und Druckansicht
+assets/tor.css        Dojo-Tor als Rahmen um die ganze Seite (Dach, Säulen, Boden)
+assets/tor.js         Blütenblätter neben den Säulen
 assets/ipv4.js        Rechenkern (Parsen, Masken, Netz/Broadcast, Klassen, RFC 1918)
 assets/ui.js          Bit-Darstellung, Legende, Speicher, Navigation mit Themen und Freischaltung
 assets/dojo-engine.js Übungs-Mechanik für alle Themen: Gürtel, Serie, Stempel, Feuerwerk
@@ -62,6 +64,7 @@ assets/topologien.js  Topologien Station 1 und 2
 assets/topo-dojo.js   Topologien Station 3
 assets/images/        Gürtelbilder aus Netzwerkkabel (guertel-<farbe>.png), Dojo-Tor als Rahmen
                       (rahmen.webp) und Illustrationen der Stationen (el-*.webp)
+assets/images/tor/    Einzelteile des Seitenrahmens und Blütenblätter
 ```
 
 ## Gestaltung
