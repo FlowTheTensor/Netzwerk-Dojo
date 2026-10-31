@@ -1,7 +1,7 @@
 # Netzwerktechnik-Dojo
 # [Hier öffnen](https://flowthetensor.github.io/Netzwerk-Dojo/)
 
-Interaktive Lernseite für Netzwerktechnik – MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien, IPv6 und das ISO/OSI-Modell, gedacht für den Unterricht.
+Interaktive Lernseite für Netzwerktechnik – MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell sowie Kabel und Leitungscodes, gedacht für den Unterricht.
 Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schritt und lädt
 **keine externen Ressourcen** (keine Web-Fonts, kein CDN, kein Tracking).
 
@@ -60,6 +60,20 @@ Wird freigeschaltet, sobald alle IPv6-Stationen einmal geöffnet wurden.
 | 2 | Daten auf Reisen | Animation: Der Sender schreibt auf Schicht 7 eine Nachricht, jede Schicht ergänzt ihren Header (Schicht 2 auch den Trailer), Bits übers Kabel, der Empfänger entfernt die Header von Schicht 1 bis 7 |
 | 3 | OSI-Dojo | 4 Gürtel: Schichten & Nummern, Merksatz, Geräte & Protokolle, Kapselung |
 
+## Thema Kabel & Signale
+
+Wird freigeschaltet, sobald alle OSI-Stationen einmal geöffnet wurden. Grundlage sind die Arbeitsblätter
+Leitungscodierung, Ethernetstandards und Netzwerkkabel, auf den aktuellen Stand gebracht.
+
+| # | Station | Inhalt |
+|---|---------|--------|
+| 1 | Netzwerkkabel | Koax, Twisted Pair, Glasfaser im Querschnitt; Differenzsignal mit Störungs-Regler; Schirmung XX/YTP mit Decoder (ungeschirmt in Deutschland unüblich); Multimode und Singlemode |
+| 2 | Kategorien & Stecker | Kat. 5e bis 8.2 mit Klassen und Frequenzen, Berater „Welche Kategorie brauche ich?“, RJ45 (auch für 10GBASE-T und Kat. 8.1), GG45/TERA/ARJ45 |
+| 3 | RJ45-Werkstatt | T568A/T568B, Crimp-Übung, Patchkabel und Crossover (10/100 und Gigabit), Auto-MDI-X, Crossover-Verbindungsübung wie auf dem Arbeitsblatt |
+| 4 | Leitungscodes | Taktproblem mit Regler für die Taktabweichung, Manchester-Code live gezeichnet, ASCII-Übung mit zwei Zeichen, Vergleich Manchester / MLT-3 / PAM-5 (vereinfacht) |
+| 5 | Ethernet-Standards | Namen zerlegen (Rate · BASE · Medium), Stammbaum von 10BASE5 bis 40GBASE-T mit Kennzeichnung „Geschichte“, CSMA/CD und 5-4-3-Regel als Rückblick |
+| 6 | Kabel-Dojo | 5 Gürtel: Kabel & Schirmung, Kategorien, RJ45-Belegung, Manchester-Code, Ethernet-Standards |
+
 ## Hinweise für Lehrkräfte
 
 - Der Planer übt **nur gleich große Subnetze (FLSM)** – alle Abteilungen bekommen dieselbe Maske.
@@ -86,6 +100,10 @@ assets/tor.css        Dojo-Tor als Rahmen um die ganze Seite (Dach, Säulen, Bod
 assets/tor.js         Blütenblätter neben den Säulen
 assets/osi.js         OSI-Schichten (auch fürs Dojo), Merksatz-Puzzle, Kapselungs-Animation
 assets/osi-dojo.js    OSI Station 3
+assets/kabel.js       Kabel-Daten (auch fürs Dojo), Kabel-Stationen 1–3
+assets/signale.js     Manchester-Rechenkern, Kabel-Station 4
+assets/ethernet.js    Ethernet-Standards (auch fürs Dojo), Kabel-Station 5
+assets/kabel-dojo.js  Kabel-Station 6
 assets/mac.js         MAC-Rechenkern und MAC-Stationen 1–2
 assets/mac-dojo.js    MAC-Station 3
 assets/ipv4.js        Rechenkern (Parsen, Masken, Netz/Broadcast, Klassen, RFC 1918)

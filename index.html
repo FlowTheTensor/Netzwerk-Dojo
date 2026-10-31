@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Netzwerktechnik-Dojo</title>
-  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: MAC-Adressen, IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien, IPv6 und das ISO/OSI-Modell.">
+  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: MAC-Adressen, IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell sowie Kabel und Leitungscodes.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23C81E3A'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3E/%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/tor.css">
@@ -15,7 +15,7 @@
     <div class="header-inner">
       <a class="brand" href="#mac-grundlagen">
         <span class="brand-title">Netzwerktechnik-<i>Dojo</i></span>
-        <span class="eyebrow">MAC · IPv4 · Topologien · IPv6 · OSI</span>
+        <span class="eyebrow">MAC · IPv4 · Topologien · IPv6 · OSI · Kabel</span>
       </a>
       <a class="school-logo" href="https://www.bsnes.de" target="_blank" rel="noopener" title="Jakob-Preh-Schule"><img src="assets/jps-logo.png" alt="Logo der Jakob-Preh-Schule" width="324" height="182"></a>
     </div>
@@ -29,6 +29,7 @@
       <a href="#topo-grundlagen" data-theme="topo">Topologien</a>
       <a href="#v6-grundlagen" data-theme="ipv6">IPv6</a>
       <a href="#osi-grundlagen" data-theme="osi">OSI</a>
+      <a href="#kabel-typen" data-theme="kabel">Kabel &amp; Signale</a>
     </div>
     <div class="stationbar">
       <a href="#mac-grundlagen" data-theme="mac"><span class="tab-num">1</span>MAC verstehen</a>
@@ -52,6 +53,12 @@
       <a href="#osi-grundlagen" data-theme="osi"><span class="tab-num">1</span>OSI-Schichten</a>
       <a href="#osi-kapselung" data-theme="osi"><span class="tab-num">2</span>Daten auf Reisen</a>
       <a href="#osi-dojo" data-theme="osi"><span class="tab-num">3</span>OSI-Dojo</a>
+      <a href="#kabel-typen" data-theme="kabel"><span class="tab-num">1</span>Netzwerkkabel</a>
+      <a href="#kabel-kat" data-theme="kabel"><span class="tab-num">2</span>Kategorien &amp; Stecker</a>
+      <a href="#kabel-rj45" data-theme="kabel"><span class="tab-num">3</span>RJ45-Werkstatt</a>
+      <a href="#kabel-code" data-theme="kabel"><span class="tab-num">4</span>Leitungscodes</a>
+      <a href="#kabel-eth" data-theme="kabel"><span class="tab-num">5</span>Ethernet-Standards</a>
+      <a href="#kabel-dojo" data-theme="kabel"><span class="tab-num">6</span>Kabel-Dojo</a>
     </div>
   </nav>
 
@@ -1272,10 +1279,360 @@ Ablaufverfolgung beendet.</pre>
       </header>
       <div class="dojo-layout" id="d-osi"></div>
 
+      <article class="card next-card">
+        <h2>Geschafft – weiter zum nächsten Thema!</h2>
+        <p>Jetzt geht es ganz nach unten auf <b>Schicht 1</b>: Kabel, Stecker und wie aus Bits ein Signal auf der Leitung wird.</p>
+        <a class="btn primary" href="#kabel-typen">Weiter zum Thema Kabel &amp; Signale →</a>
+      </article>
+    </section>
+
+    <!-- ============================ KABEL 1 ============================ -->
+    <section id="kabel-typen" class="page" data-theme="kabel">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-kabel.webp" alt="">
+        <p class="eyebrow">Kabel &amp; Signale · Station 1 · Grundlagen</p>
+        <h1>Netzwerkkabel</h1>
+        <p class="lead">Auf <b>Schicht 1</b> des OSI-Modells werden aus Bits Signale: elektrische Spannung im Kupferkabel, Lichtpulse in der Glasfaser oder Funkwellen im WLAN. Welches Kabel man nimmt, entscheidet über Geschwindigkeit, Reichweite und Störfestigkeit.</p>
+      </header>
+
+      <article class="card">
+        <h2>Drei Kabelarten</h2>
+        <div class="kb-types">
+          <div class="mini-card">
+            <div class="kb-x" data-x="koax"></div>
+            <h3>Koaxialkabel</h3>
+            <p>Ein Innenleiter, darum eine Isolierung, ein Schirm aus Drahtgeflecht und der Mantel. Damit begann Ethernet (10BASE5, 10BASE2) als <b>Bus</b>: alle Geräte an einem Kabel, 10 Mbit/s.</p>
+            <p class="note">Im Netzwerk heute nicht mehr üblich. Koax steckt aber noch im Kabelfernsehen und im Kabel-Internet (DOCSIS).</p>
+          </div>
+          <div class="mini-card">
+            <div class="kb-x" data-x="tp"></div>
+            <h3>Twisted-Pair-Kabel</h3>
+            <p><b>Acht Adern</b>, je zwei miteinander verdrillt zu <b>vier Paaren</b>. Das Standardkabel im LAN: vom Switch zur Netzwerkdose und zum PC, mit RJ45-Steckern.</p>
+            <p class="note">Bis 100 m pro Strecke, je nach Kategorie bis 10 Gbit/s (Kat. 6A) oder mehr.</p>
+          </div>
+          <div class="mini-card">
+            <div class="kb-x" data-x="lwl"></div>
+            <h3>Glasfaser (LWL)</h3>
+            <p>Licht wird in einem haarfeinen <b>Glaskern</b> geführt. Der Mantel aus Glas mit etwas anderem Brechungsindex wirft es immer wieder zurück in den Kern.</p>
+            <p class="note">Für lange Strecken und hohe Raten: zwischen Gebäuden, im Backbone, im Rechenzentrum.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Warum sind die Adern verdrillt?</h2>
+        <p>Auf einem Adernpaar wird das Signal <b>gegenphasig</b> übertragen: Die eine Ader führt das Signal, die andere genau das Gegenteil. Eine Störung von außen – etwa von einem Motor oder einer Stromleitung – trifft durch die Verdrillung <b>beide Adern gleich</b>. Der Empfänger bildet die <b>Differenz</b> der beiden Adern: Das Signal verdoppelt sich, die Störung hebt sich auf.</p>
+        <label class="field field-range kb-noise-field"><span>Störung von außen <output id="kb-noise-out">60 %</output></span><input type="range" id="kb-noise" min="0" max="100" value="60"></label>
+        <div class="tp-wrap"><div id="kb-diff"></div></div>
+        <p class="note">Jedes Paar ist unterschiedlich stark verdrillt. So stören sich auch die Paare untereinander kaum (das nennt man <b>Nebensprechen</b>).</p>
+      </article>
+
+      <article class="card">
+        <h2>Geschirmt oder ungeschirmt?</h2>
+        <p>Zusätzlich zur Verdrillung kann ein Kabel einen <b>Schirm</b> aus Metallfolie oder Drahtgeflecht haben. Die Bezeichnung folgt der Norm <b>ISO/IEC 11801</b> und hat die Form <code>XX/YTP</code>:</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Teil</th><th>bedeutet</th><th>mögliche Werte</th></tr></thead>
+            <tbody>
+              <tr><td><code>XX</code> vor dem Schrägstrich</td><td>Schirm um <b>alle</b> Paare (Gesamtschirm)</td><td><b>U</b> ungeschirmt · <b>F</b> Folie · <b>S</b> Geflecht · <b>SF</b> Geflecht und Folie</td></tr>
+              <tr><td><code>Y</code> nach dem Schrägstrich</td><td>Schirm um <b>jedes einzelne</b> Paar</td><td><b>U</b> ungeschirmt · <b>F</b> Folie</td></tr>
+              <tr><td><code>TP</code></td><td>Twisted Pair</td><td>immer gleich</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kb-shield">
+          <div>
+            <label class="field b-field"><span>Kabelbezeichnung</span><input id="kb-sh-in" value="S/FTP" spellcheck="false" autocomplete="off"></label>
+            <div class="presets"><span class="muted">Ausprobieren:</span>
+              <button type="button" class="pill" data-sh="U/UTP">U/UTP</button>
+              <button type="button" class="pill" data-sh="F/UTP">F/UTP</button>
+              <button type="button" class="pill" data-sh="U/FTP">U/FTP</button>
+              <button type="button" class="pill" data-sh="S/FTP">S/FTP</button>
+              <button type="button" class="pill" data-sh="SF/UTP">SF/UTP</button>
+            </div>
+            <div id="kb-sh-out" aria-live="polite"></div>
+          </div>
+          <div class="kb-x big" id="kb-sh-svg"></div>
+        </div>
+        <ul class="ticks">
+          <li><b>Weltweit</b> ist ungeschirmtes <b>U/UTP</b> das häufigste Netzwerkkabel: günstig, dünn, leicht zu verlegen, und der Schirm muss nicht geerdet werden.</li>
+          <li><b>In Deutschland</b> sind ungeschirmte Kabel dagegen <b>unüblich</b>. Hier wird traditionell geschirmt verlegt, meist <b>S/FTP</b>. Das ist störfester (EMV), setzt aber einen sauberen Potenzialausgleich im Gebäude voraus.</li>
+          <li>Alte Namen wie „STP“ oder „S/STP“ sind nicht eindeutig – heute nennt man immer beide Schirme, also z. B. S/FTP.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Glasfaser: Multimode und Singlemode</h2>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th></th><th>Multimode</th><th>Singlemode</th></tr></thead>
+            <tbody>
+              <tr><td>Kerndurchmesser</td><td>50 µm – das Licht läuft auf vielen Wegen („Moden“)</td><td>9 µm – nur ein einziger Lichtweg</td></tr>
+              <tr><td>Lichtquelle</td><td>günstiger Laser (VCSEL), 850 nm</td><td>Laser, 1310 nm oder 1550 nm</td></tr>
+              <tr><td>Reichweite bei 10 Gbit/s</td><td>300–400 m</td><td>10 km und mehr</td></tr>
+              <tr><td>Faserklassen</td><td>OM3, OM4, OM5</td><td>OS2</td></tr>
+              <tr><td>Einsatz</td><td>im Gebäude, im Rechenzentrum</td><td>zwischen Gebäuden, Provider, Glasfaser bis ins Haus</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="ticks">
+          <li><b>Vorteile:</b> keine elektromagnetischen Störungen, kein Nebensprechen, galvanische Trennung zwischen Gebäuden, sehr große Reichweite und Bandbreite.</li>
+          <li><b>Stecker:</b> heute fast immer <b>LC</b> (klein, paarweise), seltener SC. Gesendet und empfangen wird auf zwei getrennten Fasern.</li>
+        </ul>
+      </article>
+
+      <article class="card next-card">
+        <h2>Welches Kabel für welches Tempo?</h2>
+        <p>Twisted-Pair-Kabel gibt es in verschiedenen Kategorien – und auch der Stecker muss mitspielen.</p>
+        <a class="btn primary" href="#kabel-kat">Weiter zu Kategorien &amp; Stecker →</a>
+      </article>
+    </section>
+
+    <!-- ============================ KABEL 2 ============================ -->
+    <section id="kabel-kat" class="page" data-theme="kabel">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-schild.webp" alt="">
+        <p class="eyebrow">Kabel &amp; Signale · Station 2 · Grundlagen</p>
+        <h1>Kategorien &amp; Stecker</h1>
+        <p class="lead">Je höher die Datenrate, desto höher die Frequenzen auf dem Kabel. Die <b>Kategorie</b> sagt, bis zu welcher Frequenz ein Kabel, eine Dose oder ein Stecker gebaut ist.</p>
+      </header>
+
+      <article class="card">
+        <h2>Kategorien und Klassen</h2>
+        <p>Die <b>Kategorie</b> (Kat., engl. Cat) gilt für einzelne Bauteile, die <b>Klasse</b> für die ganze Übertragungsstrecke. Eine Strecke erreicht ihre Klasse nur, wenn <b>alle</b> Bauteile mindestens die passende Kategorie haben.</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact kb-cat">
+            <thead><tr><th>Kategorie</th><th>Klasse</th><th>Frequenz bis</th><th></th><th>Typischer Einsatz</th></tr></thead>
+            <tbody id="kb-cat-body"></tbody>
+          </table>
+        </div>
+        <p class="note">Ältere Kategorien (1, 2, 3, 4, 5 ohne „e“) braucht man für neue Netze nicht mehr. Für eine Neuinstallation nimmt man heute mindestens <b>Kat. 6A</b>.</p>
+        <p class="callout"><b>Merke:</b> Eine Twisted-Pair-Strecke ist höchstens <b>100 m</b> lang: 90 m fest verlegtes Kabel (Link) plus zusammen 10 m Patchkabel an beiden Enden (Channel). Ausnahme: Kat. 8 schafft nur 30 m.</p>
+      </article>
+
+      <article class="card">
+        <h2>Welche Kategorie brauche ich?</h2>
+        <div class="fields">
+          <label class="field"><span>Gewünschte Datenrate</span>
+            <select id="kb-need-rate" class="kb-select">
+              <option value="1">1 Gbit/s (1000BASE-T)</option>
+              <option value="2.5">2,5 Gbit/s (2.5GBASE-T)</option>
+              <option value="5">5 Gbit/s (5GBASE-T)</option>
+              <option value="10" selected>10 Gbit/s (10GBASE-T)</option>
+              <option value="40">25 / 40 Gbit/s (25/40GBASE-T)</option>
+            </select></label>
+          <label class="field field-range"><span>Länge der Strecke <output id="kb-need-len-out">80 m</output></span><input type="range" id="kb-need-len" min="5" max="150" step="5" value="80"></label>
+        </div>
+        <div id="kb-need-out" class="kb-need" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>Der RJ45-Stecker</h2>
+        <p>Fast jedes Netzwerkkabel aus Kupfer endet in einem <b>RJ45-Stecker</b> mit <b>8 Kontakten</b> – einer für jede Ader. Genau genommen heißt er 8P8C-Modularstecker, „RJ45“ hat sich aber überall durchgesetzt.</p>
+        <ul class="ticks">
+          <li><b>Pin 1 finden:</b> Kontakte nach oben, Rastnase nach unten, Kabel zeigt zu dir – dann ist Pin 1 links.</li>
+          <li>RJ45 gibt es in allen Kategorien: Ein Stecker der <b>Kat. 6A</b> ist bis <b>500 MHz</b> spezifiziert. <b>10-Gigabit-Ethernet über RJ45</b> (10GBASE-T) ist damit ganz normaler Standard.</li>
+          <li>Sogar <b>Kat. 8.1</b> nutzt RJ45 – bis 2000 MHz für 25 und 40 Gbit/s, allerdings nur auf 30 m im Rechenzentrum.</li>
+          <li>Für geschirmte Kabel gibt es <b>geschirmte Stecker</b> mit Metallgehäuse, die den Kabelschirm mit dem Gerät verbinden.</li>
+        </ul>
+        <h3 class="sub-h">Andere Steckersysteme</h3>
+        <p>Für Kat. 7, 7A und 8.2 wurden Stecker mit getrennt geschirmten Paaren entwickelt: <b>GG45</b> (passt auch in RJ45-Buchsen), <b>TERA</b> und <b>ARJ45</b>. Sie sind in der Praxis selten. Wer mehr als 10 Gbit/s braucht, nimmt fast immer <b>Glasfaser</b> oder im Rechenzentrum kurze Direktkabel (DAC).</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Welche Ader kommt wohin?</h2>
+        <p>In der RJ45-Werkstatt lernst du die Belegungen T568A und T568B und baust selbst Kabel.</p>
+        <a class="btn primary" href="#kabel-rj45">Weiter zur RJ45-Werkstatt →</a>
+      </article>
+    </section>
+
+    <!-- ============================ KABEL 3 ============================ -->
+    <section id="kabel-rj45" class="page" data-theme="kabel">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-rack.webp" alt="">
+        <p class="eyebrow">Kabel &amp; Signale · Station 3 · Interaktiv</p>
+        <h1>RJ45-Werkstatt</h1>
+        <p class="lead">Die acht Adern haben feste Farben. In welcher Reihenfolge sie in den Stecker kommen, regeln zwei Normen: <b>T568A</b> und <b>T568B</b>.</p>
+      </header>
+
+      <article class="card">
+        <h2>T568A und T568B</h2>
+        <div class="kb-ab" id="kb-ab"></div>
+        <ul class="ticks">
+          <li>Der Unterschied: Das <b>orange</b> und das <b>grüne</b> Paar tauschen die Plätze (Pins 1, 2 ↔ 3, 6). Blau und Braun bleiben gleich.</li>
+          <li>Beide Belegungen funktionieren gleich gut. Wichtig ist nur, dass in einer Installation <b>einheitlich</b> gearbeitet wird. In der Praxis begegnet einem T568B besonders häufig.</li>
+          <li>10BASE-T und 100BASE-TX nutzen nur die Pins <b>1, 2, 3 und 6</b> (orange und grün). Ab Gigabit-Ethernet werden <b>alle vier Paare</b> gebraucht.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Crimp-Übung</h2>
+        <p>Setze die acht Adern in der richtigen Reihenfolge in den Stecker. Klicke eine Ader an und dann den Pin – oder ziehe sie mit der Maus hinein.</p>
+        <div id="kb-crimp"></div>
+      </article>
+
+      <article class="card">
+        <h2>Patchkabel oder Crossover-Kabel?</h2>
+        <div class="seg kb-cable-seg" id="kb-cable-seg">
+          <button type="button" data-c="patch" class="active"><b>Patchkabel</b><small>beide Enden T568B</small></button>
+          <button type="button" data-c="x100"><b>Crossover 10/100</b><small>T568B ↔ T568A</small></button>
+          <button type="button" data-c="x1000"><b>Crossover Gigabit</b><small>alle vier Paare gekreuzt</small></button>
+        </div>
+        <div class="tp-wrap kb-wiring" id="kb-cable"></div>
+        <p id="kb-cable-txt"></p>
+        <ul class="ticks">
+          <li><b>Patchkabel</b> (Straight-Through): beide Enden gleich belegt. Damit verbindet man ein Gerät mit dem Switch oder der Netzwerkdose.</li>
+          <li><b>Crossover-Kabel:</b> Senden und Empfangen werden gekreuzt. Früher brauchte man es, um zwei PCs oder zwei Switches direkt zu verbinden.</li>
+          <li><b>Heute:</b> Praktisch alle Geräte beherrschen <b>Auto-MDI-X</b> – sie erkennen selbst, wie das Kabel belegt ist, und tauschen intern Senden und Empfangen. Crossover-Kabel braucht man deshalb kaum noch.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Übung: Gigabit-Crossover verbinden</h2>
+        <p>Links ist ein Stecker nach T568B belegt, rechts ein Stecker eines Gigabit-Crossover-Kabels. Verbinde jeden Pin links mit dem Pin rechts, an dem <b>dieselbe Ader</b> ankommt: erst links klicken, dann rechts. Pin 1 ist schon verbunden.</p>
+        <div id="kb-xo"></div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Wie kommen die Bits aufs Kabel?</h2>
+        <p>Jetzt weißt du, welche Ader wohin gehört. Aber wie sieht das Signal aus, das auf so einem Adernpaar übertragen wird?</p>
+        <a class="btn primary" href="#kabel-code">Weiter zu Leitungscodes →</a>
+      </article>
+    </section>
+
+    <!-- ============================ KABEL 4 ============================ -->
+    <section id="kabel-code" class="page" data-theme="kabel">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-steinlaterne.webp" alt="">
+        <p class="eyebrow">Kabel &amp; Signale · Station 4 · Interaktiv</p>
+        <h1>Leitungscodes</h1>
+        <p class="lead">Ein <b>Leitungscode</b> legt fest, wie aus logischen Nullen und Einsen ein Signal auf der Leitung wird. Ein guter Leitungscode sorgt dafür, dass der Empfänger die Bits sicher erkennt – auch wenn seine Uhr nicht ganz genau so schnell läuft wie die des Senders.</p>
+      </header>
+
+      <article class="card">
+        <h2>Das Problem: Wo fängt das nächste Bit an?</h2>
+        <p>Der einfachste Code: Spannung hoch für 1, Spannung tief für 0. Der Empfänger schaut in festen Abständen auf die Leitung. Bei vielen gleichen Bits hintereinander ändert sich das Signal aber lange nicht – und wenn der <b>Takt des Empfängers</b> nur ein wenig vom Takt des Senders abweicht, zählt er sich schnell um ein Bit vertan.</p>
+        <label class="field field-range kb-drift-field"><span>Abweichung des Empfänger-Takts <output id="kb-drift-out">8 %</output></span><input type="range" id="kb-drift" min="-15" max="15" value="8"></label>
+        <div class="tp-wrap"><div id="kb-drift-svg"></div></div>
+        <div id="kb-drift-res" class="kb-res" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>Der Manchester-Code</h2>
+        <p>Der Manchester-Code baut den <b>Takt ins Signal ein</b>: In der <b>Mitte jedes Bits</b> wechselt die Spannung immer. Bei Ethernet (IEEE 802.3) gilt:</p>
+        <div class="two-col kb-rules">
+          <div class="mini-card"><h3>logische 0 → <code>10</code></h3><p>erst hoch, dann tief: <b>fallende Flanke</b> in der Bitmitte</p></div>
+          <div class="mini-card"><h3>logische 1 → <code>01</code></h3><p>erst tief, dann hoch: <b>steigende Flanke</b> in der Bitmitte</p></div>
+        </div>
+        <label class="field b-field"><span>Datenbits (bis 16)</span><input id="kb-man-in" value="010000000000111" spellcheck="false" autocomplete="off"></label>
+        <div class="presets"><span class="muted">Ausprobieren:</span>
+          <button type="button" class="pill" data-bits="010000000000111">Beispiel mit 10 Nullen</button>
+          <button type="button" class="pill" data-bits="0000000">viele Nullen</button>
+          <button type="button" class="pill" data-bits="1111111">viele Einsen</button>
+          <button type="button" class="pill" data-bits="101101">101101</button>
+          <button type="button" class="pill" data-bits="01001111">ASCII „O“</button>
+        </div>
+        <div class="tp-wrap"><div id="kb-man-svg"></div></div>
+        <div id="kb-man-txt" class="kb-res"></div>
+        <ul class="ticks">
+          <li><b>Taktrückgewinnung:</b> Weil es in jeder Bitmitte eine Flanke gibt, kann sich der Empfänger ständig neu auf den Sender einstellen. Eine eigene Taktleitung ist überflüssig.</li>
+          <li>Genau genommen ist der Manchester-Code eine <b>XOR-Verknüpfung</b> der Daten mit dem Takt (Takt in jeder Bitzeit erst 1, dann 0).</li>
+          <li><b>Der Preis:</b> Für jedes Bit braucht man zwei Signalschritte. Das Signal wechselt also doppelt so schnell wie die Daten.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Übung: Zwei Zeichen empfangen</h2>
+        <p>Zwei Zeichen wurden Manchester-codiert über ein Adernpaar übertragen. Ermittle die empfangenen Bits, den ASCII-Wert und das Zeichen.</p>
+        <div id="kb-ascii"></div>
+        <details class="v6-more">
+          <summary>ASCII-Tabelle (Zeichen 32 bis 126)</summary>
+          <div class="kb-ascii-tbl" id="kb-ascii-tbl"></div>
+        </details>
+      </article>
+
+      <article class="card">
+        <h2>Warum nicht überall Manchester?</h2>
+        <p>Doppelt so viele Signalwechsel wie Bits – bei 10 Mbit/s ist das kein Problem. Bei 1000 Mbit/s wären die Frequenzen viel zu hoch für ein Kupferkabel. Schnellere Ethernet-Varianten nutzen deshalb Codes mit <b>mehr Spannungsstufen</b>: Pro Signalschritt wird mehr als ein Bit übertragen. Hier dieselben Bits wie oben in drei Codes:</p>
+        <div class="tp-wrap"><div id="kb-cmp-svg"></div></div>
+        <ul class="ticks">
+          <li><b>MLT-3</b> (100BASE-TX): drei Stufen. Bei einer 1 geht das Signal eine Stufe weiter im Kreis 0 → + → 0 → − → 0, bei einer 0 bleibt es stehen. Damit lange Nullfolgen den Takt nicht verschlucken, werden vorher je 4 Bit in 5 Bit mit genug Einsen übersetzt (<b>4B5B</b>).</li>
+          <li><b>PAM-5</b> (1000BASE-T): fünf Spannungsstufen. Vereinfacht gesagt steckt in jedem Schritt <b>2 Bit</b>. Gigabit-Ethernet sendet so auf <b>allen vier Adernpaaren gleichzeitig</b> und in <b>beide Richtungen</b>: 4 Paare × 2 Bit × 125 Millionen Schritte pro Sekunde = 1000 Mbit/s. Die fünfte Stufe dient der Fehlerkorrektur.</li>
+        </ul>
+        <p class="note">Die PAM-5-Kurve ist vereinfacht: Das echte 1000BASE-T verwürfelt die Daten vorher (Scrambler) und verteilt sie mit einem Fehlerschutz-Code (Trellis-Code) auf die vier Paare. Das Prinzip „mehr Stufen = mehr Bit pro Schritt“ bleibt aber genau so.</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Standard</th><th>Leitungscode</th><th>Stufen</th><th>Signalschritte pro Sekunde und Paar</th></tr></thead>
+            <tbody>
+              <tr><td>10BASE-T</td><td>Manchester</td><td>2</td><td>20 Millionen</td></tr>
+              <tr><td>100BASE-TX</td><td>4B5B + MLT-3</td><td>3</td><td>125 Millionen</td></tr>
+              <tr><td>1000BASE-T</td><td>PAM-5 auf 4 Paaren</td><td>5</td><td>125 Millionen</td></tr>
+              <tr><td>10GBASE-T</td><td>PAM-16 auf 4 Paaren</td><td>16</td><td>800 Millionen</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Die Ethernet-Familie</h2>
+        <p>10BASE-T, 1000BASE-T, 10GBASE-SR … – was bedeuten diese Namen eigentlich?</p>
+        <a class="btn primary" href="#kabel-eth">Weiter zu Ethernet-Standards →</a>
+      </article>
+    </section>
+
+    <!-- ============================ KABEL 5 ============================ -->
+    <section id="kabel-eth" class="page" data-theme="kabel">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-kirschbaum.webp" alt="">
+        <p class="eyebrow">Kabel &amp; Signale · Station 5 · Grundlagen</p>
+        <h1>Ethernet-Standards</h1>
+        <p class="lead">Alle Ethernet-Varianten stammen von der IEEE und gehören zur Normenfamilie <b>IEEE 802.3</b>. Seit 1983 ist Ethernet von 10 Mbit/s auf bis zu 800 Gbit/s gewachsen – die MAC-Adressen und der Aufbau des Frames sind dabei gleich geblieben.</p>
+      </header>
+
+      <article class="card">
+        <h2>Was steckt im Namen?</h2>
+        <p>Jeder Name folgt demselben Muster: <b>Datenrate</b> · <b>BASE</b> · <b>Medium</b>. „BASE“ steht für <b>Basisband</b>: Das Signal wird direkt auf das Kabel gegeben und belegt es allein.</p>
+        <label class="field b-field"><span>Standard</span><input id="kb-eth-in" value="1000BASE-T" spellcheck="false" autocomplete="off"></label>
+        <div id="kb-eth-out" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>Die Ethernet-Familie</h2>
+        <p>Klicke einen Standard an, um ihn oben zu zerlegen. Grau markierte Standards sind <b>Geschichte</b> – gut zu wissen, aber in neuen Netzen nicht mehr zu finden.</p>
+        <div class="kb-tree" id="kb-tree"></div>
+      </article>
+
+      <article class="card">
+        <h2>Früher: Hubs, Kollisionen und die 5-4-3-Regel</h2>
+        <p>Beim Koax-Bus und mit Hubs teilten sich alle Geräte <b>ein Medium</b>. Sendeten zwei gleichzeitig, kam es zur <b>Kollision</b>; beide mussten warten und neu senden (Verfahren <b>CSMA/CD</b>). Damit Kollisionen überall rechtzeitig erkannt werden, durfte das Netz nicht zu groß werden:</p>
+        <ul class="ticks">
+          <li><b>5-4-3-Regel</b> (10 Mbit/s): höchstens <b>5</b> Segmente, <b>4</b> Repeater oder Hubs dazwischen, an höchstens <b>3</b> Segmenten Geräte.</li>
+          <li>Bei Fast Ethernet mit Hubs galt stattdessen: höchstens <b>205 m</b> Ausdehnung zwischen zwei Geräten.</li>
+        </ul>
+        <p class="callout"><b>Heute:</b> Jedes Gerät hängt an einem eigenen Switch-Port und sendet im <b>Vollduplex</b> – gleichzeitig in beide Richtungen. Kollisionen gibt es nicht mehr, die 5-4-3-Regel und die 205 m spielen keine Rolle. Es gilt nur noch die Länge jeder einzelnen Strecke, z. B. 100 m bei Twisted Pair.</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Jetzt üben</h2>
+        <p>Im Kabel-Dojo trainierst du Kabeltypen, Kategorien, die RJ45-Belegung, den Manchester-Code und die Ethernet-Standards.</p>
+        <a class="btn primary" href="#kabel-dojo">Weiter zum Kabel-Dojo →</a>
+      </article>
+    </section>
+
+    <!-- ============================ KABEL 6 ============================ -->
+    <section id="kabel-dojo" class="page" data-theme="kabel">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-puppe.webp" alt="">
+        <p class="eyebrow">Kabel &amp; Signale · Station 6 · Training</p>
+        <h1>Kabel-Dojo</h1>
+        <p class="lead">Fünf Gürtel, fünf Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten.</p>
+      </header>
+      <div class="dojo-layout" id="d-kabel"></div>
+
       <article class="card next-card has-art">
         <img class="card-art" src="assets/images/el-laternchen.webp" alt="">
         <h2>Alle Themen geschafft!</h2>
-        <p>Du hast MAC-Adressen, IPv4, Topologien, IPv6 und das OSI-Modell durchgearbeitet. Wiederholen kannst du jederzeit – am besten in den Übungs-Dojos, bis alle Gürtel in Farbe leuchten.</p>
+        <p>Du hast MAC-Adressen, IPv4, Topologien, IPv6, das OSI-Modell und die Kabel und Signale durchgearbeitet. Wiederholen kannst du jederzeit – am besten in den Übungs-Dojos, bis alle Gürtel in Farbe leuchten.</p>
         <a class="btn primary" href="#mac-grundlagen">Zurück zum Anfang ↺</a>
       </article>
     </section>
@@ -1317,6 +1674,10 @@ Ablaufverfolgung beendet.</pre>
   <script src="assets/dojo.js"></script>
   <script src="assets/mac-dojo.js"></script>
   <script src="assets/osi-dojo.js"></script>
+  <script src="assets/kabel.js"></script>
+  <script src="assets/signale.js"></script>
+  <script src="assets/ethernet.js"></script>
+  <script src="assets/kabel-dojo.js"></script>
   <script src="assets/planer.js"></script>
   <script src="assets/topo.js"></script>
   <script src="assets/topologien.js"></script>
