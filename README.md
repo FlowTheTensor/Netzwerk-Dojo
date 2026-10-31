@@ -32,6 +32,8 @@ Wird freigeschaltet, sobald alle sechs IPv4-Stationen einmal geöffnet wurden.
 - **Hilfen einblenden** (Schalter oben im Planer) zeigt das kleinste passende Subnetz je Abteilung
   und einen Rechenhinweis für FLSM. Automatische Lösungsvorschläge gibt es nicht.
 - **Neue Aufgabe würfeln** erzeugt zufällige Hostzahlen für die drei Abteilungen.
+- **Ping** (Schritt 5): Gerät anklicken → „Ping senden“ → Ziel anklicken. Der Paketweg wird anhand der
+  eingetragenen IP-Adressen, Masken und Gateways simuliert – inklusive typischer Fehlermeldungen von Windows.
 - **Link zu diesem Plan kopieren** speichert den kompletten Planungsstand in der URL.
   So lassen sich vorbereitete Aufgaben verteilen oder Lösungen abgeben.
 - Fortschritt (Gürtel, besuchte Stationen, Freischaltung) und der aktuelle Plan werden nur im

@@ -177,7 +177,6 @@ p { text-wrap: pretty; }
 .themebar, .stationbar { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; align-items: center; }
 .themebar::-webkit-scrollbar, .stationbar::-webkit-scrollbar { display: none; }
 .themebar { margin-bottom: 6px; gap: 6px; }
-.themebar-lbl { font: 500 10.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-right: 4px; flex: none; }
 .themebar a, .themebar .soon {
   flex: none; font: 700 14px var(--display); text-decoration: none; color: var(--ink-soft);
   padding: 4px 13px; border-radius: 999px; border: 1.5px solid var(--line); white-space: nowrap;
@@ -896,3 +895,19 @@ kbd { font: 600 .8em var(--mono); border: 1px solid var(--line-strong); border-b
 .b-name { font: 700 1.1rem var(--display); }
 .b-host.yes { color: var(--ok); font-weight: 600; }
 .b-host.no { color: var(--err); font-weight: 600; }
+
+/* ---------- Ping im Firmennetz-Planer ---------- */
+.ping-box { margin-top: 1rem; padding-top: .9rem; border-top: 1px dashed var(--line-strong); }
+.ping-hint { margin: .5rem 0 0; font-size: .88rem; color: var(--accent); font-weight: 600; }
+.ping-con { font-size: 11px; margin-top: .7rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.ping-steps { margin: .6rem 0 0; padding-left: 1.1rem; font-size: .85rem; }
+.ping-steps li { margin: .2rem 0; }
+.ping-steps li.ping-phase { list-style: none; margin-left: -1.1rem; margin-top: .5rem; }
+.ping-steps li:last-child { font-weight: 700; }
+.ping-steps.ok li:last-child { color: var(--ok); }
+.ping-steps.bad li:last-child { color: var(--err); }
+.topo-svg .link.ping-ok { stroke: var(--ok); stroke-width: 5; stroke-dasharray: 10 7; animation: ping-flow .8s linear infinite; }
+.topo-svg .link.ping-bad { stroke: var(--err); stroke-width: 5; stroke-dasharray: 10 7; }
+.topo-svg.picking .node { cursor: crosshair; }
+@keyframes ping-flow { to { stroke-dashoffset: -17; } }
+@media (prefers-reduced-motion: reduce) { .topo-svg .link.ping-ok { animation: none; } }

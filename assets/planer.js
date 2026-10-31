@@ -519,11 +519,13 @@
     const DY = 384;
     const XS = [160, 480, 800];
     const stRouter = gws.every(g => g.status === 'ok') ? 'ok' : gws.some(g => g.status === 'err') ? 'err' : 'empty';
-    let s = '<svg class="topo-svg" viewBox="0 0 960 470" role="group" aria-label="Netzplan der Firma">';
+    const showPing = pingRes && pingRes.from === sel && !pingPick;
+    const pc = key => (!showPing ? '' : pingRes.badLinks.includes(key) ? ' ping-bad' : pingRes.okLinks.includes(key) ? ' ping-ok' : '');
+    let s = `<svg class="topo-svg${pingPick ? ' picking' : ''}" viewBox="0 0 960 470" role="group" aria-label="Netzplan der Firma">`;
     S.depts.forEach((d, i) => {
       const x = XS[i];
-      s += `<line class="link" x1="${RX}" y1="${RY}" x2="${x}" y2="${SY}"/>`;
-      d.devices.forEach((_, k) => { s += `<line class="link l${i}" x1="${x}" y1="${SY}" x2="${x + (k - 1) * 105}" y2="${DY}"/>`; });
+      s += `<line class="link${pc(`up:${i}`)}" x1="${RX}" y1="${RY}" x2="${x}" y2="${SY}"/>`;
+      d.devices.forEach((_, k) => { s += `<line class="link l${i}${pc(`dev:${i}:${k}`)}" x1="${x}" y1="${SY}" x2="${x + (k - 1) * 105}" y2="${DY}"/>`; });
     });
     S.depts.forEach((d, i) => {
       const x = XS[i];
@@ -571,9 +573,11 @@
         <label class="field"><span>IP-Adresse</span><input data-bind="dev:${i}:${k}:ip" spellcheck="false" autocomplete="off" inputmode="decimal"></label>
         <label class="field"><span>Subnetzmaske</span><input data-bind="dev:${i}:${k}:mask" spellcheck="false" autocomplete="off"></label>
         <label class="field"><span>Standard-Gateway</span><input data-bind="dev:${i}:${k}:gw" spellcheck="false" autocomplete="off" inputmode="decimal"></label>
-        <div id="p-ed-fb-dev"></div>`;
+        <div id="p-ed-fb-dev"></div>
+        <div class="ping-box" id="p-ping-box"></div>`;
     }
     syncInputs(ed);
+    renderPing();
   }
 
   function updateEditor(drs, gws, devs) {
@@ -592,6 +596,149 @@
       const fb = $('#p-ed-fb-dev');
       if (fb) fb.innerHTML = fbList(devs[i][k].msgs);
     }
+  }
+
+  /* ---------- Ping: Paketweg anhand der eingetragenen Konfiguration simulieren ----------
+     Jedes Gerät hängt am Switch seiner Abteilung (Segment i), jeder Switch an Router-Schnittstelle eth i.
+     Der Absender entscheidet mit SEINER Maske, ob das Ziel lokal ist; sonst geht das Paket an SEIN Gateway. */
+  let pingPick = null; // Quelle, für die gerade ein Ziel gewählt wird
+  let pingRes = null; // { from, to, ok, lines, steps, okLinks, badLinks }
+
+  function pingModel() {
+    const drs = checkDepts(checkBase());
+    const hosts = [];
+    S.depts.forEach((d, i) => {
+      d.devices.forEach((x, k) => hosts.push({
+        id: `dev:${i}:${k}`, name: x.name, seg: i, link: `dev:${i}:${k}`,
+        ip: IPv4.parse(x.ip), p: IPv4.parseMask(x.mask), gw: IPv4.parse(x.gw),
+      }));
+      // Router-Schnittstelle: Adresse aus Schritt 5, Maske des Abteilungsnetzes aus Schritt 3
+      const ip = IPv4.parse(d.gw);
+      const p = drs[i].parsed ? drs[i].p : null;
+      if (ip !== null && p !== null) hosts.push({ id: 'router', name: `Router eth${i}`, seg: i, link: `up:${i}`, ip, p, router: true });
+    });
+    return hosts;
+  }
+
+  // Ein Paket von „from“ an dstIp schicken. Ergebnis: { ok, to, links, steps, err, errType, errIp }
+  function send(hosts, from, dstIp) {
+    const steps = [];
+    const links = [from.router ? `up:${from.seg}` : from.link];
+    const local = (h, a) => IPv4.network(a, h.p) === IPv4.network(h.ip, h.p);
+    const onSeg = (seg, a) => hosts.filter(h => h.seg === seg && h.ip === a);
+    const fail = (errType, err, errIp) => ({ ok: false, steps, links, err, errType, errIp });
+    const arrive = (seg, via) => {
+      const found = onSeg(seg, dstIp);
+      if (!found.length) return null;
+      const to = found[0];
+      if (found.length > 1) steps.push(`⚠ ${F(dstIp)} ist im Netz der Abteilung ${esc(S.depts[seg].name)} <b>doppelt vergeben</b> – es antwortet ein zufälliges Gerät.`);
+      links.push(to.router ? `up:${seg}` : to.link);
+      steps.push(`${esc(to.name)} empfängt das Paket${via ? ` über ${via}` : ''}.`);
+      return to;
+    };
+
+    if (from.router) {
+      const out = hosts.find(h => h.router && local(h, dstIp));
+      if (!out) return fail('timeout', `Der Router hat keine Schnittstelle im Netz von ${F(dstIp)}.`);
+      steps.push(`Router: ${F(dstIp)} gehört zum Netz an <b>eth${out.seg}</b> (${esc(S.depts[out.seg].name)}).`);
+      if (out.seg !== from.seg) links.push(`up:${out.seg}`);
+      const to = arrive(out.seg);
+      return to ? { ok: true, to, links, steps, hops: 0 } : fail('timeout', `Im Netz der Abteilung ${esc(S.depts[out.seg].name)} hat kein Gerät die Adresse ${F(dstIp)}.`);
+    }
+
+    if (from.ip === null || from.p === null) return fail('general', `${esc(from.name)} hat keine gültige IP-Adresse und Subnetzmaske.`);
+    if (local(from, dstIp)) {
+      steps.push(`${esc(from.name)} (${F(from.ip)}/${from.p}): ${F(dstIp)} liegt laut eigener Maske <b>im eigenen Netz</b> → direkt über den Switch zustellen.`);
+      const to = arrive(from.seg);
+      if (to) return { ok: true, to, links, steps, hops: 0 };
+      return fail('host', `Am Switch der Abteilung ${esc(S.depts[from.seg].name)} hat kein Gerät die Adresse ${F(dstIp)}. ${esc(from.name)} schickt das Paket deshalb nicht zum Router – es hält das Ziel ja für lokal.`, from.ip);
+    }
+    steps.push(`${esc(from.name)} (${F(from.ip)}/${from.p}): ${F(dstIp)} liegt <b>nicht</b> im eigenen Netz → Paket an das Standard-Gateway.`);
+    if (from.gw === null) return fail('general', `${esc(from.name)} hat <b>kein Standard-Gateway</b> eingetragen – Ziele außerhalb des eigenen Netzes sind unerreichbar.`);
+    if (!local(from, from.gw)) return fail('general', `Das Gateway ${F(from.gw)} liegt <b>nicht im eigenen Netz</b> von ${esc(from.name)} – das Gerät kann es nicht direkt erreichen.`);
+    const gwHost = onSeg(from.seg, from.gw)[0];
+    if (!gwHost) return fail('host', `Am Switch der Abteilung ${esc(S.depts[from.seg].name)} meldet sich niemand mit der Gateway-Adresse ${F(from.gw)}. Hat die Router-Schnittstelle eth${from.seg} diese Adresse?`, from.ip);
+    if (!gwHost.router) return fail('timeout', `${F(from.gw)} gehört <b>${esc(gwHost.name)}</b> – das ist kein Router und leitet keine Pakete weiter.`);
+    links.push(`up:${from.seg}`);
+    steps.push(`Router empfängt das Paket an <b>eth${from.seg}</b> (${F(gwHost.ip)}).`);
+    const out = hosts.find(h => h.router && local(h, dstIp));
+    if (!out) return fail('net', `Der Router hat <b>keine Schnittstelle im Netz</b> von ${F(dstIp)} – er weiß nicht, wohin damit.`, gwHost.ip);
+    if (out.seg !== from.seg) links.push(`up:${out.seg}`);
+    steps.push(`Router: ${F(dstIp)} gehört zum Netz an <b>eth${out.seg}</b> (${esc(S.depts[out.seg].name)}) → weiterleiten.`);
+    if (out.ip === dstIp) {
+      steps.push('Das Ziel ist der Router selbst.');
+      return { ok: true, to: out, links, steps, hops: 0 };
+    }
+    const to = arrive(out.seg, 'den Router');
+    return to ? { ok: true, to, links, steps, hops: 1 } : fail('timeout', `Im Netz der Abteilung ${esc(S.depts[out.seg].name)} hat kein Gerät die Adresse ${F(dstIp)}.`);
+  }
+
+  function runPing(fromId, toId) {
+    const hosts = pingModel();
+    const src = hosts.find(h => h.id === fromId);
+    const [, i] = fromId.split(':').map(Number);
+    // Router als Ziel: die Schnittstelle in der Abteilung des Absenders (sein Gateway)
+    const dst = toId === 'router' ? hosts.find(h => h.router && h.seg === i) : hosts.find(h => h.id === toId);
+    const dstName = toId === 'router' ? `Router eth${i}` : S.depts[toId.split(':')[1]].devices[toId.split(':')[2]].name;
+    const res = { from: fromId, to: toId, ok: false, lines: [], steps: [], okLinks: [], badLinks: [] };
+    const target = dst && dst.ip !== null ? F(dst.ip) : '?';
+    res.lines.push(`C:\\> ping ${target}`, '');
+    if (!dst || dst.ip === null) {
+      res.lines.push('Ping-Anforderung konnte Host nicht finden.');
+      res.steps.push(toId === 'router'
+        ? `Die Router-Schnittstelle eth${i} hat noch keine gültige Adresse (oder das Subnetz in Schritt 3 fehlt).`
+        : `${esc(dstName)} hat noch keine gültige IP-Adresse – es gibt nichts anzupingen.`);
+      pingRes = res;
+      return;
+    }
+    res.lines.push(`Ping wird ausgeführt für ${target} mit 32 Bytes Daten:`);
+    const go = send(hosts, src, dst.ip);
+    res.steps.push('<b>Hinweg</b>', ...go.steps);
+    const repeat = s => { for (let n = 0; n < 4; n++) res.lines.push(s); };
+    if (!go.ok) {
+      res.steps.push(`✘ ${go.err}`);
+      res.badLinks = go.links;
+      if (go.errType === 'general') repeat('PING: Fehler bei der Übertragung. Allgemeiner Fehler.');
+      else if (go.errType === 'host') repeat(`Antwort von ${F(go.errIp)}: Zielhost nicht erreichbar.`);
+      else if (go.errType === 'net') repeat(`Antwort von ${F(go.errIp)}: Zielnetz nicht erreichbar.`);
+      else repeat('Zeitüberschreitung der Anforderung.');
+      pingRes = res;
+      return;
+    }
+    if (go.to !== dst) {
+      res.steps.push(`✘ Angekommen ist das Paket bei ${esc(go.to.name)} statt bei ${esc(dstName)} – die Adresse ist doppelt vergeben.`);
+    }
+    const back = send(hosts, go.to, src.ip);
+    res.steps.push('<b>Rückweg (Antwort)</b>', ...back.steps);
+    if (!back.ok || back.to !== src) {
+      res.steps.push(`✘ ${back.ok ? 'Die Antwort landet bei einem anderen Gerät.' : back.err} Der Hinweg klappt, aber die <b>Antwort kommt nicht zurück</b>.`);
+      // Hinweg hat geklappt (grün), die Antwort bleibt hängen (rot)
+      res.okLinks = go.links;
+      res.badLinks = back.links;
+      repeat('Zeitüberschreitung der Anforderung.');
+      pingRes = res;
+      return;
+    }
+    res.ok = go.to === dst;
+    if (res.ok) res.okLinks = go.links; else res.badLinks = go.links;
+    // Windows startet mit TTL 128, jeder Router zieht 1 ab; Router selbst antworten meist mit 255
+    repeat(`Antwort von ${target}: Bytes=32 Zeit<1ms TTL=${go.to.router ? 255 : 128 - back.hops}`);
+    res.steps.push(res.ok ? `✔ Ping erfolgreich${go.to.router ? ' – der Router hat selbst geantwortet.' : go.hops ? ' – über den Router, deshalb TTL 127 statt 128.' : ' – direkt im eigenen Netz.'}` : '');
+    pingRes = res;
+  }
+
+  function renderPing() {
+    const box = $('#p-ping-box');
+    if (!box) return;
+    const picking = pingPick === sel;
+    const btn = `<button type="button" class="btn${picking ? ' primary' : ''}" id="p-ping">${picking ? 'Abbrechen' : '📡 Ping senden'}</button>`;
+    let h = btn;
+    if (picking) h += '<p class="ping-hint">Klicke im Netzplan auf das <b>Ziel</b> – ein anderes Gerät oder den Router.</p>';
+    if (pingRes && pingRes.from === sel && !picking) {
+      h += `<pre class="console ping-con">${pingRes.lines.map((l, n) => (n === 0 ? `<span class="c-cmd">${esc(l)}</span>` : esc(l))).join('\n')}</pre>
+        <ul class="ping-steps ${pingRes.ok ? 'ok' : 'bad'}">${pingRes.steps.filter(Boolean).map(s => `<li${s.startsWith('<b>') ? ' class="ping-phase"' : ''}>${s}</li>`).join('')}</ul>`;
+    }
+    box.innerHTML = h;
   }
 
   function renderSummary(base, drs, gws, devs, complete) {
@@ -665,6 +812,7 @@
     const b = e.target.dataset.bind;
     if (!b) return;
     setBind(b, e.target.value);
+    if (pingRes) { pingRes = null; renderPing(); }
     refresh();
   });
   $('#p-help').addEventListener('change', e => { S.help = e.target.checked; refresh(); });
@@ -687,6 +835,14 @@
   });
 
   function selectNode(t) {
+    if (pingPick) {
+      const target = t.dataset.sel;
+      if (target !== pingPick) runPing(pingPick, target);
+      pingPick = null;
+      renderPing();
+      refresh();
+      return;
+    }
     sel = t.dataset.sel;
     renderEditor();
     refresh();
@@ -694,6 +850,16 @@
     if (first && window.matchMedia('(max-width: 900px)').matches) $('#p-editor').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     if (first) first.focus({ preventScroll: true });
   }
+  $('#p-editor').addEventListener('click', e => {
+    if (!e.target.closest('#p-ping')) return;
+    if (pingPick === sel) pingPick = null;
+    else { pingPick = sel; pingRes = null; }
+    renderPing();
+    refresh();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && pingPick) { pingPick = null; renderPing(); refresh(); }
+  });
   $('#p-topo').addEventListener('click', e => {
     const t = e.target.closest('[data-sel]');
     if (t) selectNode(t);
@@ -715,6 +881,7 @@
       d.hosts = hosts[i];
       d.net = d.mask = d.gw = '';
       d.devices.forEach(x => { x.ip = x.mask = x.gw = ''; });
+      pingRes = pingPick = null;
     });
     syncInputs();
     renderEditor();
@@ -742,6 +909,7 @@
     if (!confirm('Den gesamten Plan zurücksetzen?')) return;
     S = fresh();
     sel = null;
+    pingRes = pingPick = null;
     $('#p-share-fb').innerHTML = '';
     buildStatic();
     syncInputs();
