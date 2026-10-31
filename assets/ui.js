@@ -73,12 +73,12 @@ const UI = (() => {
   const store = {
     get(key, fallback = null) {
       try {
-        const v = localStorage.getItem('subnet-dojo:' + key);
+        const v = localStorage.getItem('netzwerk-dojo:' + key);
         return v === null ? fallback : JSON.parse(v);
       } catch { return fallback; }
     },
     set(key, val) {
-      try { localStorage.setItem('subnet-dojo:' + key, JSON.stringify(val)); } catch { /* ignorieren */ }
+      try { localStorage.setItem('netzwerk-dojo:' + key, JSON.stringify(val)); } catch { /* ignorieren */ }
     },
   };
 
