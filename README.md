@@ -1,5 +1,5 @@
 # Netzwerktechnik-Dojo
-# [Hier öffnen](https://flowthetensor.github.io/Subnet-Dojo/)
+# [Hier öffnen](https://flowthetensor.github.io/Netzwerk-Dojo/)
 
 Interaktive Lernseite für Netzwerktechnik – MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien und IPv6, gedacht für den Unterricht.
 Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schritt und lädt

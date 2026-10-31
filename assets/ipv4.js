@@ -1,4 +1,4 @@
-/* Subnet-Dojo – IPv4-Rechenkern.
+/* Netzwerktechnik-Dojo – IPv4-Rechenkern.
    Alle Adressen werden als vorzeichenlose 32-Bit-Zahl (0 … 4294967295) behandelt. */
 'use strict';
 
