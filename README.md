@@ -1,11 +1,33 @@
 # Netzwerktechnik-Dojo
 # [Hier öffnen](https://flowthetensor.github.io/Netzwerk-Dojo/)
 
-Interaktive Lernseite für Netzwerktechnik – MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell, Kabel und Leitungscodes Netzwerkdienste (DHCP, DNS, URL, Ports) sowie Verschlüsselung und Anonymität, gedacht für den Unterricht.
+Interaktive Lernseite für Netzwerktechnik – serielle Schnittstellen (RS-232, UART, I²C, SPI), MAC-Adressen, IPv4 und Subnetting, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell, Kabel und Leitungscodes, Netzwerkdienste (DHCP, DNS, URL, Ports) sowie Verschlüsselung und Anonymität, gedacht für den Unterricht.
 Die Seite ist rein statisch (HTML, CSS, JavaScript), braucht keinen Build-Schritt und lädt
 **keine externen Ressourcen** (keine Web-Fonts, kein CDN, kein Tracking).
 
+## Thema Serielle Schnittstellen
+
+Erstes Thema. Es erzählt die Geschichte von der Punkt-zu-Punkt-Verbindung (RS-232, UART) über Busse mit
+Adressen (I²C, SPI) bis zum Ethernet, das danach mit den MAC-Adressen weitergeht. Grundlage ist das Arbeitsblatt
+„Einfache Schnittstellen zur Kommunikation“, fachlich korrigiert: UART ist der Baustein, RS-232 die elektrische
+Schnittstelle (nicht „nur RX/TX = UART“); Bus kommt von *omnibus* (nicht „Binary Unit System“); M.2 ist eine
+Bauform und PCIe seriell (nicht „parallele Schnittstelle M.2“); die SPI-Schaltung mit CS1–CS3 ist nicht
+kaskadiert, erst die Daisy Chain; Parität zählt die Einsen einschließlich Paritätsbit; Baud = Signalschritte
+pro Sekunde, nur bei zwei Pegeln gleich Bit/s.
+
+| # | Station | Inhalt |
+|---|---------|--------|
+| 1 | Seriell & parallel | Ein Zeichen seriell und parallel Takt für Takt, Laufzeitunterschiede bei hohem Takt, Vor- und Nachteile, früher parallel/heute seriell, uni- und bidirektional, Bus am Beispiel KNX und was ein Bus regeln muss, Zeitleiste |
+| 2 | RS-232 | DE-9-Stecker mit klickbaren Pins (Datenleitungen 2, 3, 5), Pegel UART gegen RS-232, Nullmodem und 1:1-Kabel, Formatkürzel wie 8N1, Baud |
+| 3 | UART-Telegramm | UART vs. RS-232, Telegramm-Baukasten (Datenbits, Parität, Stoppbits, Baudrate) mit Bitzeit und Telegrammen pro Sekunde, MSB/LSB, Paritätsbit mit Störungs-Simulation, Übungen vom Arbeitsblatt: Telegramme pro Sekunde, Mitschnitte im Stil von PulseView (Baudrate aus 104 µs, „a?“ / „ok“ dekodieren) |
+| 4 | I²C | Bus mit Pull-ups und Teilnehmern, Adressierung als SCL/SDA-Signal mit ACK/NACK, Übung zum PulseView-Mitschnitt vom Arbeitsblatt (0x08, NACK, Datenrate aus 10 µs), 112 Adressen, Geschwindigkeiten |
+| 5 | SPI & Vergleich | Vier Leitungen, Schieberegister-Tausch Takt für Takt, Übung zum PulseView-Mitschnitt vom Arbeitsblatt (79 = 0x4F, Datenrate aus 1 µs), eigene CS-Leitungen vs. Daisy Chain, Vergleich UART/I²C/SPI/Ethernet, PCIe und M.2 |
+| 6 | Seriell-Dojo | 6 Gürtel: seriell/parallel & Bus, RS-232, Übertragungsformat & Parität, Rechnen mit der Baudrate, Mitschnitte dekodieren, I²C & SPI |
+
 ## Thema MAC-Adressen
+
+Wird freigeschaltet, sobald alle Stationen der seriellen Schnittstellen einmal geöffnet wurden. Wer schon
+vorher in einem Thema war, wird nicht ausgesperrt.
 
 | # | Station | Inhalt |
 |---|---------|--------|
@@ -142,6 +164,9 @@ assets/krypto.js      Krypto-Rechenkern (Caesar, XOR, RSA; auch fürs Dojo), Sic
 assets/tls.js         Sicherheits-Station 3
 assets/anonym.js      „Wer sieht was?“-Daten (auch fürs Dojo), Sicherheits-Stationen 4–5
 assets/krypto-dojo.js Sicherheits-Station 6
+assets/seriell.js     Seriell-Rechenkern (Telegramm, Parität, Formatkürzel, Pins; auch fürs Dojo), Seriell-Stationen 1–3
+assets/bus.js         I²C-Teilnehmer (auch fürs Dojo), Seriell-Stationen 4–5
+assets/seriell-dojo.js  Seriell-Station 6
 assets/mac.js         MAC-Rechenkern und MAC-Stationen 1–2
 assets/mac-dojo.js    MAC-Station 3
 assets/ipv4.js        Rechenkern (Parsen, Masken, Netz/Broadcast, Klassen, RFC 1918)
@@ -184,3 +209,5 @@ Das Schullogo (`assets/jps-logo.png`) gehört der Jakob-Preh-Schule.
 - [RFC 3986](https://www.rfc-editor.org/info/rfc3986/) – URI: Generic Syntax
 - [RFC 6335](https://www.rfc-editor.org/info/rfc6335/) – Portbereiche und Vergabe durch die IANA
 - [RFC 8446](https://www.rfc-editor.org/info/rfc8446/) – TLS 1.3
+- [NXP UM10204](https://www.nxp.com/docs/en/user-guide/UM10204.pdf) – I²C-Bus Specification and User Manual
+- TIA-232-F – Interface Between Data Terminal Equipment and Data Circuit-Terminating Equipment

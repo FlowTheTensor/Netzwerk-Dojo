@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Netzwerktechnik-Dojo</title>
-  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: MAC-Adressen, IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell, Kabel und Leitungscodes DHCP, DNS, URLs und Ports sowie Verschlüsselung und Anonymität im Netz.">
+  <meta name="description" content="Interaktives Lern-Dojo für Netzwerktechnik: serielle Schnittstellen (RS-232, UART, I²C, SPI), MAC-Adressen, IPv4 und Subnetting mit Firmennetz-Planer, Netzwerk-Topologien, IPv6, das ISO/OSI-Modell, Kabel und Leitungscodes, DHCP, DNS, URLs und Ports sowie Verschlüsselung und Anonymität im Netz.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23C81E3A'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='700'%3E/%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/tor.css">
@@ -13,9 +13,8 @@
   <div class="tor">
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="#mac-grundlagen">
+      <a class="brand" href="#ser-grundlagen">
         <span class="brand-title">Netzwerktechnik-<i>Dojo</i></span>
-        <span class="eyebrow">MAC · IPv4 · Topologien · IPv6 · OSI · Kabel · Dienste · Sicherheit</span>
       </a>
       <a class="school-logo" href="https://www.bsnes.de" target="_blank" rel="noopener" title="Jakob-Preh-Schule"><img src="assets/jps-logo.png" alt="Logo der Jakob-Preh-Schule" width="324" height="182"></a>
     </div>
@@ -24,6 +23,7 @@
 
   <nav class="topnav" aria-label="Themen und Stationen">
     <div class="themebar">
+      <a href="#ser-grundlagen" data-theme="seriell">Seriell</a>
       <a href="#mac-grundlagen" data-theme="mac">MAC</a>
       <a href="#grundlagen" data-theme="ipv4">IPv4</a>
       <a href="#topo-grundlagen" data-theme="topo">Topologien</a>
@@ -34,6 +34,12 @@
       <a href="#sec-sym" data-theme="krypto">Verschlüsselung</a>
     </div>
     <div class="stationbar">
+      <a href="#ser-grundlagen" data-theme="seriell"><span class="tab-num">1</span>Seriell &amp; parallel</a>
+      <a href="#ser-rs232" data-theme="seriell"><span class="tab-num">2</span>RS-232</a>
+      <a href="#ser-uart" data-theme="seriell"><span class="tab-num">3</span>UART-Telegramm</a>
+      <a href="#ser-i2c" data-theme="seriell"><span class="tab-num">4</span>I²C</a>
+      <a href="#ser-spi" data-theme="seriell"><span class="tab-num">5</span>SPI &amp; Vergleich</a>
+      <a href="#ser-dojo" data-theme="seriell"><span class="tab-num">6</span>Seriell-Dojo</a>
       <a href="#mac-grundlagen" data-theme="mac"><span class="tab-num">1</span>MAC verstehen</a>
       <a href="#mac-switch" data-theme="mac"><span class="tab-num">2</span>Switch &amp; MAC-Tabelle</a>
       <a href="#mac-dojo" data-theme="mac"><span class="tab-num">3</span>MAC-Dojo</a>
@@ -76,6 +82,464 @@
   </nav>
 
   <main>
+    <!-- ============================ SERIELL 1 ============================ -->
+    <section id="ser-grundlagen" class="page" data-theme="seriell">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-rolle.webp" alt="">
+        <p class="eyebrow">Seriell · Station 1 · Grundlagen</p>
+        <h1>Seriell und parallel</h1>
+        <p class="lead">Lange bevor es Netzwerke gab, wollte man zwei Geräte miteinander reden lassen: einen Computer mit einem Drucker, einem Modem oder einem Terminal. Dafür gibt es zwei Grundideen – die Bits <b>nacheinander</b> über eine Leitung schicken oder <b>gleichzeitig</b> über viele Leitungen. Von hier aus geht die Reise bis zum Ethernet.</p>
+      </header>
+
+      <article class="card">
+        <h2>Ein Zeichen, zwei Wege</h2>
+        <p>Ein Zeichen besteht aus 8 Bit. <b>Seriell</b> wandert es Bit für Bit über eine einzige Datenleitung. <b>Parallel</b> hat jedes Bit seine eigene Leitung – nach einem Takt ist alles da.</p>
+        <div class="sr-par-ctrl">
+          <label class="field"><span>Zeichen</span><input id="sr-par-ch" value="a" maxlength="1" spellcheck="false" autocomplete="off"></label>
+          <div class="row-actions">
+            <button type="button" class="btn primary" id="sr-par-step">Nächster Takt →</button>
+            <button type="button" class="btn" id="sr-par-go">▶ Automatisch abspielen</button>
+            <button type="button" class="btn ghost" id="sr-par-reset">Von vorn</button>
+          </div>
+        </div>
+        <div class="sr-par" id="sr-par"></div>
+        <label class="switch"><input type="checkbox" id="sr-par-skew"><span>Sehr hoher Takt: die Leitungen sind unterschiedlich schnell</span></label>
+        <div id="sr-par-txt" class="kb-res" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>Vor- und Nachteile</h2>
+        <div class="two-col">
+          <div class="mini-card">
+            <h3>Serielle Schnittstelle</h3>
+            <p><b>Prinzip:</b> Die Bits werden <b>nacheinander</b> über eine Datenleitung (je Richtung) übertragen.</p>
+            <p><b>Vorteile:</b> wenige Adern, dünne und billige Kabel, kleine Stecker, große Entfernungen möglich, kein Gleichlauf-Problem zwischen den Leitungen.</p>
+            <p><b>Nachteile:</b> Bei gleichem Takt braucht ein Zeichen mehrere Takte; die Bits müssen beim Sender in eine Reihe gebracht und beim Empfänger wieder zusammengesetzt werden (Schieberegister).</p>
+          </div>
+          <div class="mini-card">
+            <h3>Parallele Schnittstelle</h3>
+            <p><b>Prinzip:</b> Mehrere Bits werden <b>gleichzeitig</b> über eigene Leitungen übertragen – z. B. 8 Bit auf 8 Leitungen.</p>
+            <p><b>Vorteile:</b> Bei gleichem Takt ist ein ganzes Zeichen in einem Takt übertragen; einfache Elektronik.</p>
+            <p><b>Nachteile:</b> viele Adern, dicke Kabel, große Stecker; bei hohem Takt kommen die Bits zu verschiedenen Zeiten an (<b>Laufzeitunterschiede</b>) und stören sich gegenseitig (<b>Übersprechen</b>) – deshalb nur kurze Strecken.</p>
+          </div>
+        </div>
+        <p class="callout"><b>Darum hat seriell gewonnen:</b> Eine einzelne Leitung lässt sich viel schneller takten als ein ganzes Bündel, das im Gleichschritt bleiben muss. USB, SATA, PCI Express, HDMI und Ethernet sind deshalb alle <b>seriell</b> – und schneller als ihre parallelen Vorgänger.</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>früher parallel</th><th>heute seriell</th></tr></thead>
+            <tbody>
+              <tr><td>Druckerschnittstelle LPT (Centronics, 25-polig)</td><td>USB</td></tr>
+              <tr><td>Festplatten über PATA/IDE (40 oder 80 Adern)</td><td>SATA, NVMe über PCI Express</td></tr>
+              <tr><td>Steckkarten über PCI (32 Bit breit)</td><td>PCI Express</td></tr>
+              <tr><td>Bildschirm über VGA (analog, je Farbe eine Leitung)</td><td>HDMI, DisplayPort</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3 class="sub-h">Wo ist parallel heute noch im Einsatz?</h3>
+        <p>Fast nur noch auf <b>sehr kurzen Wegen innerhalb eines Geräts</b>, wo man die Leiterbahnen genau gleich lang verlegen kann:</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Wo?</th><th>Wie breit?</th><th>Warum klappt es dort?</th></tr></thead>
+            <tbody>
+              <tr><td><b>Arbeitsspeicher</b> (DDR4, DDR5)</td><td>64 Datenbits zwischen Prozessor und RAM, bei DDR5 zwei Kanäle à 32 Bit – dazu Adress- und Steuerleitungen</td><td>nur wenige Zentimeter, gleich lange Leiterbahnen (die typischen Schlangenlinien auf dem Mainboard)</td></tr>
+              <tr><td><b>Grafikspeicher</b> (GDDR, HBM)</td><td>GDDR: 32 Bit je Chip, mit 8 Chips also 256 Bit · HBM: 1024 Bit je Speicherstapel</td><td>bei HBM sitzen Chip und Speicher direkt nebeneinander im selben Gehäuse (KI-Beschleuniger, High-End-Grafikkarten)</td></tr>
+              <tr><td><b>Im Inneren der Chips</b></td><td>oft 256 oder 512 Bit zwischen Rechenkernen, Cache und Speichercontroller</td><td>Wege von wenigen Millimetern</td></tr>
+              <tr><td><b>Flash-Speicher</b> in SSDs, USB-Sticks, eMMC</td><td>8 Datenleitungen zu jedem NAND-Chip, SD-Karten 4</td><td>Controller und Speicherchips liegen auf derselben kleinen Platine</td></tr>
+              <tr><td><b>Mikrocontroller</b> und Embedded</td><td>8 bis 16 Leitungen für kleine Displays (Parallel-RGB), Kameramodule (DVP) und externe Speicher</td><td>kurze Wege, niedriger Takt, einfache Ansteuerung</td></tr>
+              <tr><td><b>Messtechnik-Labore</b></td><td>GPIB (IEEE 488): 8 Datenleitungen</td><td>ein alter Standard, der noch in vielen Oszilloskopen und Netzteilen steckt</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Beim Arbeitsspeicher hilft noch mehr: Jede Gruppe von 8 Datenbits bekommt ein eigenes Taktsignal mit (DQS), und beim Einschalten misst der Speichercontroller die Laufzeit jeder einzelnen Leitung und gleicht sie aus.</p>
+        <p class="note"><b>Kein parallel:</b> PCI Express x16, Thunderbolt oder 100-Gbit-Ethernet nutzen zwar mehrere <b>Lanes</b> nebeneinander, aber jede Lane ist eine eigene serielle Verbindung, die ihren Takt selbst wiederherstellt – Laufzeitunterschiede zwischen den Lanes gleicht der Empfänger aus. Ein Grenzfall ist Gigabit-Ethernet: Es sendet auf allen <b>vier Adernpaaren gleichzeitig</b>, jedes Paar für sich aber seriell.</p>
+      </article>
+
+      <article class="card">
+        <h2>In welche Richtung? Uni- und bidirektional</h2>
+        <p>Die Pfeile in einem Schaltplan zeigen die <b>Übertragungsrichtung</b> einer Leitung.</p>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Begriff</th><th>Bedeutung</th><th>Beispiel</th></tr></thead>
+            <tbody>
+              <tr><td><b>unidirektional</b> (simplex)</td><td>Nur einer sendet, der andere empfängt.</td><td>die Datenleitungen zum alten Drucker, Radio</td></tr>
+              <tr><td><b>bidirektional, halbduplex</b></td><td>Beide können senden – aber abwechselnd.</td><td>Funkgerät, I²C (eine Datenleitung für beide Richtungen)</td></tr>
+              <tr><td><b>bidirektional, vollduplex</b></td><td>Beide senden gleichzeitig.</td><td>RS-232 mit TXD und RXD, SPI, Ethernet am Switch</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="sr-dir" id="sr-dir"></div>
+      </article>
+
+      <article class="card">
+        <h2>Viele Geräte an einer Leitung: der Bus</h2>
+        <p>Zwei Geräte mit einem Kabel zu verbinden, ist einfach (<b>Punkt-zu-Punkt</b>). Sollen aber zehn Sensoren und Aktoren miteinander reden, wären es schnell 45 Kabel. Beim <b>Bus</b> hängen deshalb alle Teilnehmer an <b>einem gemeinsamen Übertragungsmedium</b>, zum Beispiel an einem Zweidrahtkabel.</p>
+        <div class="sr-knx" id="sr-knx"></div>
+        <p>Ein Beispiel ist der <b>KNX-Bus</b> (früher EIB) in der Gebäudetechnik: Taster, Thermostate und Windmesser (<b>Sensoren</b>, sie geben Befehle) und Leuchten, Jalousien und Heizungsventile (<b>Aktoren</b>, sie führen Befehle aus) hängen an einer grünen Zweidrahtleitung. Die 230-V-Leitung versorgt nur die Verbraucher mit Strom.</p>
+        <h3 class="sub-h">Was ein Bus regeln muss</h3>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Problem</th><th>Lösung bei I²C</th><th>Lösung bei Ethernet</th></tr></thead>
+            <tbody>
+              <tr><td>Wer ist gemeint? – Geräte brauchen <b>eindeutige Adressen</b></td><td>7-Bit-Adresse</td><td>48-Bit-MAC-Adresse</td></tr>
+              <tr><td>Wer darf wann senden? – ein <b>Zugriffsverfahren</b></td><td>Nur der Controller beginnt</td><td>früher CSMA/CD, heute Switch</td></tr>
+              <tr><td>Was, wenn zwei gleichzeitig senden? – <b>Kollisionen</b></td><td>Arbitrierung: wer eine 0 sendet, gewinnt</td><td>Kollision erkennen, warten, neu senden</td></tr>
+              <tr><td>Wie sieht eine Nachricht aus? – ein <b>Protokoll</b></td><td>Start, Adresse, Daten, ACK, Stopp</td><td>Ethernet-Frame</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note"><b>Woher kommt das Wort?</b> „Bus“ kommt vom lateinischen <i>omnibus</i> – „für alle“, wie der Omnibus, in den alle einsteigen. Die oft zu lesende Auflösung „Binary Unit System“ wurde erst nachträglich erfunden.</p>
+      </article>
+
+      <article class="card">
+        <h2>Die Reise in diesem Thema</h2>
+        <ol class="timeline">
+          <li><span class="tl-year">1960</span><div><b>RS-232.</b> Ein Standard, um Computer und Fernschreiber mit Modems zu verbinden – Punkt-zu-Punkt, ein Zeichen nach dem anderen.</div></li>
+          <li><span class="tl-year">1970</span><div><b>Centronics.</b> Die parallele Druckerschnittstelle: 8 Datenleitungen gleichzeitig.</div></li>
+          <li><span class="tl-year">1973</span><div><b>Ethernet bei Xerox.</b> Seriell, aber mit Adressen für jedes Gerät – das erste lokale Netz.</div></li>
+          <li><span class="tl-year">1982</span><div><b>I²C von Philips.</b> Zwei Drähte, viele Chips auf einer Platine – jeder mit eigener Adresse.</div></li>
+          <li><span class="tl-year">1980er</span><div><b>SPI von Motorola.</b> Vier Drähte, sehr schnell – den Teilnehmer wählt eine eigene Leitung aus.</div></li>
+          <li><span class="tl-year">1996</span><div><b>USB, SATA, PCI Express.</b> Seriell löst parallel fast überall ab.</div></li>
+        </ol>
+        <p class="callout"><b>Der rote Faden:</b> Punkt-zu-Punkt (RS-232, UART) → Bus mit Adressen (I²C, SPI) → Netzwerk mit weltweit eindeutigen Adressen (Ethernet und MAC-Adressen).</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Der Klassiker: RS-232</h2>
+        <p>Die serielle Schnittstelle, die jahrzehntelang an jedem PC war – und die man heute noch an Switches, Routern und Maschinen findet.</p>
+        <a class="btn primary" href="#ser-rs232">Weiter zu RS-232 →</a>
+      </article>
+    </section>
+
+    <!-- ============================ SERIELL 2 ============================ -->
+    <section id="ser-rs232" class="page" data-theme="seriell">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-kabel.webp" alt="">
+        <p class="eyebrow">Seriell · Station 2 · Interaktiv</p>
+        <h1>RS-232</h1>
+        <p class="lead"><b>RS-232</b> (heute TIA-232) legt fest, wie eine serielle Verbindung elektrisch aussieht: welche Spannungen, welche Leitungen, welcher Stecker. Am PC hieß sie <b>COM-Schnittstelle</b>. Heute steckt sie noch in Maschinen, Messgeräten und SPS – und als <b>Konsolen-Anschluss</b> an Switches und Routern.</p>
+      </header>
+
+      <article class="card">
+        <h2>Der 9-polige Stecker</h2>
+        <p>Klicke auf einen Pin. Für die eigentlichen Daten braucht man nur <b>drei</b> davon – die anderen sind Steuerleitungen.</p>
+        <label class="switch small"><input type="checkbox" id="sr-pin-data"><span>Nur die Datenleitungen hervorheben</span></label>
+        <div class="sr-pins">
+          <div class="tp-wrap"><div id="sr-de9"></div></div>
+          <div id="sr-pin-info" class="sr-pin-info" aria-live="polite"></div>
+        </div>
+        <ul class="ticks">
+          <li><b>Pin 3 TXD</b> (Transmit Data) sendet, <b>Pin 2 RXD</b> (Receive Data) empfängt, <b>Pin 5 GND</b> ist die gemeinsame Masse. Ohne Masse gibt es keinen Bezugspunkt für die Spannung – deshalb sind es mindestens drei Adern.</li>
+          <li>Der Stecker heißt richtig <b>DE-9</b> (Gehäusegröße E, 9 Pins). „DB-9“ ist verbreitet, aber falsch: Die Größe B gehört zum 25-poligen Stecker, mit dem RS-232 ursprünglich gebaut wurde.</li>
+          <li>Die Steuerleitungen stammen aus der Zeit der Modems: „Ich bin bereit“ (DTR, DSR), „Darf ich senden?“ (RTS, CTS), „Es klingelt“ (RI).</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Spannungen: RS-232 ist anders herum</h2>
+        <p>Im Mikrocontroller arbeitet die serielle Schnittstelle mit Logikpegeln: 0 V für eine 0 und 3,3 V oder 5 V für eine 1. RS-232 verwendet dagegen <b>positive und negative Spannungen</b> – und das auch noch <b>umgekehrt</b>:</p>
+        <div class="two-col">
+          <div class="mini-card"><h3>logische 1 („Mark“)</h3><p><b>−3 V bis −15 V</b>, meist etwa −12 V. Das ist auch der Ruhepegel, wenn nichts gesendet wird.</p></div>
+          <div class="mini-card"><h3>logische 0 („Space“)</h3><p><b>+3 V bis +15 V</b>, meist etwa +12 V. Zwischen −3 V und +3 V ist der Pegel ungültig.</p></div>
+        </div>
+        <label class="field b-field"><span>Zeichen</span><input id="sr-lvl-ch" value="K" maxlength="1" spellcheck="false" autocomplete="off"></label>
+        <div class="tp-wrap"><div id="sr-lvl"></div></div>
+        <ul class="ticks">
+          <li>Die großen Spannungen machen die Leitung <b>störfest</b>: Bis etwa 15 m (bei langsamer Übertragung auch mehr) kommen die Bits sicher an.</li>
+          <li>Zwischen Mikrocontroller und RS-232-Stecker sitzt deshalb ein <b>Pegelwandler</b> (z. B. der Baustein MAX232). Wer einen Mikrocontroller direkt an ±12 V anschließt, zerstört ihn.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Kabel: gerade oder gekreuzt?</h2>
+        <p>Was der eine auf TXD sendet, muss beim anderen auf RXD ankommen. Ein Modem (DCE) ist schon „anders herum“ beschaltet – dorthin geht ein gerades Kabel. Zwei Computer (DTE) verbindet man mit einem gekreuzten <b>Nullmodemkabel</b>.</p>
+        <div class="seg small" id="sr-null-seg">
+          <button type="button" data-n="1" class="active">PC ↔ PC (Nullmodem)</button>
+          <button type="button" data-n="0">PC ↔ Modem (1:1)</button>
+        </div>
+        <div class="tp-wrap"><div id="sr-null"></div></div>
+        <p class="note">Diese Idee kennst du vielleicht vom Netzwerkkabel: Auch dort gab es gekreuzte Kabel (Crossover), bis die Netzwerkkarten das Kreuzen selbst übernommen haben (Auto-MDI-X).</p>
+      </article>
+
+      <article class="card">
+        <h2>Beide Seiten gleich einstellen</h2>
+        <p>Eine serielle Verbindung hat keinen gemeinsamen Takt. Sender und Empfänger müssen deshalb vorher dasselbe eingestellt haben – sonst kommt nur Zeichensalat an:</p>
+        <ul class="ticks">
+          <li><b>Übertragungsrate</b> in Baud, z. B. 9600 oder 115 200</li>
+          <li><b>Übertragungsformat</b>: Datenbits, Parität, Stoppbits – kurz geschrieben wie <b>8N1</b></li>
+          <li><b>Flusssteuerung</b>: keine, per Hardware (RTS/CTS) oder per Software (Zeichen XON/XOFF)</li>
+        </ul>
+        <label class="field b-field"><span>Format</span><input id="sr-fmt-in" value="8N1" spellcheck="false" autocomplete="off"></label>
+        <div class="presets"><span class="muted">Ausprobieren:</span>
+          <button type="button" class="pill" data-fmt="8N1">8N1</button>
+          <button type="button" class="pill" data-fmt="7E1">7E1</button>
+          <button type="button" class="pill" data-fmt="7E2">7E2</button>
+          <button type="button" class="pill" data-fmt="8O1">8O1</button>
+        </div>
+        <div id="sr-fmt-out" class="kb-res" aria-live="polite"></div>
+        <h3 class="sub-h">Übung: Ergänze die Bedeutung</h3>
+        <p>Die Kürzel sind Beispiele für mögliche Formen von Telegrammen. Fülle die Lücken aus – z. B. „8 Datenbits“, „gerade Parität“ oder „2 Stoppbits“.</p>
+        <div id="sr-cloze"></div>
+        <p class="note"><b>Merke:</b> Even = gerade Parität → die Anzahl der Einsen (mit Paritätsbit) ist gerade. Odd = ungerade Parität → die Anzahl der Einsen ist ungerade.</p>
+        <p class="note"><b>Baud</b> zählt die Signalschritte pro Sekunde. Bei RS-232 und UART gibt es nur zwei Pegel, ein Schritt ist also genau ein Bit: <b>9600 Baud = 9600 Bit/s</b> – Start-, Paritäts- und Stoppbits mitgezählt. Bei Verfahren mit mehr Stufen (wie PAM-5 bei Gigabit-Ethernet) ist das nicht mehr dasselbe.</p>
+        <p class="note">Stopp oder Stop? Nach deutscher Rechtschreibung „<b>Stopp</b>“ mit zwei p – die englische Schreibweise „Stop“ findet man aber in vielen Programmen.</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Wie sieht ein Zeichen auf der Leitung aus?</h2>
+        <p>Startbit, Datenbits, Parität, Stoppbit – baue dein eigenes Telegramm.</p>
+        <a class="btn primary" href="#ser-uart">Weiter zum UART-Telegramm →</a>
+      </article>
+    </section>
+
+    <!-- ============================ SERIELL 3 ============================ -->
+    <section id="ser-uart" class="page" data-theme="seriell">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-leitungscode.webp" alt="">
+        <p class="eyebrow">Seriell · Station 3 · Interaktiv</p>
+        <h1>Das UART-Telegramm</h1>
+        <p class="lead">Der <b>UART</b> (Universal Asynchronous Receiver Transmitter) ist der Baustein, der ein Byte in eine Reihe von Bits verwandelt und beim Empfänger wieder zusammensetzt. Fast jeder Mikrocontroller hat einen eingebaut. „Asynchron“ heißt: Es gibt <b>keine Taktleitung</b> – das Startbit sagt dem Empfänger, wann es losgeht.</p>
+      </header>
+
+      <article class="card">
+        <h2>UART und RS-232 – was ist was?</h2>
+        <div class="two-col">
+          <div class="mini-card"><h3>UART</h3><p>Der <b>Baustein</b>, der die Bits in den richtigen Takt bringt und das Telegramm baut: Startbit, Daten, Parität, Stopp. Er arbeitet mit Logikpegeln (0 V / 3,3 V oder 5 V) auf den Leitungen <b>TX</b> und <b>RX</b>.</p></div>
+          <div class="mini-card"><h3>RS-232</h3><p>Die <b>elektrische Schnittstelle</b> nach außen: ±12 V, Stecker, Steuerleitungen. Ein Pegelwandler macht aus dem UART-Signal ein RS-232-Signal.</p></div>
+        </div>
+        <p class="note">Auf manchen Arbeitsblättern steht: „Nutzt man nur RX und TX, spricht man von UART.“ Genauer: Die Verbindung nur mit RX, TX und Masse heißt <b>Drei-Draht-Verbindung</b> (ohne Hardware-Flusssteuerung). UART ist der Baustein dahinter – ihn gibt es mit und ohne Steuerleitungen. Wenn bei Mikrocontrollern „UART“ gesagt wird, meint man meist genau diese Drei-Draht-Verbindung mit Logikpegeln.</p>
+      </article>
+
+      <article class="card">
+        <h2>Baue ein Telegramm</h2>
+        <div class="fields sr-uart-fields">
+          <label class="field"><span>Zeichen</span><input id="sr-u-ch" value="a" maxlength="1" spellcheck="false" autocomplete="off"></label>
+          <label class="field"><span>Datenbits</span><select class="kb-select" id="sr-u-n"><option>5</option><option>6</option><option>7</option><option selected>8</option></select></label>
+          <label class="field"><span>Parität</span><select class="kb-select" id="sr-u-p"><option value="N">N – keine</option><option value="E">E – gerade</option><option value="O">O – ungerade</option></select></label>
+          <label class="field"><span>Stoppbits</span><select class="kb-select" id="sr-u-s"><option>1</option><option>2</option></select></label>
+          <label class="field"><span>Baudrate</span><select class="kb-select" id="sr-u-b"><option>1200</option><option>2400</option><option>4800</option><option selected>9600</option><option>19200</option><option>57600</option><option>115200</option></select></label>
+        </div>
+        <div class="tp-wrap"><div id="sr-u-svg"></div></div>
+        <div class="legend sr-u-legend"><span><i class="sw sr-sw-start"></i>1 · Startbit</span><span><i class="sw sr-sw-data"></i>2 · Datenbits (LSB zuerst)</span><span><i class="sw sr-sw-par"></i>3 · Paritätsbit</span><span><i class="sw sr-sw-stop"></i>4 · Stoppbit(s)</span></div>
+        <div id="sr-u-out" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>So liest der Empfänger mit</h2>
+        <ol class="b-steps">
+          <li><b>Ruhe:</b> Wenn nichts gesendet wird, liegt die Leitung auf <b>1</b> (High).</li>
+          <li><b>Startbit:</b> Die Leitung fällt auf <b>0</b>. Diese Flanke startet beim Empfänger einen Zeitzähler. Er wartet eine halbe Bitzeit und schaut dann immer in der <b>Mitte jedes Bits</b> auf die Leitung.</li>
+          <li><b>Datenbits:</b> 5 bis 9 Bit, meist 8 – das <b>niederwertigste Bit (LSB) zuerst</b>. Der Empfänger schiebt sie in ein <b>Schieberegister</b>.</li>
+          <li><b>Paritätsbit</b> (wahlweise): ein Prüfbit, siehe unten.</li>
+          <li><b>Stoppbit(s):</b> 1, 1,5 oder 2 Bitzeiten auf <b>1</b>. Sie trennen das Telegramm vom nächsten, damit das nächste Startbit wieder eine fallende Flanke hat.</li>
+        </ol>
+        <div class="two-col">
+          <div class="mini-card"><h3>MSB – Most Significant Bit</h3><p>Das <b>höchstwertige</b> Bit, ganz links in der Binärzahl. Bei 8 Bit hat es den Stellenwert 2<sup>7</sup> = 128.</p></div>
+          <div class="mini-card"><h3>LSB – Least Significant Bit</h3><p>Das <b>niederwertigste</b> Bit, ganz rechts. Es hat den Stellenwert 2<sup>0</sup> = 1. Der UART sendet es <b>zuerst</b>.</p></div>
+        </div>
+        <p class="callout"><b>Achtung beim Ablesen:</b> In einem Mitschnitt steht die Zeit von links nach rechts – das LSB also links. Um die Binärzahl zu bekommen, liest man die Datenbits <b>rückwärts</b>. Aus <code>10000110</code> auf der Leitung wird <code>01100001</code> = 0x61 = 97 = „a“.</p>
+      </article>
+
+      <article class="card">
+        <h2>Das Paritätsbit</h2>
+        <p>Der Sender zählt die Einsen in den Datenbits und setzt das Paritätsbit so, dass die Anzahl der Einsen <b>einschließlich Paritätsbit</b> gerade (Even) bzw. ungerade (Odd) ist. Klicke Datenbits an, um sie zu ändern, und lass dann auf dem Weg Bits umkippen.</p>
+        <div class="seg small" id="sr-pa-seg">
+          <button type="button" data-p="E" class="active">E – gerade</button>
+          <button type="button" data-p="O">O – ungerade</button>
+        </div>
+        <div id="sr-pa" class="sr-pa"></div>
+        <div id="sr-pa-txt" class="kb-res" aria-live="polite"></div>
+        <p class="note">Die Parität erkennt jeden <b>einzelnen</b> Bitfehler – kippen zwei Bits, passt die Zahl der Einsen wieder und der Fehler bleibt unentdeckt. Korrigieren kann sie nichts: Der Empfänger weiß nur, <i>dass</i> etwas falsch ist, nicht <i>welches</i> Bit.</p>
+      </article>
+
+      <article class="card">
+        <h2>Übungen vom Arbeitsblatt</h2>
+        <p class="sr-ws-task"><b>Aufgabe 1:</b> Ein Datentelegramm besteht aus 16 Datenbits, 2 Stoppbits, 1 Paritätsbit und einem Startbit. Wie viele Telegramme können bei <b>57 600 Baud</b> pro Sekunde übertragen werden?</p>
+        <details class="v6-more"><summary>Lösung Aufgabe 1</summary>
+          <p>Ein Telegramm hat 1 + 16 + 1 + 2 = <b>20 Bit</b>. Bei 57 600 Bit/s: <code>57 600 ÷ 20 = 2 880</code> → <b>2 880 Telegramme pro Sekunde</b>.</p>
+          <p class="muted">16 Datenbits sind beim UART unüblich (5 bis 9 sind möglich) – gerechnet wird aber genauso.</p>
+        </details>
+        <p class="sr-ws-intro">Für die Aufgaben 2 und 3 hat ein Logikanalysator (hier wie im Programm PulseView) die Leitungen RX und TX eines Mikrocontrollers aufgezeichnet und die Telegramme gleich dekodiert: oben die einzelnen Bits, darunter der Wert hexadezimal. Format 8N1.</p>
+        <div id="sr-ws"></div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Mehr als zwei Teilnehmer</h2>
+        <p>Eine UART-Verbindung verbindet genau zwei Geräte. Was, wenn ein Mikrocontroller mit vielen Sensoren sprechen soll? Die Lösung: <b>Adressen</b>.</p>
+        <a class="btn primary" href="#ser-i2c">Weiter zu I²C →</a>
+      </article>
+    </section>
+
+    <!-- ============================ SERIELL 4 ============================ -->
+    <section id="ser-i2c" class="page" data-theme="seriell">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-topo-rolle.webp" alt="">
+        <p class="eyebrow">Seriell · Station 4 · Interaktiv</p>
+        <h1>I²C – Adressen auf zwei Drähten</h1>
+        <p class="lead"><b>I²C</b> (Inter-Integrated Circuit, gesprochen „I-Quadrat-C“) hat Philips 1982 entwickelt, um viele Chips auf einer Platine zu verbinden. Zwei Leitungen reichen für alle: Jeder Teilnehmer hat eine eigene <b>Adresse</b>. Und weil eine Leitung den <b>Takt</b> trägt, arbeitet I²C <b>synchron</b>.</p>
+      </header>
+
+      <article class="card">
+        <h2>Der Aufbau</h2>
+        <div class="tp-wrap"><div id="sr-i2c-bus"></div></div>
+        <ul class="ticks">
+          <li><b>SDA</b> (Serial Data) trägt die Daten – in beide Richtungen, abwechselnd (halbduplex). <b>SCL</b> (Serial Clock) trägt den Takt, den der <b>Controller</b> vorgibt.</li>
+          <li>Die beiden <b>Pull-up-Widerstände R<sub>p</sub></b> ziehen die Leitungen auf High. Die Teilnehmer können eine Leitung nur auf Low ziehen (Open Drain) – so gibt es keinen Kurzschluss, wenn zwei gleichzeitig senden. Wer eine 0 sendet, setzt sich durch.</li>
+          <li>Früher hießen die Rollen <b>Master</b> und <b>Slave</b>. Heute sagt man <b>Controller</b> und <b>Target</b> – in manchen Unterlagen auch Main und Subnode.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Ein Gerät ansprechen</h2>
+        <p>Der Controller beginnt jede Übertragung mit einer <b>Startbedingung</b> und sendet dann die <b>7-Bit-Adresse</b> – hier mit dem <b>höchstwertigen Bit zuerst</b>, anders als beim UART. Das 8. Bit sagt, ob er schreiben (0) oder lesen (1) will. Im 9. Takt antwortet der angesprochene Teilnehmer mit <b>ACK</b>, indem er SDA auf Low zieht.</p>
+        <div class="fields sr-i2c-fields">
+          <label class="field"><span>Adresse</span><select class="kb-select" id="sr-i2c-addr"></select></label>
+          <label class="field"><span>Richtung</span><select class="kb-select" id="sr-i2c-rw"><option value="0">0 – schreiben</option><option value="1" selected>1 – lesen</option></select></label>
+          <label class="field"><span>Takt</span><select class="kb-select" id="sr-i2c-f"><option value="100">100 kHz (Standard)</option><option value="400">400 kHz (Fast)</option><option value="1000">1 MHz (Fast-mode Plus)</option></select></label>
+        </div>
+        <div class="tp-wrap"><div id="sr-i2c-svg"></div></div>
+        <div id="sr-i2c-out" class="kb-res" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>Übung: Datenrate aus dem Mitschnitt</h2>
+        <p>Ein Logikanalysator hat eine I²C-Übertragung aufgezeichnet und dekodiert: oben die Bits, darunter Adresse, Richtung und Antwort. <b>D0</b> ist die Datenleitung SDA, <b>D1</b> der Takt SCL.</p>
+        <div id="sr-i2c-ws"></div>
+      </article>
+
+      <article class="card">
+        <h2>Wie viele Teilnehmer passen auf den Bus?</h2>
+        <p>Mit 7 Bit gibt es 2<sup>7</sup> = <b>128</b> Adressen. 16 davon sind für Sonderzwecke reserviert (0x00–0x07 und 0x78–0x7F, z. B. für einen Aufruf an alle oder die Erweiterung auf 10 Bit). Es bleiben <b>112</b> Adressen für Teilnehmer.</p>
+        <ul class="ticks">
+          <li>Die Adresse ist meist vom Hersteller fest im Chip eingetragen. Damit zwei gleiche Sensoren an einen Bus passen, haben viele Chips <b>Adress-Pins</b> (A0, A1, …), mit denen man die letzten Bits per Lötbrücke ändert.</li>
+          <li>Wer mehr braucht, verwendet <b>10-Bit-Adressen</b>.</li>
+          <li>Gedacht ist I²C für <b>kurze Wege</b> auf einer Platine oder innerhalb eines Geräts – meist unter einem Meter.</li>
+        </ul>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Modus</th><th>Datenrate</th></tr></thead>
+            <tbody>
+              <tr><td>Standard Mode</td><td>100 kbit/s</td></tr>
+              <tr><td>Fast Mode</td><td>400 kbit/s</td></tr>
+              <tr><td>Fast-mode Plus</td><td>1 Mbit/s</td></tr>
+              <tr><td>High-speed Mode</td><td>3,4 Mbit/s</td></tr>
+              <tr><td>Ultra-fast Mode</td><td>5 Mbit/s – nur in eine Richtung, ohne ACK</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="card next-card">
+        <h2>Noch schneller: SPI</h2>
+        <p>I²C ist sparsam, aber nicht sehr schnell. SPI braucht mehr Leitungen – und schafft ein Vielfaches.</p>
+        <a class="btn primary" href="#ser-spi">Weiter zu SPI →</a>
+      </article>
+    </section>
+
+    <!-- ============================ SERIELL 5 ============================ -->
+    <section id="ser-spi" class="page" data-theme="seriell">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-server.webp" alt="">
+        <p class="eyebrow">Seriell · Station 5 · Interaktiv</p>
+        <h1>SPI und der Weg zum Netz</h1>
+        <p class="lead">Das <b>Serial Peripheral Interface</b> (SPI) stammt von Motorola. Es verwendet <b>vier Leitungen</b>, arbeitet synchron und vollduplex und schafft je nach Chip einige bis über 50 Mbit/s. Statt Adressen gibt es eine eigene Leitung, die einen Teilnehmer auswählt.</p>
+      </header>
+
+      <article class="card">
+        <h2>Vier Leitungen</h2>
+        <div class="tp-wrap"><div id="sr-spi-4"></div></div>
+        <div class="tbl-wrap">
+          <table class="tbl compact">
+            <thead><tr><th>Leitung</th><th>Bedeutung</th><th>Richtung</th></tr></thead>
+            <tbody>
+              <tr><td><b>CS</b> (oft mit Strich: <span class="sr-ov">CS</span>)</td><td>Chip Select – wählt den Teilnehmer aus. Der Strich heißt <b>low-aktiv</b>: ausgewählt ist, wer 0 V bekommt.</td><td>Main → Subnode</td></tr>
+              <tr><td><b>SCLK</b></td><td>SPI Clock – der Takt</td><td>Main → Subnode</td></tr>
+              <tr><td><b>MOSI</b></td><td>Main Out, Subnode In – am Subnode oft SDI</td><td>Main → Subnode</td></tr>
+              <tr><td><b>MISO</b></td><td>Main In, Subnode Out – am Subnode oft SDO</td><td>Subnode → Main</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Ältere Datenblätter sagen Master und Slave (daher die Abkürzungen MOSI und MISO), neuere auch Controller und Peripheral (PICO, POCI).</p>
+      </article>
+
+      <article class="card">
+        <h2>Zwei Schieberegister im Kreis</h2>
+        <p>Main und Subnode haben je ein 8-Bit-<b>Schieberegister</b>. Bei jedem Takt schiebt der Main ein Bit über MOSI hinaus – und bekommt gleichzeitig eines über MISO herein. Nach 8 Takten haben beide ihre Bytes <b>getauscht</b>. Hier sendet der Main die Zahl <b>79</b> (0x4F) wie im Mitschnitt auf dem Arbeitsblatt, der Subnode antwortet mit 0xFF.</p>
+        <div class="fields sr-spi-fields">
+          <label class="field"><span>Main sendet (0–255)</span><input id="sr-spi-m" type="number" min="0" max="255" value="79"></label>
+          <label class="field"><span>Subnode sendet (0–255)</span><input id="sr-spi-s" type="number" min="0" max="255" value="255"></label>
+        </div>
+        <div class="row-actions">
+          <button type="button" class="btn primary" id="sr-spi-step">Nächster Takt →</button>
+          <button type="button" class="btn" id="sr-spi-go">▶ Automatisch abspielen</button>
+          <button type="button" class="btn ghost" id="sr-spi-reset">Von vorn</button>
+        </div>
+        <div id="sr-spi-reg" class="sr-spi-reg"></div>
+        <div class="tp-wrap"><div id="sr-spi-svg"></div></div>
+        <div class="osi-say" id="sr-spi-say" aria-live="polite"></div>
+        <p class="note">SPI überträgt wie I²C das <b>MSB zuerst</b>.</p>
+      </article>
+
+      <article class="card">
+        <h2>Übung: Datenrate aus dem Mitschnitt</h2>
+        <p>Ein Logikanalysator hat eine SPI-Übertragung aufgezeichnet und dekodiert. Zu sehen sind die Leitungen <b>MISO</b>, <b>MOSI</b> und der Takt <b>CLK</b>.</p>
+        <div id="sr-spi-ws"></div>
+      </article>
+
+      <article class="card">
+        <h2>Mehrere Subnodes</h2>
+        <div class="seg small" id="sr-spi-multi-seg">
+          <button type="button" data-m="cs" class="active">Eigene CS-Leitungen</button>
+          <button type="button" data-m="chain">Daisy Chain</button>
+        </div>
+        <div class="tp-wrap"><div id="sr-spi-multi"></div></div>
+        <div id="sr-spi-multi-txt" class="kb-res" aria-live="polite"></div>
+      </article>
+
+      <article class="card">
+        <h2>Alle im Vergleich – und der Schritt zum Netzwerk</h2>
+        <div class="tbl-wrap">
+          <table class="tbl compact sr-cmp">
+            <thead><tr><th></th><th>UART / RS-232</th><th>I²C</th><th>SPI</th><th>Ethernet</th></tr></thead>
+            <tbody>
+              <tr><th>Leitungen</th><td>TX, RX, Masse</td><td>SDA, SCL (+ Masse)</td><td>CS, SCLK, MOSI, MISO (+ Masse)</td><td>2 oder 4 Adernpaare</td></tr>
+              <tr><th>Takt</th><td>asynchron – Startbit</td><td>synchron – SCL</td><td>synchron – SCLK</td><td>Takt steckt im Leitungscode</td></tr>
+              <tr><th>Richtung</th><td>vollduplex</td><td>halbduplex</td><td>vollduplex</td><td>vollduplex</td></tr>
+              <tr><th>Teilnehmer</th><td>2</td><td>bis 112 (7-Bit-Adressen)</td><td>1 je CS-Leitung</td><td>praktisch beliebig viele</td></tr>
+              <tr><th>Auswahl</th><td>keine nötig</td><td>7-Bit-Adresse</td><td>eigene Leitung</td><td>48-Bit-MAC-Adresse</td></tr>
+              <tr><th>Datenrate</th><td>meist bis 115,2 kbit/s</td><td>0,1 bis 5 Mbit/s</td><td>bis über 50 Mbit/s</td><td>10 Mbit/s bis 800 Gbit/s</td></tr>
+              <tr><th>Reichweite</th><td>etwa 15 m</td><td>unter 1 m</td><td>wenige cm bis 1 m</td><td>100 m (Kupfer), km (Glasfaser)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="callout"><b>Auch Ethernet ist seriell:</b> Auf jedem Adernpaar kommen die Signale nacheinander an. Neu ist, dass beliebig viele Geräte aus aller Welt zusammenkommen. Eine 7-Bit-Adresse reicht dafür nicht – jede Netzwerkkarte bekommt eine <b>weltweit eindeutige 48-Bit-Adresse</b>, die MAC-Adresse.</p>
+        <p class="note"><b>PCI Express und M.2:</b> M.2 ist kein eigenes Übertragungsverfahren, sondern eine Steckkarten-Bauform. Eine M.2-SSD spricht meist über bis zu vier <b>PCIe-Lanes</b> (NVMe) oder über SATA. Jede Lane ist eine eigene <b>serielle</b> Verbindung mit je einem Adernpaar pro Richtung. Mehrere Lanes verteilen die Daten zwar nebeneinander, jede stellt ihren Takt aber selbst wieder her – deshalb gilt PCIe als serielle Schnittstelle, die den parallelen PCI-Bus abgelöst hat.</p>
+      </article>
+
+      <article class="card next-card">
+        <h2>Jetzt üben</h2>
+        <p>Im Seriell-Dojo trainierst du seriell und parallel, RS-232, das Übertragungsformat, Baudraten, das Dekodieren von Mitschnitten sowie I²C und SPI.</p>
+        <a class="btn primary" href="#ser-dojo">Weiter zum Seriell-Dojo →</a>
+      </article>
+    </section>
+
+    <!-- ============================ SERIELL 6 ============================ -->
+    <section id="ser-dojo" class="page" data-theme="seriell">
+      <header class="page-head">
+        <img class="head-art" src="assets/images/el-puppe.webp" alt="">
+        <p class="eyebrow">Seriell · Station 6 · Training</p>
+        <h1>Seriell-Dojo</h1>
+        <p class="lead">Sechs Gürtel, sechs Themen. Löse <b>5 Aufgaben in Folge</b> richtig, um einen Gürtel zu erhalten.</p>
+      </header>
+      <div class="dojo-layout" id="d-seriell"></div>
+
+      <article class="card next-card has-art">
+        <img class="card-art" src="assets/images/el-laternchen.webp" alt="">
+        <h2>Geschafft – weiter zum nächsten Thema!</h2>
+        <p>Ethernet überträgt auch seriell – aber zwischen beliebig vielen Geräten. Dafür braucht jede Netzwerkkarte eine weltweit eindeutige Adresse: die MAC-Adresse.</p>
+        <a class="btn primary" href="#mac-grundlagen">Weiter zum Thema MAC-Adressen →</a>
+      </article>
+    </section>
+
     <!-- ============================ MAC 1 ============================ -->
     <section id="mac-grundlagen" class="page" data-theme="mac">
       <header class="page-head">
@@ -2352,8 +2816,8 @@ Ablaufverfolgung beendet.</pre>
       <article class="card next-card has-art">
         <img class="card-art" src="assets/images/el-laternchen.webp" alt="">
         <h2>Alle Themen geschafft!</h2>
-        <p>Du hast MAC-Adressen, IPv4, Topologien, IPv6, das OSI-Modell, Kabel und Signale, die Netzwerkdienste sowie Verschlüsselung und Anonymität durchgearbeitet. Wiederholen kannst du jederzeit – am besten in den Übungs-Dojos, bis alle Gürtel in Farbe leuchten.</p>
-        <a class="btn primary" href="#mac-grundlagen">Zurück zum Anfang ↺</a>
+        <p>Du hast serielle Schnittstellen, MAC-Adressen, IPv4, Topologien, IPv6, das OSI-Modell, Kabel und Signale, die Netzwerkdienste sowie Verschlüsselung und Anonymität durchgearbeitet. Wiederholen kannst du jederzeit – am besten in den Übungs-Dojos, bis alle Gürtel in Farbe leuchten.</p>
+        <a class="btn primary" href="#ser-grundlagen">Zurück zum Anfang ↺</a>
       </article>
     </section>
 
@@ -2375,7 +2839,7 @@ Ablaufverfolgung beendet.</pre>
 
   <footer class="site-footer">
     <img class="footer-art" src="assets/images/el-bonsai.webp" alt="">
-    <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996) · <a href="https://www.rfc-editor.org/info/rfc3927/" target="_blank" rel="noopener">RFC 3927</a> (APIPA/Link-Local) · <a href="https://www.rfc-editor.org/info/rfc6890/" target="_blank" rel="noopener">RFC 6890</a> (Besondere Adressbereiche) · <a href="https://www.rfc-editor.org/info/rfc2131/" target="_blank" rel="noopener">RFC 2131</a> (DHCP) · <a href="https://www.rfc-editor.org/info/rfc1034/" target="_blank" rel="noopener">RFC 1034</a> (DNS) · <a href="https://www.rfc-editor.org/info/rfc3986/" target="_blank" rel="noopener">RFC 3986</a> (URI) · <a href="https://www.rfc-editor.org/info/rfc6335/" target="_blank" rel="noopener">RFC 6335</a> (Portbereiche) · <a href="https://www.rfc-editor.org/info/rfc8446/" target="_blank" rel="noopener">RFC 8446</a> (TLS 1.3)</p>
+    <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996) · <a href="https://www.rfc-editor.org/info/rfc3927/" target="_blank" rel="noopener">RFC 3927</a> (APIPA/Link-Local) · <a href="https://www.rfc-editor.org/info/rfc6890/" target="_blank" rel="noopener">RFC 6890</a> (Besondere Adressbereiche) · <a href="https://www.rfc-editor.org/info/rfc2131/" target="_blank" rel="noopener">RFC 2131</a> (DHCP) · <a href="https://www.rfc-editor.org/info/rfc1034/" target="_blank" rel="noopener">RFC 1034</a> (DNS) · <a href="https://www.rfc-editor.org/info/rfc3986/" target="_blank" rel="noopener">RFC 3986</a> (URI) · <a href="https://www.rfc-editor.org/info/rfc6335/" target="_blank" rel="noopener">RFC 6335</a> (Portbereiche) · <a href="https://www.rfc-editor.org/info/rfc8446/" target="_blank" rel="noopener">RFC 8446</a> (TLS 1.3) · <a href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf" target="_blank" rel="noopener">NXP UM10204</a> (I²C-Spezifikation) · TIA-232-F (serielle Schnittstelle)</p>
     <p>Netzwerktechnik-Dojo · Jakob-Preh-Schule · statische HTML-Seite, läuft komplett im Browser – keine Daten werden übertragen, keine externen Dienste geladen.</p>
   </footer>
 
@@ -2406,6 +2870,9 @@ Ablaufverfolgung beendet.</pre>
   <script src="assets/tls.js"></script>
   <script src="assets/anonym.js"></script>
   <script src="assets/krypto-dojo.js"></script>
+  <script src="assets/seriell.js"></script>
+  <script src="assets/bus.js"></script>
+  <script src="assets/seriell-dojo.js"></script>
   <script src="assets/planer.js"></script>
   <script src="assets/topo.js"></script>
   <script src="assets/topologien.js"></script>

@@ -83,9 +83,11 @@ const UI = (() => {
   };
 
   /* ---------- Themen und Freischaltung ----------
-     Ein Thema wird freigeschaltet, sobald alle Stationen des vorherigen Themas geöffnet wurden. */
+     Ein Thema wird freigeschaltet, sobald alle Stationen des vorherigen Themas geöffnet wurden.
+     Wer in einem Thema schon war, bleibt drin – auch wenn später davor ein Thema eingefügt wird. */
   const THEMES = {
-    mac: { name: 'MAC-Adressen' },
+    seriell: { name: 'Serielle Schnittstellen' },
+    mac: { name: 'MAC-Adressen', after: 'seriell' },
     ipv4: { name: 'IPv4', after: 'mac' },
     topo: { name: 'Topologien', after: 'ipv4' },
     ipv6: { name: 'IPv6', after: 'topo' },
@@ -102,7 +104,7 @@ const UI = (() => {
     const req = THEMES[theme]?.after;
     if (!req) return true;
     const seen = visited();
-    return stationsOf(req).every(p => seen.has(p.id));
+    return stationsOf(theme).some(p => seen.has(p.id)) || stationsOf(req).every(p => seen.has(p.id));
   }
 
   function toast(html) {
