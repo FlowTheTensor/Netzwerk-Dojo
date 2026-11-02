@@ -17,7 +17,7 @@ pro Sekunde, nur bei zwei Pegeln gleich Bit/s.
 
 | # | Station | Inhalt |
 |---|---------|--------|
-| 1 | Seriell & parallel | Ein Zeichen seriell und parallel Takt für Takt, Laufzeitunterschiede bei hohem Takt, Vor- und Nachteile, früher parallel/heute seriell, uni- und bidirektional, Bus am Beispiel KNX und was ein Bus regeln muss, Zeitleiste |
+| 1 | Seriell & parallel | Ein Zeichen seriell und parallel Takt für Takt, Laufzeitunterschiede bei hohem Takt, Vor- und Nachteile, Fotos früher parallel/heute seriell (LPT, Druckerkabel, USB, IDE, SATA, PCI/PCIe), wo parallel heute noch steckt, Lanes, uni- und bidirektional, Bus am Beispiel KNX und was ein Bus regeln muss, Zeitleiste |
 | 2 | RS-232 | DE-9-Stecker mit klickbaren Pins (Datenleitungen 2, 3, 5), Pegel UART gegen RS-232, Nullmodem und 1:1-Kabel, Formatkürzel wie 8N1, Baud |
 | 3 | UART-Telegramm | UART vs. RS-232, Telegramm-Baukasten (Datenbits, Parität, Stoppbits, Baudrate) mit Bitzeit und Telegrammen pro Sekunde, MSB/LSB, Paritätsbit mit Störungs-Simulation, Übungen vom Arbeitsblatt: Telegramme pro Sekunde, Mitschnitte im Stil von PulseView (Baudrate aus 104 µs, „a?“ / „ok“ dekodieren) |
 | 4 | I²C | Bus mit Pull-ups und Teilnehmern, Adressierung als SCL/SDA-Signal mit ACK/NACK, Übung zum PulseView-Mitschnitt vom Arbeitsblatt (0x08, NACK, Datenrate aus 10 µs), 112 Adressen, Geschwindigkeiten |
@@ -186,7 +186,8 @@ assets/ipv6.js        IPv6-Rechenkern (parsen, kürzen, Typ, Präfix, EUI-64)
 assets/ipv6-stationen.js  IPv6 Stationen 1–4
 assets/ipv6-dojo.js   IPv6 Station 5
 assets/images/        Gürtelbilder aus Netzwerkkabel (guertel-<farbe>.png), Dojo-Tor als Rahmen
-                      (rahmen.webp) und Illustrationen der Stationen (el-*.webp)
+                      (rahmen.webp), Illustrationen der Stationen (el-*.webp) und Fotos von
+                      Wikimedia Commons (foto-*.webp, siehe Quellen)
 assets/images/tor/    Einzelteile des Seitenrahmens und Blütenblätter
 ```
 
@@ -211,3 +212,17 @@ Das Schullogo (`assets/jps-logo.png`) gehört der Jakob-Preh-Schule.
 - [RFC 8446](https://www.rfc-editor.org/info/rfc8446/) – TLS 1.3
 - [NXP UM10204](https://www.nxp.com/docs/en/user-guide/UM10204.pdf) – I²C-Bus Specification and User Manual
 - TIA-232-F – Interface Between Data Terminal Equipment and Data Circuit-Terminating Equipment
+
+### Fotos (Wikimedia Commons, für die Seite verkleinert)
+
+| Datei | Original | Urheber | Lizenz |
+|---|---|---|---|
+| foto-lpt.webp | [Parallel computer printer port.jpg](https://commons.wikimedia.org/wiki/File:Parallel_computer_printer_port.jpg) | Duncan Lithgow | gemeinfrei |
+| foto-druckerkabel.webp | [IEEE 1284 printer cable, type AB-0135.jpg](https://commons.wikimedia.org/wiki/File:IEEE_1284_printer_cable,_type_AB-0135.jpg) | Raimond Spekking | CC BY-SA 4.0 |
+| foto-usb.webp | [Interfaces on left side of Lenovo ThinkPad T410 laptop … (cropped).jpg](https://commons.wikimedia.org/wiki/File:Interfaces_on_left_side_of_Lenovo_ThinkPad_T410_laptop_-_VGA_connector,_Ethernet_port,_Display_port,_three_USB_2.0_ports_(cropped).jpg) | Pittigrilli | CC0 |
+| foto-ide.webp | [IDE cable 40 pin & 80 pin.jpg](https://commons.wikimedia.org/wiki/File:IDE_cable_40_pin_%26_80_pin.jpg) | Smial | CC BY-SA 2.0 DE |
+| foto-sata.webp | [Serial ATA hard disk connected.jpg](https://commons.wikimedia.org/wiki/File:Serial_ATA_hard_disk_connected.jpg) | Thomas Rosenau | CC BY-SA 2.5 |
+| foto-sata-innen.webp | [Serial ATA cable cut off to show the inside.jpg](https://commons.wikimedia.org/wiki/File:Serial_ATA_cable_cut_off_to_show_the_inside.jpg) | Tobias Maier | CC BY-SA 3.0 |
+| foto-pci-pcie.webp | [PCI und PCIe Slots.jpg](https://commons.wikimedia.org/wiki/File:PCI_und_PCIe_Slots.jpg) | Smial | CC BY-SA 2.0 DE |
+
+Die verkleinerten Fassungen der CC-BY-SA-Fotos stehen unter derselben Lizenz wie das jeweilige Original.

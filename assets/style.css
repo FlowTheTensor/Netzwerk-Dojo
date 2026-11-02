@@ -1930,3 +1930,33 @@ td.kr-no { color: var(--host); font-weight: 600; }
 .sr-pv-nack { fill: color-mix(in srgb, var(--err) 30%, var(--surface)); stroke: var(--err); stroke-width: 1; }
 .sr-pv-mosi { fill: color-mix(in srgb, var(--accent) 22%, var(--surface)); stroke: var(--accent); stroke-width: 1; }
 .sr-ws-intro { margin-top: 1.4rem; }
+/* Fotos früher parallel – heute seriell */
+.sr-gal { display: grid; gap: 1.2rem; margin: .6rem 0 .4rem; }
+.sr-pair h4 { margin: 0 0 .5rem; font: 700 14px var(--display); }
+.sr-pair-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.sr-foto { margin: 0; background: var(--surface-2); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+.sr-foto.old { box-shadow: inset 0 3px 0 var(--accent-2); }
+.sr-foto.new { box-shadow: inset 0 3px 0 var(--net); }
+.sr-foto.old.new { box-shadow: none; grid-column: 1 / -1; }
+.sr-foto > a { display: block; line-height: 0; }
+.sr-foto img { width: 100%; height: 200px; object-fit: cover; display: block; background: #fff; }
+.sr-foto.old.new img { height: auto; max-height: 420px; object-fit: contain; }
+.sr-foto figcaption { padding: .55rem .8rem .7rem; font-size: 13.5px; line-height: 1.5; display: flex; flex-direction: column; gap: .25rem; flex: 1; }
+.sr-tag { align-self: flex-start; font: 600 10px var(--mono); text-transform: uppercase; letter-spacing: .06em; border-radius: 5px; padding: 1px 7px; margin-right: 4px; display: inline-block; }
+.sr-tag.old { background: color-mix(in srgb, var(--accent-2) 22%, var(--surface)); color: var(--accent-2); }
+.sr-tag.new { background: var(--info-bg); color: var(--net); }
+.sr-foto.old.new figcaption .sr-tag { align-self: auto; }
+.sr-credit { margin-top: auto; padding-top: .3rem; font-size: 11px; color: var(--muted); }
+.sr-credit a { color: inherit; }
+.sr-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.sr-tags .sr-tag { margin: 0; }
+.sr-foto.old.new img { background: transparent; }
+.sr-sub-art { float: right; height: 96px; width: auto; margin: 1rem 0 6px 16px; }
+@media (max-width: 600px) { .sr-sub-art { height: 64px; } }
+.sr-head-pair { position: absolute; right: 0; top: 18px; display: flex; align-items: flex-end; gap: 10px; pointer-events: none; }
+.sr-head-pair img { height: 118px; width: auto; }
+@media (max-width: 1120px) { .sr-head-pair { position: static; justify-content: center; margin: 0 0 .6rem; } .sr-head-pair img { height: 110px; } }
+@media (max-width: 600px) { .sr-head-pair img { height: 84px; } }
+.sr-mc-art { float: right; height: 84px; width: auto; margin: -4px -4px 6px 12px; }
+@media (max-width: 600px) { .sr-mc-art { height: 64px; } }
+.head-art.wide { height: 100px; top: 40px; }

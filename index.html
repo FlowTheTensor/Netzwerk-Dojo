@@ -85,7 +85,7 @@
     <!-- ============================ SERIELL 1 ============================ -->
     <section id="ser-grundlagen" class="page" data-theme="seriell">
       <header class="page-head">
-        <img class="head-art" src="assets/images/el-rolle.webp" alt="">
+        <div class="sr-head-pair" aria-hidden="true"><img src="assets/images/el-seriell-schild.webp" alt=""><img src="assets/images/el-parallel-schild.webp" alt=""></div>
         <p class="eyebrow">Seriell · Station 1 · Grundlagen</p>
         <h1>Seriell und parallel</h1>
         <p class="lead">Lange bevor es Netzwerke gab, wollte man zwei Geräte miteinander reden lassen: einen Computer mit einem Drucker, einem Modem oder einem Terminal. Dafür gibt es zwei Grundideen – die Bits <b>nacheinander</b> über eine Leitung schicken oder <b>gleichzeitig</b> über viele Leitungen. Von hier aus geht die Reise bis zum Ethernet.</p>
@@ -111,12 +111,14 @@
         <h2>Vor- und Nachteile</h2>
         <div class="two-col">
           <div class="mini-card">
+            <img class="sr-mc-art" src="assets/images/el-seriell.webp" alt="">
             <h3>Serielle Schnittstelle</h3>
             <p><b>Prinzip:</b> Die Bits werden <b>nacheinander</b> über eine Datenleitung (je Richtung) übertragen.</p>
             <p><b>Vorteile:</b> wenige Adern, dünne und billige Kabel, kleine Stecker, große Entfernungen möglich, kein Gleichlauf-Problem zwischen den Leitungen. Schnelle serielle Verbindungen sind außerdem <b>störfest</b>: Sie senden über ein verdrilltes Adernpaar, bei dem sich Störungen weitgehend aufheben, sichern die Daten mit Prüfsummen und senden Fehlerhaftes einfach neu.</p>
             <p><b>Nachteile:</b> Bei gleichem Takt braucht ein Zeichen mehrere Takte; die Bits müssen beim Sender in eine Reihe gebracht und beim Empfänger wieder zusammengesetzt werden (Schieberegister).</p>
           </div>
           <div class="mini-card">
+            <img class="sr-mc-art" src="assets/images/el-parallel.webp" alt="">
             <h3>Parallele Schnittstelle</h3>
             <p><b>Prinzip:</b> Mehrere Bits werden <b>gleichzeitig</b> über eigene Leitungen übertragen – z. B. 8 Bit auf 8 Leitungen.</p>
             <p><b>Vorteile:</b> Bei gleichem Takt ist ein ganzes Zeichen in einem Takt übertragen; einfache Elektronik.</p>
@@ -124,17 +126,54 @@
           </div>
         </div>
         <p class="callout"><b>Darum hat seriell gewonnen:</b> Eine einzelne Leitung lässt sich viel schneller takten als ein ganzes Bündel, das im Gleichschritt bleiben muss. USB, SATA, PCI Express, HDMI und Ethernet sind deshalb alle <b>seriell</b> – und schneller als ihre parallelen Vorgänger.</p>
-        <div class="tbl-wrap">
-          <table class="tbl compact">
-            <thead><tr><th>früher parallel</th><th>heute seriell</th></tr></thead>
-            <tbody>
-              <tr><td>Druckerschnittstelle LPT (Centronics, 25-polig)</td><td>USB</td></tr>
-              <tr><td>Festplatten über PATA/IDE (40 oder 80 Adern)</td><td>SATA, NVMe über PCI Express</td></tr>
-              <tr><td>Steckkarten über PCI (32 Bit breit)</td><td>PCI Express</td></tr>
-              <tr><td>Bildschirm über VGA (analog, je Farbe eine Leitung)</td><td>HDMI, DisplayPort</td></tr>
-            </tbody>
-          </table>
+        <h3 class="sub-h">So sah das aus: früher parallel – heute seriell</h3>
+        <p>Klicke ein Foto an, um es groß zu sehen.</p>
+        <div class="sr-gal">
+        <div class="sr-pair">
+          <h4>Drucker</h4>
+          <div class="sr-pair-row">
+            <figure class="sr-foto old">
+              <a href="assets/images/foto-lpt.webp" target="_blank" rel="noopener"><img src="assets/images/foto-lpt.webp" alt="25-polige LPT-Buchse an einem PC" width="640" height="480" loading="lazy"></a>
+              <figcaption><span class="sr-tags"><span class="sr-tag old">früher parallel</span></span><span class="sr-cap"><b>LPT-Buchse</b> am PC: 25 Pins, davon 8 Datenleitungen – höchstens etwa 2 MB/s.</span><small class="sr-credit">Foto: <a href="https://commons.wikimedia.org/wiki/File:Parallel_computer_printer_port.jpg" target="_blank" rel="noopener">Duncan Lithgow</a> · gemeinfrei · Wikimedia Commons</small></figcaption>
+            </figure>
+            <figure class="sr-foto old">
+              <a href="assets/images/foto-druckerkabel.webp" target="_blank" rel="noopener"><img src="assets/images/foto-druckerkabel.webp" alt="Druckerkabel mit 25-poligem Stecker und 36-poligem Centronics-Stecker" width="640" height="360" loading="lazy"></a>
+              <figcaption><span class="sr-tags"><span class="sr-tag old">früher parallel</span></span><span class="sr-cap"><b>Druckerkabel:</b> links der 25-polige Stecker für den PC, rechts der 36-polige <b>Centronics</b>-Stecker für den Drucker.</span><small class="sr-credit">Foto: <a href="https://commons.wikimedia.org/wiki/File:IEEE_1284_printer_cable,_type_AB-0135.jpg" target="_blank" rel="noopener">Raimond Spekking</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Wikimedia Commons</small></figcaption>
+            </figure>
+            <figure class="sr-foto new">
+              <a href="assets/images/foto-usb.webp" target="_blank" rel="noopener"><img src="assets/images/foto-usb.webp" alt="Anschlüsse an einem Laptop, rechts drei USB-Buchsen" width="640" height="356" loading="lazy"></a>
+              <figcaption><span class="sr-tags"><span class="sr-tag new">heute seriell</span></span><span class="sr-cap"><b>USB</b> (rechts im Bild): 4 Kontakte, die Daten laufen über ein einziges Adernpaar – mit USB 2.0 schon 480 Mbit/s.</span><small class="sr-credit">Foto: <a href="https://commons.wikimedia.org/wiki/File:Interfaces_on_left_side_of_Lenovo_ThinkPad_T410_laptop_-_VGA_connector,_Ethernet_port,_Display_port,_three_USB_2.0_ports_(cropped).jpg" target="_blank" rel="noopener">Pittigrilli</a> · <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.de" target="_blank" rel="noopener">CC0</a> · Wikimedia Commons</small></figcaption>
+            </figure>
+          </div>
         </div>
+        <div class="sr-pair">
+          <h4>Festplatte</h4>
+          <div class="sr-pair-row">
+            <figure class="sr-foto old">
+              <a href="assets/images/foto-ide.webp" target="_blank" rel="noopener"><img src="assets/images/foto-ide.webp" alt="Zwei IDE-Flachbandkabel mit 40-poligen Steckern" width="640" height="845" loading="lazy" style="object-position:50% 30%"></a>
+              <figcaption><span class="sr-tags"><span class="sr-tag old">früher parallel</span></span><span class="sr-cap"><b>IDE-Flachbandkabel</b> (PATA) mit 40-poligen Steckern: links 80 Adern, rechts 40 Adern. Bei den schnelleren 80-adrigen Kabeln liegt zwischen den Signaladern je eine Masseader – gegen das Übersprechen. Höchstens 133 MB/s.</span><small class="sr-credit">Foto: <a href="https://commons.wikimedia.org/wiki/File:IDE_cable_40_pin_%26_80_pin.jpg" target="_blank" rel="noopener">Smial</a> · <a href="https://creativecommons.org/licenses/by-sa/2.0/de/" target="_blank" rel="noopener">CC BY-SA 2.0 DE</a> · Wikimedia Commons</small></figcaption>
+            </figure>
+            <figure class="sr-foto new">
+              <a href="assets/images/foto-sata.webp" target="_blank" rel="noopener"><img src="assets/images/foto-sata.webp" alt="Festplatte mit angestecktem SATA-Daten- und Stromkabel" width="640" height="583" loading="lazy" style="object-position:50% 80%"></a>
+              <figcaption><span class="sr-tags"><span class="sr-tag new">heute seriell</span></span><span class="sr-cap"><b>SATA</b>: Das schmale rote Kabel trägt die Daten, nur 7 Kontakte – und schafft bis 600 MB/s. Der breite Stecker daneben ist der Strom.</span><small class="sr-credit">Foto: <a href="https://commons.wikimedia.org/wiki/File:Serial_ATA_hard_disk_connected.jpg" target="_blank" rel="noopener">Thomas Rosenau</a> · <a href="https://creativecommons.org/licenses/by-sa/2.5/deed.de" target="_blank" rel="noopener">CC BY-SA 2.5</a> · Wikimedia Commons</small></figcaption>
+            </figure>
+            <figure class="sr-foto new">
+              <a href="assets/images/foto-sata-innen.webp" target="_blank" rel="noopener"><img src="assets/images/foto-sata-innen.webp" alt="Aufgeschnittenes SATA-Kabel mit zwei abgeschirmten Adernpaaren" width="640" height="960" loading="lazy" style="object-position:50% 20%"></a>
+              <figcaption><span class="sr-tags"><span class="sr-tag new">heute seriell</span></span><span class="sr-cap"><b>SATA-Kabel aufgeschnitten:</b> Innen stecken nur zwei abgeschirmte Adernpaare – eins pro Richtung – und drei Masseadern.</span><small class="sr-credit">Foto: <a href="https://commons.wikimedia.org/wiki/File:Serial_ATA_cable_cut_off_to_show_the_inside.jpg" target="_blank" rel="noopener">Tobias Maier</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.de" target="_blank" rel="noopener">CC BY-SA 3.0</a> · Wikimedia Commons</small></figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="sr-pair">
+          <h4>Steckkarten</h4>
+          <div class="sr-pair-row">
+            <figure class="sr-foto old new">
+              <a href="assets/images/foto-pci-pcie.webp" target="_blank" rel="noopener"><img src="assets/images/foto-pci-pcie.webp" alt="Mainboard mit PCIe-x1-, PCIe-x16- und zwei PCI-Steckplätzen" width="640" height="480" loading="lazy"></a>
+              <figcaption><span class="sr-tags"><span class="sr-tag old">früher parallel</span> <span class="sr-tag new">heute seriell</span></span><span class="sr-cap">Beide auf einem Mainboard: unten zwei weiße <b>PCI</b>-Steckplätze (32 Bit parallel, 133 MB/s für alle Karten zusammen), oben gelb <b>PCIe x1</b> und <b>PCIe x16</b> mit 1 bzw. 16 seriellen Lanes.</span><small class="sr-credit">Foto: <a href="https://commons.wikimedia.org/wiki/File:PCI_und_PCIe_Slots.jpg" target="_blank" rel="noopener">Smial</a> · <a href="https://creativecommons.org/licenses/by-sa/2.0/de/" target="_blank" rel="noopener">CC BY-SA 2.0 DE</a> · Wikimedia Commons</small></figcaption>
+            </figure>
+          </div>
+        </div>
+        </div>
+        <p class="note">Die Fotos stammen von Wikimedia Commons und wurden für diese Seite verkleinert. Urheber und Lizenz stehen jeweils unter dem Bild.</p>
         <h3 class="sub-h">Wo ist parallel heute noch im Einsatz?</h3>
         <p>Fast nur noch auf <b>sehr kurzen Wegen innerhalb eines Geräts</b>, wo man die Leiterbahnen genau gleich lang verlegen kann:</p>
         <div class="tbl-wrap">
@@ -151,6 +190,7 @@
           </table>
         </div>
         <p class="note">Beim Arbeitsspeicher hilft noch mehr: Jede Gruppe von 8 Datenbits bekommt ein eigenes Taktsignal mit (DQS), und beim Einschalten misst der Speichercontroller die Laufzeit jeder einzelnen Leitung und gleicht sie aus.</p>
+        <img class="sr-sub-art" src="assets/images/el-lanes.webp" alt="">
         <h3 class="sub-h">Parallel genutzt, aber seriell: Lanes</h3>
         <p>PCI Express x16, Thunderbolt oder 100-Gbit-Ethernet nutzen mehrere <b>Lanes</b> gleichzeitig nebeneinander – man spricht deshalb auch von <b>parallel genutzten seriellen Lanes</b>. Als Schnittstelle gelten sie trotzdem als <b>seriell</b>. Der Unterschied liegt darin, wie die Bits zusammengehalten werden:</p>
         <div class="two-col">
@@ -237,7 +277,7 @@
     <!-- ============================ SERIELL 2 ============================ -->
     <section id="ser-rs232" class="page" data-theme="seriell">
       <header class="page-head">
-        <img class="head-art" src="assets/images/el-kabel.webp" alt="">
+        <img class="head-art" src="assets/images/el-seriell.webp" alt="">
         <p class="eyebrow">Seriell · Station 2 · Interaktiv</p>
         <h1>RS-232</h1>
         <p class="lead"><b>RS-232</b> (heute TIA-232) legt fest, wie eine serielle Verbindung elektrisch aussieht: welche Spannungen, welche Leitungen, welcher Stecker. Am PC hieß sie <b>COM-Schnittstelle</b>. Heute steckt sie noch in Maschinen, Messgeräten und SPS – und als <b>Konsolen-Anschluss</b> an Switches und Routern.</p>
@@ -318,7 +358,7 @@
     <!-- ============================ SERIELL 3 ============================ -->
     <section id="ser-uart" class="page" data-theme="seriell">
       <header class="page-head">
-        <img class="head-art" src="assets/images/el-leitungscode.webp" alt="">
+        <img class="head-art" src="assets/images/el-bits-seriell.webp" alt="">
         <p class="eyebrow">Seriell · Station 3 · Interaktiv</p>
         <h1>Das UART-Telegramm</h1>
         <p class="lead">Der <b>UART</b> (Universal Asynchronous Receiver Transmitter) ist der Baustein, der ein Byte in eine Reihe von Bits verwandelt und beim Empfänger wieder zusammensetzt. Fast jeder Mikrocontroller hat einen eingebaut. „Asynchron“ heißt: Es gibt <b>keine Taktleitung</b> – das Startbit sagt dem Empfänger, wann es losgeht.</p>
@@ -375,7 +415,8 @@
         <p class="note">Die Parität erkennt jeden <b>einzelnen</b> Bitfehler – kippen zwei Bits, passt die Zahl der Einsen wieder und der Fehler bleibt unentdeckt. Korrigieren kann sie nichts: Der Empfänger weiß nur, <i>dass</i> etwas falsch ist, nicht <i>welches</i> Bit.</p>
       </article>
 
-      <article class="card">
+      <article class="card has-art">
+        <img class="card-art" src="assets/images/el-taktperiode.webp" alt="">
         <h2>Übungen vom Arbeitsblatt</h2>
         <p class="sr-ws-task"><b>Aufgabe 1:</b> Ein Datentelegramm besteht aus 16 Datenbits, 2 Stoppbits, 1 Paritätsbit und einem Startbit. Wie viele Telegramme können bei <b>57 600 Baud</b> pro Sekunde übertragen werden?</p>
         <details class="v6-more"><summary>Lösung Aufgabe 1</summary>
@@ -396,7 +437,7 @@
     <!-- ============================ SERIELL 4 ============================ -->
     <section id="ser-i2c" class="page" data-theme="seriell">
       <header class="page-head">
-        <img class="head-art" src="assets/images/el-topo-rolle.webp" alt="">
+        <img class="head-art" src="assets/images/el-takt.webp" alt="">
         <p class="eyebrow">Seriell · Station 4 · Interaktiv</p>
         <h1>I²C – Adressen auf zwei Drähten</h1>
         <p class="lead"><b>I²C</b> (Inter-Integrated Circuit, gesprochen „I-Quadrat-C“) hat Philips 1982 entwickelt, um viele Chips auf einer Platine zu verbinden. Zwei Leitungen reichen für alle: Jeder Teilnehmer hat eine eigene <b>Adresse</b>. Und weil eine Leitung den <b>Takt</b> trägt, arbeitet I²C <b>synchron</b>.</p>
@@ -462,7 +503,7 @@
     <!-- ============================ SERIELL 5 ============================ -->
     <section id="ser-spi" class="page" data-theme="seriell">
       <header class="page-head">
-        <img class="head-art" src="assets/images/el-server.webp" alt="">
+        <img class="head-art wide" src="assets/images/el-nachrichten.webp" alt="">
         <p class="eyebrow">Seriell · Station 5 · Interaktiv</p>
         <h1>SPI und der Weg zum Netz</h1>
         <p class="lead">Das <b>Serial Peripheral Interface</b> (SPI) stammt von Motorola. Es verwendet <b>vier Leitungen</b>, arbeitet synchron und vollduplex und schafft je nach Chip einige bis über 50 Mbit/s. Statt Adressen gibt es eine eigene Leitung, die einen Teilnehmer auswählt.</p>
@@ -2863,7 +2904,7 @@ Ablaufverfolgung beendet.</pre>
 
   <footer class="site-footer">
     <img class="footer-art" src="assets/images/el-bonsai.webp" alt="">
-    <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996) · <a href="https://www.rfc-editor.org/info/rfc3927/" target="_blank" rel="noopener">RFC 3927</a> (APIPA/Link-Local) · <a href="https://www.rfc-editor.org/info/rfc6890/" target="_blank" rel="noopener">RFC 6890</a> (Besondere Adressbereiche) · <a href="https://www.rfc-editor.org/info/rfc2131/" target="_blank" rel="noopener">RFC 2131</a> (DHCP) · <a href="https://www.rfc-editor.org/info/rfc1034/" target="_blank" rel="noopener">RFC 1034</a> (DNS) · <a href="https://www.rfc-editor.org/info/rfc3986/" target="_blank" rel="noopener">RFC 3986</a> (URI) · <a href="https://www.rfc-editor.org/info/rfc6335/" target="_blank" rel="noopener">RFC 6335</a> (Portbereiche) · <a href="https://www.rfc-editor.org/info/rfc8446/" target="_blank" rel="noopener">RFC 8446</a> (TLS 1.3) · <a href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf" target="_blank" rel="noopener">NXP UM10204</a> (I²C-Spezifikation) · TIA-232-F (serielle Schnittstelle)</p>
+    <p>Quellen: <a href="https://www.rfc-editor.org/info/rfc791/" target="_blank" rel="noopener">RFC 791</a> (Internet Protocol, 1981) · <a href="https://www.rfc-editor.org/info/rfc950/" target="_blank" rel="noopener">RFC 950</a> (Subnetting, 1985) · <a href="https://www.rfc-editor.org/info/rfc4632/" target="_blank" rel="noopener">RFC 4632</a> (CIDR) · <a href="https://www.rfc-editor.org/info/rfc1918/" target="_blank" rel="noopener">RFC 1918</a> (Private Adressen, 1996) · <a href="https://www.rfc-editor.org/info/rfc3927/" target="_blank" rel="noopener">RFC 3927</a> (APIPA/Link-Local) · <a href="https://www.rfc-editor.org/info/rfc6890/" target="_blank" rel="noopener">RFC 6890</a> (Besondere Adressbereiche) · <a href="https://www.rfc-editor.org/info/rfc2131/" target="_blank" rel="noopener">RFC 2131</a> (DHCP) · <a href="https://www.rfc-editor.org/info/rfc1034/" target="_blank" rel="noopener">RFC 1034</a> (DNS) · <a href="https://www.rfc-editor.org/info/rfc3986/" target="_blank" rel="noopener">RFC 3986</a> (URI) · <a href="https://www.rfc-editor.org/info/rfc6335/" target="_blank" rel="noopener">RFC 6335</a> (Portbereiche) · <a href="https://www.rfc-editor.org/info/rfc8446/" target="_blank" rel="noopener">RFC 8446</a> (TLS 1.3) · <a href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf" target="_blank" rel="noopener">NXP UM10204</a> (I²C-Spezifikation) · TIA-232-F (serielle Schnittstelle) · Fotos der Stecker: Wikimedia Commons, Urheber und Lizenz am jeweiligen Bild</p>
     <p>Netzwerktechnik-Dojo · Jakob-Preh-Schule · statische HTML-Seite, läuft komplett im Browser – keine Daten werden übertragen, keine externen Dienste geladen.</p>
   </footer>
 
