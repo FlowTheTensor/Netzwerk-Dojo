@@ -113,14 +113,14 @@
           <div class="mini-card">
             <h3>Serielle Schnittstelle</h3>
             <p><b>Prinzip:</b> Die Bits werden <b>nacheinander</b> über eine Datenleitung (je Richtung) übertragen.</p>
-            <p><b>Vorteile:</b> wenige Adern, dünne und billige Kabel, kleine Stecker, große Entfernungen möglich, kein Gleichlauf-Problem zwischen den Leitungen.</p>
+            <p><b>Vorteile:</b> wenige Adern, dünne und billige Kabel, kleine Stecker, große Entfernungen möglich, kein Gleichlauf-Problem zwischen den Leitungen. Schnelle serielle Verbindungen sind außerdem <b>störfest</b>: Sie senden über ein verdrilltes Adernpaar, bei dem sich Störungen weitgehend aufheben, sichern die Daten mit Prüfsummen und senden Fehlerhaftes einfach neu.</p>
             <p><b>Nachteile:</b> Bei gleichem Takt braucht ein Zeichen mehrere Takte; die Bits müssen beim Sender in eine Reihe gebracht und beim Empfänger wieder zusammengesetzt werden (Schieberegister).</p>
           </div>
           <div class="mini-card">
             <h3>Parallele Schnittstelle</h3>
             <p><b>Prinzip:</b> Mehrere Bits werden <b>gleichzeitig</b> über eigene Leitungen übertragen – z. B. 8 Bit auf 8 Leitungen.</p>
             <p><b>Vorteile:</b> Bei gleichem Takt ist ein ganzes Zeichen in einem Takt übertragen; einfache Elektronik.</p>
-            <p><b>Nachteile:</b> viele Adern, dicke Kabel, große Stecker; bei hohem Takt kommen die Bits zu verschiedenen Zeiten an (<b>Laufzeitunterschiede</b>) und stören sich gegenseitig (<b>Übersprechen</b>) – deshalb nur kurze Strecken.</p>
+            <p><b>Nachteile:</b> viele Adern, dicke Kabel, große Stecker; bei hohem Takt kommen die Bits zu verschiedenen Zeiten an (<b>Laufzeitunterschiede</b>) und stören sich gegenseitig (<b>Übersprechen</b>) – deshalb nur kurze Strecken. Außerdem sind sie <b>anfälliger für elektromagnetische Störungen</b> (EMV): Viele einzelne Leitungen fangen Störungen ein, und eine Störspitze trifft im selben Takt gleich mehrere Bits desselben Zeichens. Ein einfaches Paritätsbit erkennt das nicht mehr sicher.</p>
           </div>
         </div>
         <p class="callout"><b>Darum hat seriell gewonnen:</b> Eine einzelne Leitung lässt sich viel schneller takten als ein ganzes Bündel, das im Gleichschritt bleiben muss. USB, SATA, PCI Express, HDMI und Ethernet sind deshalb alle <b>seriell</b> – und schneller als ihre parallelen Vorgänger.</p>
@@ -151,7 +151,31 @@
           </table>
         </div>
         <p class="note">Beim Arbeitsspeicher hilft noch mehr: Jede Gruppe von 8 Datenbits bekommt ein eigenes Taktsignal mit (DQS), und beim Einschalten misst der Speichercontroller die Laufzeit jeder einzelnen Leitung und gleicht sie aus.</p>
-        <p class="note"><b>Kein parallel:</b> PCI Express x16, Thunderbolt oder 100-Gbit-Ethernet nutzen zwar mehrere <b>Lanes</b> nebeneinander, aber jede Lane ist eine eigene serielle Verbindung, die ihren Takt selbst wiederherstellt – Laufzeitunterschiede zwischen den Lanes gleicht der Empfänger aus. Ein Grenzfall ist Gigabit-Ethernet: Es sendet auf allen <b>vier Adernpaaren gleichzeitig</b>, jedes Paar für sich aber seriell.</p>
+        <h3 class="sub-h">Parallel genutzt, aber seriell: Lanes</h3>
+        <p>PCI Express x16, Thunderbolt oder 100-Gbit-Ethernet nutzen mehrere <b>Lanes</b> gleichzeitig nebeneinander – man spricht deshalb auch von <b>parallel genutzten seriellen Lanes</b>. Als Schnittstelle gelten sie trotzdem als <b>seriell</b>. Der Unterschied liegt darin, wie die Bits zusammengehalten werden:</p>
+        <div class="two-col">
+          <div class="mini-card">
+            <h3>Klassisch parallel</h3>
+            <p class="muted">PCI, Druckerschnittstelle LPT, Arbeitsspeicher</p>
+            <ul class="ticks">
+              <li>Die 8, 32 oder 64 Bit eines Wortes laufen <b>gleichzeitig</b> los.</li>
+              <li>Der Empfänger tastet alle Leitungen mit <b>einem gemeinsamen Takt</b> im selben Augenblick ab.</li>
+              <li>Deshalb müssen alle Leitungen auf einen Bruchteil einer Bitzeit genau gleich schnell sein – bei hohem Takt kaum noch machbar.</li>
+            </ul>
+          </div>
+          <div class="mini-card">
+            <h3>Mehrere serielle Lanes</h3>
+            <p class="muted">PCI Express x4, x8, x16</p>
+            <ul class="ticks">
+              <li>Jede Lane ist eine <b>eigenständige serielle Verbindung</b> und gewinnt ihren Takt selbst aus dem Datenstrom zurück.</li>
+              <li>Die Daten werden <b>byteweise reihum</b> verteilt: Byte 1 auf Lane 0, Byte 2 auf Lane 1, …</li>
+              <li>Die Lanes dürfen um viele Bitzeiten verschoben ankommen. Der Empfänger puffert jede Lane und richtet sie anhand von Markierungen im Datenstrom wieder aus.</li>
+              <li>Fällt eine Lane aus, läuft die Verbindung mit weniger Lanes weiter (z. B. x16 → x8).</li>
+            </ul>
+          </div>
+        </div>
+        <p class="callout"><b>Kurz:</b> Bei parallel gehören die Leitungen <b>bitgenau im Gleichschritt</b> zusammen. Bei Lanes arbeiten <b>mehrere unabhängige serielle Strecken</b> gleichzeitig – zusammengeführt wird erst danach im Puffer.</p>
+        <p class="note">Dasselbe Prinzip steckt in Gigabit-Ethernet, das auf allen <b>vier Adernpaaren gleichzeitig</b> sendet, jedes Paar für sich seriell, und in der <b>Link Aggregation</b>, bei der mehrere Netzwerkkabel zu einer schnelleren Verbindung gebündelt werden.</p>
       </article>
 
       <article class="card">
