@@ -17,7 +17,7 @@ pro Sekunde, nur bei zwei Pegeln gleich Bit/s.
 
 | # | Station | Inhalt |
 |---|---------|--------|
-| 1 | Seriell & parallel | Ein Zeichen seriell und parallel Takt für Takt, Laufzeitunterschiede bei hohem Takt, Vor- und Nachteile, Fotos früher parallel/heute seriell (LPT, Druckerkabel, USB, IDE, SATA, PCI/PCIe), wo parallel heute noch steckt, Lanes, uni- und bidirektional, Bus am Beispiel KNX und was ein Bus regeln muss, Zeitleiste |
+| 1 | Seriell & parallel | Ein Zeichen seriell und parallel Takt für Takt, Laufzeitunterschiede bei hohem Takt, Vor- und Nachteile, Fotos früher parallel/heute seriell (LPT, Druckerkabel, USB, IDE, SATA, PCI/PCIe), wo parallel heute noch steckt, Lanes, Beispiel Festplatte IDE → SATA → M.2 (Bauform, B-/M-Key, Datenraten bis PCIe 5.0 x4), uni- und bidirektional, Bus am Beispiel KNX und was ein Bus regeln muss, Zeitleiste |
 | 2 | RS-232 | DE-9-Stecker mit klickbaren Pins (Datenleitungen 2, 3, 5), Pegel UART gegen RS-232, Nullmodem und 1:1-Kabel, Formatkürzel wie 8N1, Baud |
 | 3 | UART-Telegramm | UART vs. RS-232, Telegramm-Baukasten (Datenbits, Parität, Stoppbits, Baudrate) mit Bitzeit und Telegrammen pro Sekunde, MSB/LSB, Paritätsbit mit Störungs-Simulation, Übungen vom Arbeitsblatt: Telegramme pro Sekunde, Mitschnitte im Stil von PulseView (Baudrate aus 104 µs, „a?“ / „ok“ dekodieren) |
 | 4 | I²C | Bus mit Pull-ups und Teilnehmern, Adressierung als SCL/SDA-Signal mit ACK/NACK, Übung zum PulseView-Mitschnitt vom Arbeitsblatt (0x08, NACK, Datenrate aus 10 µs), 112 Adressen, Geschwindigkeiten |
@@ -223,6 +223,7 @@ Das Schullogo (`assets/jps-logo.png`) gehört der Jakob-Preh-Schule.
 | foto-ide.webp | [IDE cable 40 pin & 80 pin.jpg](https://commons.wikimedia.org/wiki/File:IDE_cable_40_pin_%26_80_pin.jpg) | Smial | CC BY-SA 2.0 DE |
 | foto-sata.webp | [Serial ATA hard disk connected.jpg](https://commons.wikimedia.org/wiki/File:Serial_ATA_hard_disk_connected.jpg) | Thomas Rosenau | CC BY-SA 2.5 |
 | foto-sata-innen.webp | [Serial ATA cable cut off to show the inside.jpg](https://commons.wikimedia.org/wiki/File:Serial_ATA_cable_cut_off_to_show_the_inside.jpg) | Tobias Maier | CC BY-SA 3.0 |
+| foto-m2.webp | [SAMSUNG M.2 NVMe SSD 990 PRO 4TB.jpg](https://commons.wikimedia.org/wiki/File:SAMSUNG_M.2_NVMe_SSD_990_PRO_4TB.jpg), zugeschnitten | Dinkun Chen | CC BY-SA 4.0 |
 | foto-pci-pcie.webp | [PCI und PCIe Slots.jpg](https://commons.wikimedia.org/wiki/File:PCI_und_PCIe_Slots.jpg) | Smial | CC BY-SA 2.0 DE |
 
 Die verkleinerten Fassungen der CC-BY-SA-Fotos stehen unter derselben Lizenz wie das jeweilige Original.

@@ -219,6 +219,44 @@
       </article>
 
       <article class="card">
+        <h2>Beispiel Festplatte: von IDE über SATA zu M.2</h2>
+        <p>Am Speicher im PC sieht man die Entwicklung besonders gut: Erst parallel über das breite IDE-Kabel, dann seriell über SATA – und heute steckt die SSD meist direkt als kleine <b>M.2</b>-Karte auf dem Mainboard.</p>
+        <figure class="sr-foto sr-foto-wide">
+          <a href="assets/images/foto-m2.webp" target="_blank" rel="noopener"><img src="assets/images/foto-m2.webp" alt="M.2-SSD Samsung 990 PRO mit der Aufschrift PCIe 4.0 NVMe M.2 SSD" width="720" height="218" loading="lazy"></a>
+          <figcaption><span class="sr-cap"><b>M.2-SSD</b> der Bauform 2280: 22 mm breit, 80 mm lang. Aufgedruckt ist „PCIe 4.0 NVMe“ – die SSD spricht über PCI Express. Rechts die Kontaktleiste mit der Kerbe (M-Key).</span><small class="sr-credit">Foto: <a href="https://commons.wikimedia.org/wiki/File:SAMSUNG_M.2_NVMe_SSD_990_PRO_4TB.jpg" target="_blank" rel="noopener">Dinkun Chen</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Wikimedia Commons, zugeschnitten</small></figcaption>
+        </figure>
+        <h3 class="sub-h">Was ist M.2?</h3>
+        <ul class="ticks">
+          <li><b>M.2</b> (früher NGFF) ist eine <b>Bauform und ein Steckplatz</b> – kein eigenes Übertragungsverfahren. Über die Kontakte läuft eine von zwei <b>seriellen</b> Verbindungen:</li>
+          <li><b>SATA</b> – dieselbe serielle Verbindung wie beim roten SATA-Kabel, nur ohne Kabel. Mehr als 600 MB/s geht damit nicht.</li>
+          <li><b>PCI Express</b> mit bis zu <b>4 Lanes</b> (x4) und dem Protokoll <b>NVMe</b> – heute der Normalfall. Jede Lane ist ein Adernpaar pro Richtung, bei x4 also 4 Paare hin und 4 Paare zurück, gleichzeitig (vollduplex).</li>
+          <li>Eine SSD nutzt <b>entweder</b> SATA <b>oder</b> PCIe – nicht beides gleichzeitig. Der Steckplatz auf dem Mainboard kann aber oft beides.</li>
+          <li>Die Zahl auf der Verpackung nennt die Größe: <b>2280</b> = 22 mm breit, 80 mm lang. Kürzere Karten (2230, 2242) stecken in Laptops und Spielkonsolen.</li>
+        </ul>
+        <p>Welche Verbindung eine Karte kann, verrät die <b>Kerbe</b> in der Kontaktleiste (der „Key“). Sie verhindert, dass man eine Karte in einen unpassenden Steckplatz steckt:</p>
+        <div class="tp-wrap"><div id="sr-m2keys"></div></div>
+        <h3 class="sub-h">Datenraten im Vergleich</h3>
+        <div class="tbl-wrap">
+          <table class="tbl compact sr-rates">
+            <thead><tr><th>Verbindung</th><th>Übertragung</th><th>Datenrate (ungefähr)</th><th>schneller als IDE</th></tr></thead>
+            <tbody>
+              <tr><td><b>IDE / PATA</b> (Ultra-DMA 133)</td><td>parallel, 16 Datenleitungen</td><td>133 MB/s</td><td>–</td></tr>
+              <tr><td><b>SATA III</b> (auch als M.2-SATA)</td><td>seriell, 1 Adernpaar je Richtung, 6 Gbit/s</td><td>600 MB/s</td><td>× 4,5</td></tr>
+              <tr><td><b>PCIe 3.0 x4</b> (NVMe)</td><td>seriell, 4 Lanes à 8 GT/s</td><td>3,9 GB/s</td><td>× 30</td></tr>
+              <tr><td><b>PCIe 4.0 x4</b> (NVMe)</td><td>seriell, 4 Lanes à 16 GT/s</td><td>7,9 GB/s</td><td>× 59</td></tr>
+              <tr><td><b>PCIe 5.0 x4</b> (NVMe)</td><td>seriell, 4 Lanes à 32 GT/s</td><td>15,8 GB/s</td><td>× 118</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="ticks">
+          <li>Die Werte gelten <b>je Richtung</b> und sind die Obergrenze der Verbindung. Echte SSDs erreichen etwas weniger, z. B. rund 550 MB/s über SATA oder 7 GB/s über PCIe 4.0 x4.</li>
+          <li><b>GT/s</b> heißt Gigatransfers pro Sekunde – das sind Signalschritte, wie Baud. Davon geht ein Teil für die <b>Leitungscodierung</b> ab: Bei SATA (8b/10b) tragen von 10 Bit auf der Leitung nur 8 Nutzdaten, aus 6 Gbit/s werden so 600 MB/s. Ab PCIe 3.0 (128b/130b) gehen nur noch etwa 1,5 % verloren.</li>
+          <li>Vorsicht bei den Einheiten: <b>Gbit/s</b> und <b>GB/s</b> unterscheiden sich um den Faktor 8 (1 Byte = 8 Bit).</li>
+        </ul>
+        <p class="note">Auf manchen Arbeitsblättern steht: „Die parallele Schnittstelle M.2 hat die serielle SATA abgelöst.“ Genauer: M.2 ist nur der Steckplatz. Abgelöst wurde <b>SATA durch PCI Express</b> – und beide sind <b>seriell</b>. PCIe ist nur deshalb schneller, weil es mehrere serielle Lanes gleichzeitig nutzt und jede Lane viel schneller taktet.</p>
+      </article>
+
+      <article class="card">
         <h2>In welche Richtung? Uni- und bidirektional</h2>
         <p>Die Pfeile in einem Schaltplan zeigen die <b>Übertragungsrichtung</b> einer Leitung.</p>
         <div class="tbl-wrap">
@@ -577,7 +615,7 @@
           </table>
         </div>
         <p class="callout"><b>Auch Ethernet ist seriell:</b> Auf jedem Adernpaar kommen die Signale nacheinander an. Neu ist, dass beliebig viele Geräte aus aller Welt zusammenkommen. Eine 7-Bit-Adresse reicht dafür nicht – jede Netzwerkkarte bekommt eine <b>weltweit eindeutige 48-Bit-Adresse</b>, die MAC-Adresse.</p>
-        <p class="note"><b>PCI Express und M.2:</b> M.2 ist kein eigenes Übertragungsverfahren, sondern eine Steckkarten-Bauform. Eine M.2-SSD spricht meist über bis zu vier <b>PCIe-Lanes</b> (NVMe) oder über SATA. Jede Lane ist eine eigene <b>serielle</b> Verbindung mit je einem Adernpaar pro Richtung. Mehrere Lanes verteilen die Daten zwar nebeneinander, jede stellt ihren Takt aber selbst wieder her – deshalb gilt PCIe als serielle Schnittstelle, die den parallelen PCI-Bus abgelöst hat.</p>
+        <p class="note"><b>PCI Express und M.2:</b> Wie mehrere serielle Lanes zusammenarbeiten und warum M.2 trotzdem eine serielle Verbindung ist, steht in Station 1 „Seriell &amp; parallel“.</p>
       </article>
 
       <article class="card next-card">

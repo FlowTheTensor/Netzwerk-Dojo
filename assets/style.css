@@ -1960,3 +1960,10 @@ td.kr-no { color: var(--host); font-weight: 600; }
 .sr-mc-art { float: right; height: 84px; width: auto; margin: -4px -4px 6px 12px; }
 @media (max-width: 600px) { .sr-mc-art { height: 64px; } }
 .head-art.wide { height: 100px; top: 40px; }
+/* M.2 */
+.sr-m2-board { fill: color-mix(in srgb, var(--host) 55%, var(--surface)); stroke: var(--host); stroke-width: 1; }
+.sr-m2-pin { fill: #D4A72C; }
+.sr-m2-notch { fill: var(--surface-2); }
+.sr-foto-wide { margin: .8rem 0; max-width: 720px; }
+.sr-foto-wide img { height: auto; object-fit: contain; }
+.sr-rates td:last-child { white-space: nowrap; font-weight: 600; }

@@ -139,6 +139,28 @@ const SERIELL = (() => {
     $('#sr-knx').innerHTML = `<div class="tp-wrap"><svg viewBox="0 0 610 250" class="sr-svg" style="min-width:480px;max-width:720px;margin:0 auto">${k}</svg></div>`;
   })();
 
+  /* ---------- Station 1: Kerben (Keys) an M.2-Karten ---------- */
+  (function m2Keys() {
+    // [Name, Kerbe, Verbindung, Kerben als Pin-Bereiche] – 75 Kontaktpositionen, Pin 1 links
+    const ROWS = [
+      ['B-Key', 'Kerbe bei Pin 12–19', 'SATA oder PCIe x2', [[12, 19]]],
+      ['M-Key', 'Kerbe bei Pin 59–66', 'SATA oder PCIe x4 – die meisten NVMe-SSDs', [[59, 66]]],
+      ['B+M-Key', 'zwei Kerben', 'meist SATA, passt in beide Steckplätze', [[12, 19], [59, 66]]],
+    ];
+    const P = 5, X = p => 20 + (p - 1) * P;
+    let h = '';
+    ROWS.forEach(([name, kerbe, link, notches], r) => {
+      const y = 14 + r * 72;
+      const inNotch = p => notches.some(([a, b]) => p >= a && p <= b);
+      h += `<rect x="${X(1) - 6}" y="${y}" width="${75 * P + 8}" height="44" rx="3" class="sr-m2-board"/>`;
+      for (let p = 1; p <= 75; p += 2) if (!inNotch(p) && !inNotch(p + 1)) h += `<rect x="${X(p)}" y="${y + 24}" width="${P + 1}" height="18" rx="1" class="sr-m2-pin"/>`;
+      notches.forEach(([a, b]) => { h += `<rect x="${X(a) - 1}" y="${y + 22}" width="${(b - a + 1) * P + 2}" height="24" class="sr-m2-notch"/>`; });
+      h += `<text x="${X(1)}" y="${y + 58}" class="sr-tiny">1</text><text x="${X(75) + P}" y="${y + 58}" class="sr-tiny" text-anchor="end">75</text>`;
+      h += `<text x="420" y="${y + 14}" class="sr-small strong">${name}</text><text x="420" y="${y + 30}" class="sr-small">${kerbe}</text><text x="420" y="${y + 46}" class="sr-small">${link}</text>`;
+    });
+    $('#sr-m2keys').innerHTML = `<svg viewBox="0 0 700 226" class="sr-svg" style="min-width:560px;max-width:820px;margin:0 auto">${h}</svg>`;
+  })();
+
   /* ---------- Station 2: DE-9-Stecker ---------- */
   (function de9() {
     const out = $('#sr-pin-info');
